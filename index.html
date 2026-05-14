@@ -2,31 +2,73 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>张宇轩 | 个人主页</title>
     <style>
-        *{margin:0;padding:0;}
-        body{
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #f5f7fa;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+            background-color: #f6f7f9;
+            color: #1d1d1f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             text-align: center;
-            padding-top: 80px;
+            max-width: 500px;
+            width: 100%;
         }
-        h1{
-            font-size: 42px;
-            color: #222;
-            margin-bottom: 20px;
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 12px;
+            font-weight: 600;
         }
-        p{
-            font-size: 18px;
-            color: #555;
+
+        .info {
+            font-size: 17px;
+            color: #666;
+            line-height: 1.8;
             margin: 10px 0;
+        }
+
+        .domain {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 10px 24px;
+            background: #007aff;
+            color: #fff;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .domain:hover {
+            background: #0066dd;
         }
     </style>
 </head>
 <body>
-    <h1>欢迎来到我的个人网站</h1>
-    <p>姓名：张宇轩</p>
-    <p>院校：华中科技大学 物理学院</p>
-    <p>域名：zhangyuxuan.xin</p>
+    <div class="card">
+        <h1>张宇轩</h1>
+        <div class="info">
+            华中科技大学 · 物理学院<br>
+            热爱理论物理 | 编程 | 数学
+        </div>
+        <a href="https://zhangyuxuan.xin" class="domain">我的个人域名</a>
+    </div>
 </body>
 </html>
