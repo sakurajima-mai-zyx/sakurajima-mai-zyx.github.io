@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>张宇轩 | 个人空间</title>
+    <title>张宇轩 | 个人博客</title>
     <style>
         * {
             margin: 0;
@@ -16,69 +16,89 @@
             background-color: #0c0c0e;
             color: #e5e5e7;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
+            padding: 60px 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
         }
 
         .name {
-            font-size: 48px;
+            font-size: 36px;
             font-weight: 300;
-            letter-spacing: 6px;
+            letter-spacing: 4px;
         }
 
         .motto {
-            font-size: 16px;
+            font-size: 14px;
             color: #8a8a8e;
-            letter-spacing: 2px;
-            margin-top: 8px;
+            margin-top: 10px;
         }
 
         .line {
             width: 60px;
             height: 1px;
             background: #444;
-            margin: 20px 0;
+            margin: 30px auto;
         }
 
-        .formula {
-            color: #abb0c0;
+        .article-list {
+            list-style: none;
+        }
+
+        .article-item {
+            padding: 20px 0;
+            border-bottom: 1px solid #222;
+        }
+
+        .article-item:last-child {
+            border-bottom: none;
+        }
+
+        .article-title {
             font-size: 20px;
-            margin: 20px 0;
-            text-align: center;
-            line-height: 1.6;
+            color: #e5e5e7;
+            text-decoration: none;
         }
 
-        .info {
-            font-size: 15px;
-            color: #999;
-            text-align: center;
-            line-height: 1.8;
+        .article-title:hover {
+            color: #007aff;
         }
 
-        .domain {
-            margin-top: 30px;
+        .article-date {
             font-size: 14px;
-            color: #777;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            font-size: 13px;
+            color: #555;
         }
     </style>
 </head>
 <body>
-    <div class="name">张宇轩</div>
-    <div class="motto">格物致知 · 观物穷理</div>
-    <div class="line"></div>
-
-    <div class="formula">
-        Laplace 变换<br>
-        ℒ[f(t)] = ∫₀^∞ f(t)e^(-st)dt
+    <div class="header">
+        <div class="name">张宇轩</div>
+        <div class="motto">格物致知 · 观物穷理</div>
+        <div class="line"></div>
     </div>
 
-    <div class="info">
-        华中科技大学 物理学院<br>
-        Theoretical Physics & Mathematics
+    <ul class="article-list">
+        <li class="article-item">
+            <a href="articles/laplace-note.html" class="article-title">拉普拉斯变换入门笔记</a>
+            <div class="article-date">2026-05-14</div>
+        </li>
+        <!-- 以后写新文章，就像上面这样复制一个li标签，改标题和链接 -->
+    </ul>
+
+    <div class="footer">
+        zhangyuxuan.xin
     </div>
-    <div class="domain">zhangyuxuan.xin</div>
 </body>
 </html>
