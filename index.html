@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>张宇轩 | 个人主页</title>
+    <title>张宇轩 | 个人空间</title>
     <style>
         * {
             margin: 0;
@@ -12,63 +12,73 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-            background-color: #f6f7f9;
-            color: #1d1d1f;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            background-color: #0c0c0e;
+            color: #e5e5e7;
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+            gap: 12px;
         }
 
-        .card {
-            background: #ffffff;
-            padding: 50px 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        .name {
+            font-size: 48px;
+            font-weight: 300;
+            letter-spacing: 6px;
+        }
+
+        .motto {
+            font-size: 16px;
+            color: #8a8a8e;
+            letter-spacing: 2px;
+            margin-top: 8px;
+        }
+
+        .line {
+            width: 60px;
+            height: 1px;
+            background: #444;
+            margin: 20px 0;
+        }
+
+        .formula {
+            color: #abb0c0;
+            font-size: 20px;
+            margin: 20px 0;
             text-align: center;
-            max-width: 500px;
-            width: 100%;
-        }
-
-        h1 {
-            font-size: 36px;
-            margin-bottom: 12px;
-            font-weight: 600;
+            line-height: 1.6;
         }
 
         .info {
-            font-size: 17px;
-            color: #666;
+            font-size: 15px;
+            color: #999;
+            text-align: center;
             line-height: 1.8;
-            margin: 10px 0;
         }
 
         .domain {
-            display: inline-block;
-            margin-top: 25px;
-            padding: 10px 24px;
-            background: #007aff;
-            color: #fff;
-            border-radius: 30px;
-            text-decoration: none;
-            font-size: 16px;
-        }
-
-        .domain:hover {
-            background: #0066dd;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #777;
         }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>张宇轩</h1>
-        <div class="info">
-            华中科技大学 · 物理学院<br>
-            热爱理论物理 | 编程 | 数学
-        </div>
-        <a href="https://zhangyuxuan.xin" class="domain">我的个人域名</a>
+    <div class="name">张宇轩</div>
+    <div class="motto">格物致知 · 观物穷理</div>
+    <div class="line"></div>
+
+    <div class="formula">
+        Laplace 变换<br>
+        ℒ[f(t)] = ∫₀^∞ f(t)e^(-st)dt
     </div>
+
+    <div class="info">
+        华中科技大学 物理学院<br>
+        Theoretical Physics & Mathematics
+    </div>
+    <div class="domain">zhangyuxuan.xin</div>
 </body>
 </html>
