@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>日记 2026.5.16</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body{background:#fff;max-width:600px;margin:60px auto;padding:0 20px;font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;}
+        .back{color:#007AFF;text-decoration:none;margin-bottom:30px;display:inline-block;}
+        .date{color:#777;margin-bottom:20px;}
+        .text{font-size:18px;color:#333;line-height:2;}
+        h2{font-size: 22px; margin-top: 40px; color: #111;}
+        h3{font-size: 19px; margin-top: 30px; color: #444;}
+        ul{padding-left: 20px;}
+        hr{border: none; border-top: 1px solid #eee; margin: 40px 0;}
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back">← 返回主页</a>
+    <div class="date">2026.5.16</div>
+    <div class="text">
+        <p>今天深度推导了量子力学中阶梯算符的代数结构，深刻体会到了狄拉克代数方法的优雅。核心思想非常纯粹：<strong>用测度算符作用新态 &rarr; 利用对易关系换位 &rarr; 提取数字公因式。</strong></p>
+
+        <h2>1. 算符作用效果与非简并本征空间</h2>
+        <p>无论是量子谐振子还是角动量理论，当我们证明了某个新状态（如 \(\hat{J}_\pm |j, m\rangle\)）是测度算符的本征态后，可以直接得出它与标准本征态的正比关系：</p>
+        $$\hat{J}_\pm |j, m\rangle \propto |j, m \pm 1\rangle$$
+        <p>其幕后的数学支撑是<strong>本征空间的非简并性（唯一性）</strong>。对于给定的量子系统，一旦同时确定了总角动量 \(\hat{J}^2\) 和 \(z\) 分量 \(\hat{J}_z\) 的本征值，其对应的本征空间便是一维的。这意味着在希尔伯特空间中，满足这两个特定本征值条件的状态在几何上只指向唯一的一个方向。因此，新状态必然与标准的归一化本征态躺在同一条直线上，互为倍数关系。</p>
+
+        <hr>
+
+        <h2>2. 量子谐振子消灭算符 \(a\) 的对称性证明</h2>
+        <p>这种代数手法具有极强的普适性。对于一维量子谐振子的消灭算符 \(a\)，可以通过完全相同的手法证明其降低能级的行为：</p>
+        
+        <h3>A. 基础准备</h3>
+        <ul>
+            <li>基础对易关系：\([a, a^\dagger] = 1\)</li>
+            <li>派生对易关系：\([\hat{N}, a] = [a^\dagger a, a] = -a \implies \hat{N}a = a\hat{N} - a\)</li>
+            <li>已知本征方程：\(\hat{N}|n\rangle = n|n\rangle\)</li>
+        </ul>
+
+        <h3>B. 三步严格证明</h3>
+        <p><strong>第一步：</strong>用粒子数算符 \(\hat{N}\) 作用在新状态 \(a|n\rangle\) 上</p>
+        $$\hat{N} \big( a|n\rangle \big)$$
+
+        <p><strong>第二步：</strong>利用对易关系交换算符顺序，将 \(\hat{N}a\) 替换为 \(a\hat{N} - a\)</p>
+        $$= (a\hat{N} - a)|n\rangle = a\hat{N}|n\rangle - a|n\rangle$$
+
+        <p><strong>第三步：</strong>让已知本征态吐出本征值 \(n\)，并提取公因式</p>
+        $$= a(n|n\rangle) - a|n\rangle = n(a|n\rangle) - 1(a|n\rangle) = (n-1)\big(a|n\rangle\big)$$
+
+        <h3>C. 结论</h3>
+        <p>由此，我们以完全一致的逻辑链条锁定了新状态的本征值：</p>
+        $$\hat{N} \big( a|n\rangle \big) = (n-1)\big(a|n\rangle\big)$$
+        <p>这雄辩地证明了 \(a|n\rangle\) 确实是 \(\hat{N}\) 的本征态，且本征值精确地减少了 1。同样由于一维本征空间的唯一性，它必然正比于标准的 \(|n-1\rangle\) 状态：</p>
+        $$a|n\rangle \propto |n-1\rangle$$
+    </div>
+</body>
+</html>
