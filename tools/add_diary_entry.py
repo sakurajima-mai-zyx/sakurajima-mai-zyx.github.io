@@ -65,9 +65,9 @@ def render_blog(label: str) -> str:
     <a href="../index.html" class="back">← 返回主页</a>
     <div class="date">{label}</div>
     <div class="text">
-        今天也继续记录。
+        今天的问题还没有同步到这里。
 
-        先把这一页留给今天，之后再补上更具体的事情。
+        如果今天问了 ChatGPT，我会把问题整理成当天的记录，再更新这一页。
     </div>
 </body>
 </html>
