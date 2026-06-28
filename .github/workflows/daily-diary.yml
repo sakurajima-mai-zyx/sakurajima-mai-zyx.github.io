@@ -1,4 +1,4 @@
-name: Daily diary
+name: Daily academic log
 
 on:
   schedule:
@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  add-diary-entry:
+  add-academic-log-entry:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -20,7 +20,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Add diary entry
+      - name: Add academic log entry
         run: python tools/add_diary_entry.py
 
       - name: Commit and push changes
@@ -33,5 +33,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add blog-list.html blogs
-          git commit -m "Add daily diary entry"
+          git commit -m "Add daily academic log entry"
           git push

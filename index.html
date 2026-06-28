@@ -3,26 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>张宇轩的网站</title>
+    <title>张宇轩的网站 | 学术型网站</title>
     <style>
+        :root{
+            --ink:#18211f;
+            --muted:#64706b;
+            --line:#dfe7e2;
+            --paper:#fbfcf8;
+            --teal:#197b71;
+            --amber:#c6742f;
+            --rose:#b84d52;
+            --white:#fff;
+        }
+        *{box-sizing:border-box}
         body{
-            background:#fff;
-            height:100vh;
             margin:0;
+            color:var(--ink);
+            background:var(--paper);
+            font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;
+        }
+        a{color:inherit}
+        .hero{
+            min-height:82vh;
             display:flex;
             flex-direction:column;
-            justify-content:center;
-            align-items:center;
-            font-family:sans-serif;
+            justify-content:space-between;
+            background:
+                linear-gradient(90deg,rgba(16,24,23,.9),rgba(16,24,23,.58) 48%,rgba(16,24,23,.18)),
+                url("assets/academic-desk.png") center/cover no-repeat;
+            color:var(--white);
         }
-        .c1{font-size:26px;color:#222;margin-bottom:15px;}
-        .c2{font-size:20px;color:#444;margin-bottom:40px;}
-        .link{color:#007aff;font-size:17px;text-decoration:none;margin:8px 0;}
+        .nav{
+            width:min(1120px,calc(100% - 40px));
+            margin:0 auto;
+            padding:24px 0;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:20px;
+        }
+        .brand{font-weight:700}
+        .nav a{
+            text-decoration:none;
+            color:rgba(255,255,255,.86);
+            font-size:15px;
+        }
+        .nav-links{
+            display:flex;
+            gap:18px;
+            align-items:center;
+        }
+        .hero-inner{
+            width:min(1120px,calc(100% - 40px));
+            margin:0 auto;
+            padding:60px 0 96px;
+        }
+        .eyebrow{
+            color:#f1c086;
+            font-size:15px;
+            margin:0 0 18px;
+            font-weight:700;
+        }
+        h1{
+            font-size:clamp(42px,7vw,78px);
+            line-height:1.04;
+            margin:0;
+            max-width:820px;
+            letter-spacing:0;
+        }
+        .lead{
+            max-width:650px;
+            margin:22px 0 0;
+            color:rgba(255,255,255,.82);
+            font-size:19px;
+            line-height:1.8;
+        }
+        .actions{
+            margin-top:34px;
+            display:flex;
+            flex-wrap:wrap;
+            gap:12px;
+        }
+        .button{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            min-height:44px;
+            padding:0 18px;
+            border-radius:8px;
+            text-decoration:none;
+            font-weight:700;
+        }
+        .button.primary{background:#f6b35f;color:#1b211e}
+        .button.secondary{border:1px solid rgba(255,255,255,.45);color:#fff}
+        main{padding:58px 0 72px}
+        .section{
+            width:min(1120px,calc(100% - 40px));
+            margin:0 auto 48px;
+        }
+        .section h2{
+            margin:0 0 18px;
+            font-size:28px;
+            letter-spacing:0;
+        }
+        .grid{
+            display:grid;
+            grid-template-columns:repeat(2,minmax(0,1fr));
+            gap:18px;
+        }
+        .card{
+            background:var(--white);
+            border:1px solid var(--line);
+            border-radius:8px;
+            padding:22px;
+            box-shadow:0 12px 30px rgba(25,48,43,.06);
+        }
+        .card h3{
+            margin:0 0 12px;
+            font-size:21px;
+        }
+        .card p{
+            color:var(--muted);
+            line-height:1.75;
+            margin:0;
+        }
+        .tag-row{
+            display:flex;
+            flex-wrap:wrap;
+            gap:8px;
+            margin-top:18px;
+        }
+        .tag{
+            border:1px solid var(--line);
+            border-radius:999px;
+            padding:7px 10px;
+            color:#32403b;
+            background:#f7faf6;
+            font-size:14px;
+        }
+        .quote{
+            background:var(--white);
+            border:1px solid var(--line);
+            border-left:5px solid var(--amber);
+            border-radius:8px;
+            padding:24px;
+            font-size:22px;
+            line-height:1.8;
+            box-shadow:0 12px 30px rgba(25,48,43,.06);
+        }
+        .record-link{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:16px;
+            padding:18px 0;
+            border-top:1px solid var(--line);
+            text-decoration:none;
+        }
+        .record-link:last-child{border-bottom:1px solid var(--line)}
+        .record-title{font-weight:700}
+        .record-note{color:var(--muted);font-size:14px;margin-top:5px}
+        .record-date{
+            color:var(--rose);
+            font-weight:700;
+            white-space:nowrap;
+        }
+        footer{
+            width:min(1120px,calc(100% - 40px));
+            margin:0 auto;
+            padding:12px 0 44px;
+            color:var(--muted);
+            font-size:14px;
+        }
+        @media (max-width:760px){
+            .hero{min-height:86vh}
+            .nav{width:min(100% - 28px,1120px);padding:18px 0}
+            .nav-links{gap:12px}
+            .hero-inner{width:min(100% - 28px,1120px);padding:44px 0 72px}
+            .lead{font-size:17px}
+            main{padding-top:42px}
+            .section{width:min(100% - 28px,1120px);margin-bottom:38px}
+            .grid{grid-template-columns:1fr}
+            .quote{font-size:19px}
+            .record-link{align-items:flex-start;flex-direction:column}
+        }
     </style>
 </head>
 <body>
-    <div class="c1">张宇轩的网站</div>
-    <div class="c2">changes for the better</div>
-    <a href="blog-list.html" class="link">日记目录</a>
+    <header class="hero">
+        <nav class="nav">
+            <a class="brand" href="index.html">张宇轩的网站</a>
+            <div class="nav-links">
+                <a href="blog-list.html">学术记录</a>
+                <a href="blogs/2026.6.29.html">6.29</a>
+            </div>
+        </nav>
+        <div class="hero-inner">
+            <p class="eyebrow">zhangyuxuan.xin</p>
+            <h1>张宇轩的学术型网站</h1>
+            <p class="lead">从 2026.6.29 开始，旧内容清空。这里之后用于整理学习、研究、论文式笔记和可长期保存的学术内容。</p>
+            <div class="actions">
+                <a class="button primary" href="blog-list.html">查看学术记录</a>
+                <a class="button secondary" href="blogs/2026.6.29.html">进入起始页</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="section">
+            <h2>起点</h2>
+            <div class="quote">今天考完了高等数学与热统，开始正式写学术型网站。</div>
+        </section>
+
+        <section class="section">
+            <h2>方向</h2>
+            <div class="grid">
+                <article class="card">
+                    <h3>物理</h3>
+                    <p>以热力学、统计物理和后续专业课为核心，保留概念、推导、题目和阅读笔记。</p>
+                    <div class="tag-row">
+                        <span class="tag">热统</span>
+                        <span class="tag">推导</span>
+                        <span class="tag">讲义</span>
+                    </div>
+                </article>
+                <article class="card">
+                    <h3>数学</h3>
+                    <p>把高等数学和后续数学工具整理成可复查的笔记，重视条件、证明和计算规范。</p>
+                    <div class="tag-row">
+                        <span class="tag">高等数学</span>
+                        <span class="tag">证明</span>
+                        <span class="tag">方法</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>最新记录</h2>
+            <a class="record-link" href="blogs/2026.6.29.html">
+                <span>
+                    <span class="record-title">正式开始写学术型网站</span>
+                    <span class="record-note">今天考完了高等数学与热统，开始正式写学术型网站。</span>
+                </span>
+                <span class="record-date">2026.6.29</span>
+            </a>
+        </section>
+    </main>
+
+    <footer>zhangyuxuan.xin</footer>
 </body>
 </html>
