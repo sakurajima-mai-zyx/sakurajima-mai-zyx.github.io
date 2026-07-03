@@ -105,7 +105,6 @@ def render_blog(label: str, iso_label: str, file_name: str, year: int, month: in
     <div class="site-grid">
         <aside class="sidebar">
             <section class="profile-card">
-                <img src="../assets/academic-desk.png" alt="学习桌面" class="profile-image">
                 <div class="profile-name">zhangyuxuan</div>
                 <div class="profile-stats">
                     <div><strong>2026.6</strong><span>建站</span></div>
