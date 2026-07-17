@@ -296,6 +296,29 @@ a:hover {
     line-height: 2;
 }
 
+.plan-section {
+    margin: 0 0 26px;
+}
+
+.plan-section h2 {
+    margin: 0 0 8px;
+    color: #4f6070;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.plan-section ol {
+    margin: 0;
+    padding-left: 26px;
+    color: #4f6070;
+    font-size: 16px;
+    line-height: 2;
+}
+
+.plan-section li {
+    padding-left: 4px;
+}
+
 .back-link {
     display: inline-block;
     margin-top: 28px;
