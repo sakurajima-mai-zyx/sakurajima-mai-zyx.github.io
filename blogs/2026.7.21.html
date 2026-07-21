@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>2026.7.21 | 电动力学第一章：麦克斯韦方程组</title>
-    <link rel="stylesheet" href="../assets/site.css?v=20260721-latex">
+    <title>2026.7.21 | 电动力学第二章：电磁场的守恒定律和对称性</title>
+    <link rel="stylesheet" href="../assets/site.css?v=20260721-picture">
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
 </head>
 <body>
@@ -30,7 +30,7 @@
             <a href="../blog-list.html">管理</a>
         </nav>
         <div class="site-stats">
-            <span>随笔 - 6</span>
+            <span>随笔 - 7</span>
             <span>文章 - 0</span>
             <span>评论 - 0</span>
             <span>阅读 - 0</span>
@@ -43,7 +43,7 @@
                 <div class="profile-name">zhangyuxuan</div>
                 <div class="profile-stats">
                     <div><strong>2026.7</strong><span>建站</span></div>
-                    <div><strong>6</strong><span>随笔</span></div>
+                    <div><strong>7</strong><span>随笔</span></div>
                     <div><strong>2</strong><span>方向</span></div>
                 </div>
                 <a class="follow" href="../blog-list.html">+ 关注学术记录</a>
@@ -52,208 +52,90 @@
             <section class="side-section">
                 <h2 class="side-title">随笔档案</h2>
                 <ul class="side-list">
-                    <li><a href="2026.7.21.html">2026年7月(6)</a></li>
+                    <li><a href="2026.7.21.html">2026年7月(7)</a></li>
                 </ul>
             </section>
         </aside>
 
         <main class="content article">
             <div class="article-date">2026.7.21</div>
-            <h1>电动力学第一章：麦克斯韦方程组</h1>
-            <p class="source-note">学习材料：周磊《电动力学》讲义，第一章。</p>
+            <h1>电动力学第二章：电磁场的守恒定律和对称性</h1>
+            <p class="source-note">学习材料：周磊《电动力学》讲义，第二章。</p>
+
+            <p>如果场只是计算电荷受力的中间工具，那么源被关掉之后，空间里剩下的场就不该继续对物质做功或传递冲量。但电磁场不会瞬间消失，它仍能改变带电体的机械能和机械动量。第二章的核心正是：这些量原本储存在场中，并且能够在空间里局域地流动。</p>
 
             <section class="study-section">
-                <h2>1. 静电场</h2>
+                <h2>1. 坡印廷定理：能量怎样穿过空间</h2>
                 <div class="math-block">
                     \[
-                    \mathbf F_{12}=\frac{1}{4\pi\varepsilon_0}
-                    \frac{q_1q_2}{R_{12}^{3}}\mathbf R_{12}
+                    \boxed{\mathbf j\cdot\mathbf E
+                    =-\frac{\partial u}{\partial t}-\nabla\cdot\mathbf S}
                     \]
                     \[
-                    \mathbf E(\mathbf r)=\frac{1}{4\pi\varepsilon_0}
-                    \int \rho(\mathbf r')\frac{\mathbf R}{R^3}\,\mathrm d\tau',
-                    \qquad \mathbf R=\mathbf r-\mathbf r'
-                    \]
-                    \[
-                    \begin{aligned}
-                    \nabla\cdot\mathbf E&=\frac{\rho}{\varepsilon_0},
-                    &\oint_S\mathbf E\cdot\mathrm d\mathbf S&=\frac{Q}{\varepsilon_0},\\
-                    \nabla\times\mathbf E&=0,
-                    &\oint_C\mathbf E\cdot\mathrm d\mathbf l&=0,\\
-                    \mathbf E&=-\nabla\varphi,
-                    &\varphi(\mathbf r)&=\frac{1}{4\pi\varepsilon_0}
-                    \int\frac{\rho(\mathbf r')}{R}\,\mathrm d\tau'.
-                    \end{aligned}
-                    \]
-                    \[
-                    \mathbf p=q\mathbf l,\qquad
-                    \varphi_p=\frac{\mathbf p\cdot\mathbf r}{4\pi\varepsilon_0r^3},\qquad
-                    \mathbf E_p=\frac{3(\mathbf p\cdot\hat{\mathbf r})\hat{\mathbf r}-\mathbf p}
-                    {4\pi\varepsilon_0r^3}
-                    \]
-                </div>
-                <p class="formula-note">静电场：有源、无旋，可定义标势。</p>
-            </section>
-
-            <section class="study-section">
-                <h2>2. 静磁场</h2>
-                <div class="math-block">
-                    \[
-                    \mathbf j=\rho\mathbf v,\qquad
-                    I=\int_S\mathbf j\cdot\mathrm d\mathbf S,\qquad
-                    \nabla\cdot\mathbf j+\frac{\partial\rho}{\partial t}=0
-                    \]
-                    \[
-                    \mathbf B(\mathbf r)=\frac{\mu_0}{4\pi}
-                    \int\mathbf j(\mathbf r')\times\frac{\mathbf R}{R^3}\,\mathrm d\tau'
-                    \]
-                    \[
-                    \mathbf F=q(\mathbf E+\mathbf v\times\mathbf B)
-                    \]
-                    \[
-                    \begin{aligned}
-                    \nabla\cdot\mathbf B&=0,
-                    &\mathbf B&=\nabla\times\mathbf A,\\
-                    \nabla\times\mathbf B&=\mu_0\mathbf j,
-                    &\mathbf A(\mathbf r)&=\frac{\mu_0}{4\pi}
-                    \int\frac{\mathbf j(\mathbf r')}{R}\,\mathrm d\tau'.
-                    \end{aligned}
-                    \]
-                    \[
-                    \mathbf m=I\mathbf S,\qquad
-                    \mathbf A_m=\frac{\mu_0}{4\pi}\frac{\mathbf m\times\mathbf r}{r^3},\qquad
-                    \mathbf B_m=\frac{\mu_0}{4\pi}
-                    \frac{3(\mathbf m\cdot\hat{\mathbf r})\hat{\mathbf r}-\mathbf m}{r^3}
-                    \]
-                </div>
-                <p class="formula-note">稳恒磁场：无源、有旋；磁偶极子与电偶极子的远场结构对应。</p>
-            </section>
-
-            <section class="study-section">
-                <h2>3. 电磁感应</h2>
-                <div class="math-block">
-                    \[
-                    \Phi_B=\int_S\mathbf B\cdot\mathrm d\mathbf S,
-                    \qquad \mathcal E=-\frac{\mathrm d\Phi_B}{\mathrm dt}
-                    \]
-                    \[
-                    \oint_C\mathbf E\cdot\mathrm d\mathbf l
-                    =-\frac{\mathrm d}{\mathrm dt}\int_S\mathbf B\cdot\mathrm d\mathbf S
-                    \]
-                    \[
-                    \boxed{\nabla\times\mathbf E=-\frac{\partial\mathbf B}{\partial t}}
-                    \]
-                </div>
-                <p class="formula-note">变化的磁场直接激发有旋电场，线圈只是探测手段。</p>
-            </section>
-
-            <section class="study-section">
-                <h2>4. 真空中的麦克斯韦方程组</h2>
-                <div class="math-block">
-                    \[
-                    \nabla\cdot\mathbf j+\frac{\partial\rho}{\partial t}=0,
+                    u=\frac12\left(\varepsilon_0E^2+\frac{B^2}{\mu_0}\right),
                     \qquad
-                    \mathbf j_D=\varepsilon_0\frac{\partial\mathbf E}{\partial t}
-                    \]
-                    \[
-                    \nabla\cdot\left(\mathbf j+\mathbf j_D\right)=0
-                    \]
-                    \[
-                    \boxed{
-                    \begin{aligned}
-                    \nabla\cdot\mathbf E&=\frac{\rho}{\varepsilon_0},\\
-                    \nabla\times\mathbf E&=-\frac{\partial\mathbf B}{\partial t},\\
-                    \nabla\cdot\mathbf B&=0,\\
-                    \nabla\times\mathbf B&=\mu_0\mathbf j
-                    +\mu_0\varepsilon_0\frac{\partial\mathbf E}{\partial t}.
-                    \end{aligned}}
-                    \]
-                    \[
-                    \boxed{
-                    \begin{aligned}
-                    \oint_S\mathbf E\cdot\mathrm d\mathbf S&=\frac{Q}{\varepsilon_0},\\
-                    \oint_C\mathbf E\cdot\mathrm d\mathbf l&=-\frac{\mathrm d}{\mathrm dt}
-                    \int_S\mathbf B\cdot\mathrm d\mathbf S,\\
-                    \oint_S\mathbf B\cdot\mathrm d\mathbf S&=0,\\
-                    \oint_C\mathbf B\cdot\mathrm d\mathbf l&=\mu_0 I
-                    +\mu_0\varepsilon_0\frac{\mathrm d}{\mathrm dt}
-                    \int_S\mathbf E\cdot\mathrm d\mathbf S.
-                    \end{aligned}}
+                    \mathbf S=\frac{1}{\mu_0}\mathbf E\times\mathbf B
                     \]
                 </div>
-                <p class="formula-note">位移电流使安培环路定理与电荷守恒相容，并补全电场与磁场的相互激发。</p>
+                <p>洛伦兹力的磁场部分始终垂直于速度，所以场向物质交付能量的局域入口只有 \(\mathbf j\cdot\mathbf E\)。但磁场仍然贡献能量密度，并与电场一起决定能量流向。上式说：某点物质得到的功率，加上该点场能的增长，恰好等于从周围流入的净能量。</p>
+                <p>坡印廷矢量不是人为规定的一支“能量箭头”，而是把麦克斯韦方程改写成连续性方程后必然出现的通量。它把“能量守恒”从一个关于总量的口号，变成了每个空间点都要遵守的局域账目。</p>
+                <p>缓慢充电的电容器最能修正直觉：板间增加的场能并不是沿导线进入后再跳进极板之间，而是由电容器周围的 \(\mathbf E\times\mathbf B\) 从侧面流入。导线负责建立场的边界条件，真正搬运能量的是导线外部的电磁场。静电能看似安静，却是此前能流积累下来的结果。</p>
             </section>
 
             <section class="study-section">
-                <h2>5. 介质中的麦克斯韦方程组</h2>
+                <h2>2. 场动量与应力：力是动量交换率</h2>
                 <div class="math-block">
                     \[
-                    \mathbf P=\frac{1}{\Delta V}\sum_i\mathbf p_i,
-                    \qquad
-                    \mathbf M=\frac{1}{\Delta V}\sum_i\mathbf m_i
+                    \boxed{\mathbf f=\rho\mathbf E+\mathbf j\times\mathbf B
+                    =-\nabla\cdot\mathsf T-\frac{\partial\mathbf g}{\partial t}}
                     \]
                     \[
-                    \rho_P=-\nabla\cdot\mathbf P,qquad
-                    \mathbf j_P=\frac{\partial\mathbf P}{\partial t},
-                    \qquad
-                    \mathbf j_M=\nabla\times\mathbf M
+                    \mathbf g=\varepsilon_0\mathbf E\times\mathbf B
+                    =\frac{\mathbf S}{c^2}
                     \]
                     \[
-                    \mathbf D=\varepsilon_0\mathbf E+\mathbf P,
-                    \qquad
-                    \mathbf H=\frac{\mathbf B}{\mu_0}-\mathbf M
-                    \]
-                    \[
-                    \boxed{
-                    \begin{aligned}
-                    \nabla\cdot\mathbf D&=\rho_f,\\
-                    \nabla\times\mathbf E&=-\frac{\partial\mathbf B}{\partial t},\\
-                    \nabla\cdot\mathbf B&=0,\\
-                    \nabla\times\mathbf H&=\mathbf j_f+\frac{\partial\mathbf D}{\partial t}.
-                    \end{aligned}}
-                    \]
-                    \[
-                    \mathbf D=\varepsilon\mathbf E,qquad
-                    \mathbf B=\mu\mathbf H,qquad
-                    \mathbf j=\sigma\mathbf E
+                    \mathsf T=\frac12\left(\varepsilon_0E^2+
+                    \frac{B^2}{\mu_0}\right)\mathsf I
+                    -\varepsilon_0\mathbf E\mathbf E
+                    -\frac{1}{\mu_0}\mathbf B\mathbf B
                     \]
                 </div>
-                <p class="formula-note">麦克斯韦方程给出普遍结构，材料差异进入本构关系。</p>
+                <p>\(\mathbf g\) 是场的动量密度，\(\mathsf T\) 是动量流密度。能量本身是标量，所以它的通量是一个矢量；动量本身已经是矢量，要描述“某个方向的表面正在输运哪个方向的动量”，就必须使用二阶张量。这正是麦克斯韦应力张量出现的原因。</p>
+                <p>对一个闭合区域，物质所受的总力等于穿过边界流入的场动量，再扣除区域内场动量自身的增长。于是力不再是一个孤立、瞬时的推拉概念，而是场与物质之间的动量交换率。稳态或周期场取时间平均后，体内场动量不再积累，物体受力就可以完全由包围它的任意闭合曲面上的应力求出。</p>
+                <p>把场想成能够传递张力与压力的连续介质只是一个类比，更准确的图像是：每一小块有方向的界面都在输运动量。辐射压力和光镊并不是额外添加的光学效应，而是这条动量连续性方程的直接表现。</p>
             </section>
 
             <section class="study-section">
-                <h2>6. 边界条件</h2>
+                <h2>3. 能流与动量密度是同一个方向</h2>
+                <p>真空中 \(\mathbf g=\mathbf S/c^2\) 把两个守恒律连在一起：只要电磁能量在流动，它就同时携带动量。\(\mathbf E\times\mathbf B\) 既决定能量穿过表面的方向，也决定场动量的方向。能量与动量不是分别附加给场的两种属性，而是同一传播过程的两个侧面。</p>
+                <p>这也解释了为什么只计算粒子的机械动量常常会“丢失”一部分守恒量：那部分动量可能正储存在电荷与外场的联合构型中。讲义在低速条件下得到 \(\mathbf p_{\mathrm{can}}=m\mathbf v+q\mathbf A\)，它随后进入量子力学的最小耦合。这里真正应留下的不是多背一个式子，而是粒子与场必须被当作一个完整体系。</p>
+            </section>
+
+            <section class="study-section">
+                <h2>4. 介质：总守恒唯一，划分方式不唯一</h2>
                 <div class="math-block">
                     \[
-                    \boxed{
-                    \begin{aligned}
-                    \mathbf n\cdot(\mathbf D_1-\mathbf D_2)&=\sigma_f,\\
-                    \mathbf n\cdot(\mathbf B_1-\mathbf B_2)&=0,\\
-                    \mathbf n\times(\mathbf H_1-\mathbf H_2)&=\boldsymbol\alpha_f,\\
-                    \mathbf n\times(\mathbf E_1-\mathbf E_2)&=0.
-                    \end{aligned}}
+                    u=\frac12\left(\mathbf E\cdot\mathbf D+
+                    \mathbf B\cdot\mathbf H\right),
+                    \qquad
+                    \mathbf S=\mathbf E\times\mathbf H
+                    \quad\text{（线性、无色散介质）}
                     \]
                     \[
-                    \sigma_f=0,\ \boldsymbol\alpha_f=0
-                    \Longrightarrow
-                    \begin{cases}
-                    D_{1n}=D_{2n},\quad B_{1n}=B_{2n},\\
-                    E_{1t}=E_{2t},\quad H_{1t}=H_{2t}.
-                    \end{cases}
+                    \mathbf g^{*}=\varepsilon_0\mathbf E\times\mathbf B,
+                    \qquad
+                    \mathbf g'=\mathbf D\times\mathbf B
                     \]
                 </div>
-                <p class="formula-note">散度方程控制法向分量，旋度方程控制切向分量。</p>
+                <p>介质被极化和磁化时，场做的功一部分储存在束缚电荷的位移、材料的弹性与内部自由度中。上面的 \(u\) 与 \(\mathbf S\) 已经把这部分可逆响应和电磁场打包在一起，所以它们并不是“纯真空场”的能量密度与能流。</p>
+                <p>动量的两种写法对应两种系统边界：\(\mathbf g^{*}\) 把束缚电荷与束缚电流仍归入物质，\(\mathbf g'\) 则把一部分依附于极化、磁化的机械动量并入“场 + 介质响应”。它们讨论的子系统不同。真正没有歧义的是包含场、介质形变和内部应力在内的总动量守恒。</p>
+                <p>因此介质中的争论不是哪一个公式更漂亮，而是我们把哪部分自由度算进了“场”。在线性、无色散近似之外，材料还会吸收、色散和形变，简单的能量密度表达式也不再普遍成立。</p>
             </section>
 
             <section class="study-section">
-                <h2>记忆主线</h2>
-                <ul>
-                    <li>静电：有源无旋；静磁：无源有旋。</li>
-                    <li>\(\partial_t\mathbf B\) 激发 \(\mathbf E\)，\(\partial_t\mathbf E\) 激发 \(\mathbf B\)。</li>
-                    <li>连续性方程 \(\Rightarrow\) 位移电流 \(\Rightarrow\) 完整麦克斯韦方程组。</li>
-                    <li>介质由 \(\mathbf P,\mathbf M\) 描述，材料性质由本构关系给出。</li>
-                    <li>积分形式 \(\Rightarrow\) 边界条件。</li>
-                </ul>
+                <h2>5. 守恒律背后的对称性</h2>
+                <p>能量、动量和角动量之所以比“力”与“功”更本质，是因为它们对应时空的对称性：物理规律不随时间原点改变，给出能量守恒；不随空间位置改变，给出动量守恒；不随空间方向改变，给出角动量守恒。守恒不是计算中的巧合，而是世界在时间、空间和平移旋转下保持均匀的结果。</p>
+                <p>这一章最终建立的图像是：电磁场是一个独立的动力学系统，能量和动量分布在空间中，通过坡印廷矢量与应力张量跨越边界，并在 \(\mathbf j\cdot\mathbf E\) 和洛伦兹力处同物质交换。所谓“场是物质的一种存在方式”，其可计算的含义就在这些局域守恒律里。</p>
             </section>
 
             <div class="post-meta">
