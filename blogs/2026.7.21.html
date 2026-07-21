@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>2026.7.21 | 电动力学第一章：麦克斯韦方程组</title>
-    <link rel="stylesheet" href="../assets/site.css?v=20260721-ch1">
+    <link rel="stylesheet" href="../assets/site.css?v=20260721-latex">
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
 </head>
 <body>
     <div class="topbar">
@@ -59,65 +60,200 @@
         <main class="content article">
             <div class="article-date">2026.7.21</div>
             <h1>电动力学第一章：麦克斯韦方程组</h1>
-            <p>第一章不是简单罗列四个方程，而是从静电、静磁和电磁感应的实验规律出发，说明麦克斯韦方程组如何建立，并继续讨论介质和边界条件怎样进入这套理论。</p>
             <p class="source-note">学习材料：周磊《电动力学》讲义，第一章。</p>
 
             <section class="study-section">
-                <h2>1. 静电与静磁的两幅图像</h2>
-                <p>库仑定律与叠加原理把电荷之间的作用改写为空间中的电场。用散度和旋度描述后，静电场是“有源、无旋”的；稳恒电流产生的静磁场则是“无源、有旋”的。</p>
-                <div class="equation-list">
-                    <div>∇ · E = ρ / ε₀，&nbsp;&nbsp;∇ × E = 0</div>
-                    <div>∇ · B = 0，&nbsp;&nbsp;∇ × B = μ₀j（稳恒电流）</div>
-                    <div>E = −∇φ，&nbsp;&nbsp;B = ∇ × A</div>
+                <h2>1. 静电场</h2>
+                <div class="math-block">
+                    \[
+                    \mathbf F_{12}=\frac{1}{4\pi\varepsilon_0}
+                    \frac{q_1q_2}{R_{12}^{3}}\mathbf R_{12}
+                    \]
+                    \[
+                    \mathbf E(\mathbf r)=\frac{1}{4\pi\varepsilon_0}
+                    \int \rho(\mathbf r')\frac{\mathbf R}{R^3}\,\mathrm d\tau',
+                    \qquad \mathbf R=\mathbf r-\mathbf r'
+                    \]
+                    \[
+                    \begin{aligned}
+                    \nabla\cdot\mathbf E&=\frac{\rho}{\varepsilon_0},
+                    &\oint_S\mathbf E\cdot\mathrm d\mathbf S&=\frac{Q}{\varepsilon_0},\\
+                    \nabla\times\mathbf E&=0,
+                    &\oint_C\mathbf E\cdot\mathrm d\mathbf l&=0,\\
+                    \mathbf E&=-\nabla\varphi,
+                    &\varphi(\mathbf r)&=\frac{1}{4\pi\varepsilon_0}
+                    \int\frac{\rho(\mathbf r')}{R}\,\mathrm d\tau'.
+                    \end{aligned}
+                    \]
+                    \[
+                    \mathbf p=q\mathbf l,\qquad
+                    \varphi_p=\frac{\mathbf p\cdot\mathbf r}{4\pi\varepsilon_0r^3},\qquad
+                    \mathbf E_p=\frac{3(\mathbf p\cdot\hat{\mathbf r})\hat{\mathbf r}-\mathbf p}
+                    {4\pi\varepsilon_0r^3}
+                    \]
                 </div>
-                <p>这一对比让我更清楚地看到：散度回答场线从哪里产生或汇聚，旋度回答场是否在局部环绕。电偶极子与磁偶极子的远场形式相似，也提示了电、磁之间更深的结构对称性。</p>
+                <p class="formula-note">静电场：有源、无旋，可定义标势。</p>
             </section>
 
             <section class="study-section">
-                <h2>2. 从电磁感应到完整方程组</h2>
-                <p>法拉第定律表明，变化的磁场会激发有旋电场，而且这种电场不依赖线圈是否存在；线圈只是探测它的工具。反过来，原来的安培环路定理只适用于稳恒电流，因为一般情况下必须满足连续性方程 ∇ · j + ∂ρ/∂t = 0。</p>
-                <p>麦克斯韦引入位移电流 ε₀∂E/∂t，使安培环路定理与电荷守恒相容。真空中的四条方程因此成为：</p>
-                <div class="equation-list">
-                    <div>∇ · E = ρ / ε₀</div>
-                    <div>∇ × E = −∂B / ∂t</div>
-                    <div>∇ · B = 0</div>
-                    <div>∇ × B = μ₀j + μ₀ε₀∂E / ∂t</div>
+                <h2>2. 静磁场</h2>
+                <div class="math-block">
+                    \[
+                    \mathbf j=\rho\mathbf v,\qquad
+                    I=\int_S\mathbf j\cdot\mathrm d\mathbf S,\qquad
+                    \nabla\cdot\mathbf j+\frac{\partial\rho}{\partial t}=0
+                    \]
+                    \[
+                    \mathbf B(\mathbf r)=\frac{\mu_0}{4\pi}
+                    \int\mathbf j(\mathbf r')\times\frac{\mathbf R}{R^3}\,\mathrm d\tau'
+                    \]
+                    \[
+                    \mathbf F=q(\mathbf E+\mathbf v\times\mathbf B)
+                    \]
+                    \[
+                    \begin{aligned}
+                    \nabla\cdot\mathbf B&=0,
+                    &\mathbf B&=\nabla\times\mathbf A,\\
+                    \nabla\times\mathbf B&=\mu_0\mathbf j,
+                    &\mathbf A(\mathbf r)&=\frac{\mu_0}{4\pi}
+                    \int\frac{\mathbf j(\mathbf r')}{R}\,\mathrm d\tau'.
+                    \end{aligned}
+                    \]
+                    \[
+                    \mathbf m=I\mathbf S,\qquad
+                    \mathbf A_m=\frac{\mu_0}{4\pi}\frac{\mathbf m\times\mathbf r}{r^3},\qquad
+                    \mathbf B_m=\frac{\mu_0}{4\pi}
+                    \frac{3(\mathbf m\cdot\hat{\mathbf r})\hat{\mathbf r}-\mathbf m}{r^3}
+                    \]
                 </div>
-                <p>位移电流不只是为了修补公式。它说明变化的电场本身能够激发磁场，与“变化的磁场激发电场”构成闭环，也为电磁波能够脱离源而传播埋下了基础。</p>
+                <p class="formula-note">稳恒磁场：无源、有旋；磁偶极子与电偶极子的远场结构对应。</p>
             </section>
 
             <section class="study-section">
-                <h2>3. 介质：把微观响应整理成宏观量</h2>
-                <p>介质放入场中后会极化或磁化，产生束缚电荷与束缚电流。第一章给出的关键关系是：</p>
-                <div class="equation-list">
-                    <div>ρ<sub>P</sub> = −∇ · P</div>
-                    <div>j<sub>P</sub> = ∂P / ∂t，&nbsp;&nbsp;j<sub>M</sub> = ∇ × M</div>
-                    <div>D = ε₀E + P，&nbsp;&nbsp;H = B / μ₀ − M</div>
+                <h2>3. 电磁感应</h2>
+                <div class="math-block">
+                    \[
+                    \Phi_B=\int_S\mathbf B\cdot\mathrm d\mathbf S,
+                    \qquad \mathcal E=-\frac{\mathrm d\Phi_B}{\mathrm dt}
+                    \]
+                    \[
+                    \oint_C\mathbf E\cdot\mathrm d\mathbf l
+                    =-\frac{\mathrm d}{\mathrm dt}\int_S\mathbf B\cdot\mathrm d\mathbf S
+                    \]
+                    \[
+                    \boxed{\nabla\times\mathbf E=-\frac{\partial\mathbf B}{\partial t}}
+                    \]
                 </div>
-                <p>D 与 H 的引入把方程中的源整理为自由电荷和自由电流；它们是便于处理介质的辅助量，真正对电荷产生力的仍是 E 与 B。麦克斯韦方程给出普遍结构，材料差异则进入本构关系，例如线性介质中的 D = εE、B = μH，以及导体中的 j = σE。</p>
+                <p class="formula-note">变化的磁场直接激发有旋电场，线圈只是探测手段。</p>
             </section>
 
             <section class="study-section">
-                <h2>4. 边界条件来自积分形式</h2>
-                <p>界面上微分形式可能失去意义，但积分形式仍然成立。用跨越界面的薄柱和小回路，可以直接得到：</p>
-                <div class="equation-list">
-                    <div>n · (D₁ − D₂) = σ<sub>f</sub></div>
-                    <div>n · (B₁ − B₂) = 0</div>
-                    <div>n × (H₁ − H₂) = α<sub>f</sub></div>
-                    <div>n × (E₁ − E₂) = 0</div>
+                <h2>4. 真空中的麦克斯韦方程组</h2>
+                <div class="math-block">
+                    \[
+                    \nabla\cdot\mathbf j+\frac{\partial\rho}{\partial t}=0,
+                    \qquad
+                    \mathbf j_D=\varepsilon_0\frac{\partial\mathbf E}{\partial t}
+                    \]
+                    \[
+                    \nabla\cdot\left(\mathbf j+\mathbf j_D\right)=0
+                    \]
+                    \[
+                    \boxed{
+                    \begin{aligned}
+                    \nabla\cdot\mathbf E&=\frac{\rho}{\varepsilon_0},\\
+                    \nabla\times\mathbf E&=-\frac{\partial\mathbf B}{\partial t},\\
+                    \nabla\cdot\mathbf B&=0,\\
+                    \nabla\times\mathbf B&=\mu_0\mathbf j
+                    +\mu_0\varepsilon_0\frac{\partial\mathbf E}{\partial t}.
+                    \end{aligned}}
+                    \]
+                    \[
+                    \boxed{
+                    \begin{aligned}
+                    \oint_S\mathbf E\cdot\mathrm d\mathbf S&=\frac{Q}{\varepsilon_0},\\
+                    \oint_C\mathbf E\cdot\mathrm d\mathbf l&=-\frac{\mathrm d}{\mathrm dt}
+                    \int_S\mathbf B\cdot\mathrm d\mathbf S,\\
+                    \oint_S\mathbf B\cdot\mathrm d\mathbf S&=0,\\
+                    \oint_C\mathbf B\cdot\mathrm d\mathbf l&=\mu_0 I
+                    +\mu_0\varepsilon_0\frac{\mathrm d}{\mathrm dt}
+                    \int_S\mathbf E\cdot\mathrm d\mathbf S.
+                    \end{aligned}}
+                    \]
                 </div>
-                <p>没有自由面电荷与自由面电流时，D、B 的法向分量连续，E、H 的切向分量连续。这样理解比单独背四条边界条件更稳：散度方程控制法向分量，旋度方程控制切向分量。</p>
+                <p class="formula-note">位移电流使安培环路定理与电荷守恒相容，并补全电场与磁场的相互激发。</p>
             </section>
 
             <section class="study-section">
-                <h2>5. 本章收获与下一步</h2>
+                <h2>5. 介质中的麦克斯韦方程组</h2>
+                <div class="math-block">
+                    \[
+                    \mathbf P=\frac{1}{\Delta V}\sum_i\mathbf p_i,
+                    \qquad
+                    \mathbf M=\frac{1}{\Delta V}\sum_i\mathbf m_i
+                    \]
+                    \[
+                    \rho_P=-\nabla\cdot\mathbf P,qquad
+                    \mathbf j_P=\frac{\partial\mathbf P}{\partial t},
+                    \qquad
+                    \mathbf j_M=\nabla\times\mathbf M
+                    \]
+                    \[
+                    \mathbf D=\varepsilon_0\mathbf E+\mathbf P,
+                    \qquad
+                    \mathbf H=\frac{\mathbf B}{\mu_0}-\mathbf M
+                    \]
+                    \[
+                    \boxed{
+                    \begin{aligned}
+                    \nabla\cdot\mathbf D&=\rho_f,\\
+                    \nabla\times\mathbf E&=-\frac{\partial\mathbf B}{\partial t},\\
+                    \nabla\cdot\mathbf B&=0,\\
+                    \nabla\times\mathbf H&=\mathbf j_f+\frac{\partial\mathbf D}{\partial t}.
+                    \end{aligned}}
+                    \]
+                    \[
+                    \mathbf D=\varepsilon\mathbf E,qquad
+                    \mathbf B=\mu\mathbf H,qquad
+                    \mathbf j=\sigma\mathbf E
+                    \]
+                </div>
+                <p class="formula-note">麦克斯韦方程给出普遍结构，材料差异进入本构关系。</p>
+            </section>
+
+            <section class="study-section">
+                <h2>6. 边界条件</h2>
+                <div class="math-block">
+                    \[
+                    \boxed{
+                    \begin{aligned}
+                    \mathbf n\cdot(\mathbf D_1-\mathbf D_2)&=\sigma_f,\\
+                    \mathbf n\cdot(\mathbf B_1-\mathbf B_2)&=0,\\
+                    \mathbf n\times(\mathbf H_1-\mathbf H_2)&=\boldsymbol\alpha_f,\\
+                    \mathbf n\times(\mathbf E_1-\mathbf E_2)&=0.
+                    \end{aligned}}
+                    \]
+                    \[
+                    \sigma_f=0,\ \boldsymbol\alpha_f=0
+                    \Longrightarrow
+                    \begin{cases}
+                    D_{1n}=D_{2n},\quad B_{1n}=B_{2n},\\
+                    E_{1t}=E_{2t},\quad H_{1t}=H_{2t}.
+                    \end{cases}
+                    \]
+                </div>
+                <p class="formula-note">散度方程控制法向分量，旋度方程控制切向分量。</p>
+            </section>
+
+            <section class="study-section">
+                <h2>记忆主线</h2>
                 <ul>
-                    <li>散度与旋度不是纯粹的计算工具，而是对矢量场局部结构的完整描述。</li>
-                    <li>电荷守恒是判断场方程是否自洽的重要约束，位移电流正是从这一约束中自然出现。</li>
-                    <li>场是独立的物理存在，不只是电荷之间“超距作用”的记账方法。</li>
-                    <li>介质问题的复杂性主要进入本构关系，而不是改变麦克斯韦方程的基本结构。</li>
+                    <li>静电：有源无旋；静磁：无源有旋。</li>
+                    <li>\(\partial_t\mathbf B\) 激发 \(\mathbf E\)，\(\partial_t\mathbf E\) 激发 \(\mathbf B\)。</li>
+                    <li>连续性方程 \(\Rightarrow\) 位移电流 \(\Rightarrow\) 完整麦克斯韦方程组。</li>
+                    <li>介质由 \(\mathbf P,\mathbf M\) 描述，材料性质由本构关系给出。</li>
+                    <li>积分形式 \(\Rightarrow\) 边界条件。</li>
                 </ul>
-                <p>下一步需要自己重推一遍积分形式与微分形式的转换，特别注意源坐标 r′、观察点坐标 r 以及 ∇、∇′ 的区别；同时用薄柱和小回路重新推导四条边界条件。完成这些之后，再从无源方程组推出电磁波方程。</p>
             </section>
 
             <div class="post-meta">
