@@ -319,6 +319,48 @@ a:hover {
     padding-left: 4px;
 }
 
+.study-section {
+    margin: 0 0 30px;
+}
+
+.study-section h2 {
+    margin: 0 0 12px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid var(--line);
+    color: #405263;
+    font-size: 19px;
+    font-weight: 400;
+}
+
+.study-section ul,
+.study-section ol {
+    margin: 0 0 18px;
+    padding-left: 25px;
+    color: #4f6070;
+    font-size: 16px;
+    line-height: 2;
+}
+
+.study-section li {
+    padding-left: 4px;
+}
+
+.equation-list {
+    margin: 4px 0 20px;
+    padding: 10px 0 10px 18px;
+    border-left: 2px solid var(--accent);
+    color: #405263;
+    font-family: "Times New Roman", "Songti SC", serif;
+    font-size: 16px;
+    line-height: 1.9;
+    overflow-x: auto;
+}
+
+.source-note {
+    color: #8a97a4 !important;
+    font-size: 14px !important;
+}
+
 .back-link {
     display: inline-block;
     margin-top: 28px;
