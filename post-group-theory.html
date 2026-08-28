@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="群论：从对称性到结构">
+    <title>群论：从对称性到结构 | zhangyuxuan</title>
+    <link rel="stylesheet" href="assets/site.css?v=20260828-3">
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body class="post-page">
+    <header class="main-header sub-header">
+        <div class="vertical">
+            <div class="inner title-mark">
+                <p class="title-kicker">GROUP THEORY</p>
+                <p class="title-band">群论</p>
+            </div>
+        </div>
+    </header>
+
+    <div id="home">
+        <header class="blog-header">
+            <div class="blog-title">
+                <h2><a href="index.html">zhangyuxuan</a></h2>
+                <p>群论</p>
+            </div>
+            <nav class="blog-nav" aria-label="主导航">
+                <div class="nav-links">
+                    <a href="index.html">首页</a>
+                    <a class="active" href="blog-list.html">随笔</a>
+                    <a href="mailto:contact@zhangyuxuan.xin">联系</a>
+                </div>
+                <span>随笔 - 1</span>
+            </nav>
+        </header>
+
+        <div class="page-layout article-layout">
+            <main id="main-content">
+                <article class="post-body">
+                    <header class="post-header">
+                        <h1>群论：从对称性到结构</h1>
+                        <p class="post-lead">群不是一组对象，而是一套可以复合、可逆并保持结构的变换。</p>
+                    </header>
+
+                    <h2 id="picture">0. 物理 picture</h2>
+                    <p>面对一个正方形，重要的并不是把四次旋转逐个列出来，而是追问：这些变换怎样复合，哪些操作互为逆变换，什么量在变换下保持不变。群论把“对称”从视觉印象变成了可以计算的结构。</p>
+                    <p>一个群写作 \((G,\cdot)\)。结合律、单位元与逆元并非形式上的清单，而是在保证所有变换能够稳定地组成一个封闭世界：</p>
+                    <div class="math-block">
+                        \[
+                        (ab)c=a(bc),\qquad ea=ae=a,\qquad aa^{-1}=a^{-1}a=e.
+                        \]
+                    </div>
+
+                    <blockquote>
+                        群真正描述的不是“东西是什么”，而是“允许怎样改变它”。
+                    </blockquote>
+
+                    <h2 id="action">1. 群作用：抽象结构落到对象上</h2>
+                    <p>只有当群作用在一个集合或空间上时，对称性才得到具体含义。若 \(G\) 作用在 \(X\) 上，元素 \(g\in G\) 把 \(x\in X\) 送到 \(g\cdot x\)。同一个抽象群作用在不同对象上，可以产生完全不同的几何与物理图像。</p>
+                    <p>轨道收集一个点能够到达的全部位置，稳定子则记录不移动这个点的变换：</p>
+                    <div class="math-block">
+                        \[
+                        \operatorname{Orb}(x)=\{g\cdot x:g\in G\},\qquad
+                        G_x=\{g\in G:g\cdot x=x\}.
+                        \]
+                    </div>
+                    <p>有限群情形下，二者由轨道－稳定子定理连接：</p>
+                    <div class="math-block">
+                        \[
+                        |G|=|\operatorname{Orb}(x)|\,|G_x|.
+                        \]
+                    </div>
+                    <p>这条公式的物理含义很直接：总的对称操作数，等于真正改变状态的方式数乘以保持该状态不动的冗余方式数。</p>
+
+                    <h2 id="example">2. 一个最小例子</h2>
+                    <p>正方形的旋转生成循环子群 \(C_4=\langle r\mid r^4=e\rangle\)。它的结构不依赖正方形的边长，也不依赖它画在纸上的位置：</p>
+                    <table>
+                        <thead>
+                            <tr><th>元素</th><th>几何动作</th><th>阶</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>\(e\)</td><td>不动</td><td>1</td></tr>
+                            <tr><td>\(r\)</td><td>旋转 \(90^\circ\)</td><td>4</td></tr>
+                            <tr><td>\(r^2\)</td><td>旋转 \(180^\circ\)</td><td>2</td></tr>
+                            <tr><td>\(r^3\)</td><td>旋转 \(270^\circ\)</td><td>4</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h2 id="view">3. 之后的视角</h2>
+                    <p>学习群论时，定义只负责建立语言。真正需要反复训练的是三个问题：群在什么对象上作用；哪些量在作用下不变；能否把复杂对象分解成更简单、不可约的部分。沿着这三条线，群论会自然地通向几何、量子力学与粒子物理。</p>
+
+                    <footer class="article-meta">posted @ 2026-08-28  zhangyuxuan  阅读(0)  评论(0)</footer>
+                </article>
+            </main>
+
+            <aside class="sidebar article-sidebar" aria-label="文章目录">
+                <section>
+                    <h2>目录</h2>
+                    <a href="#picture">0. 物理 picture</a>
+                    <a href="#action">1. 群作用</a>
+                    <a href="#example">2. 一个最小例子</a>
+                    <a href="#view">3. 之后的视角</a>
+                </section>
+                <section>
+                    <h2>公告</h2>
+                    <p>这里记录关于数学与物理的学习。</p>
+                </section>
+            </aside>
+        </div>
+    </div>
+
+    <footer>
+        <p>Copyright © zhangyuxuan</p>
+        <p>Powered by zhangyuxuan.xin</p>
+    </footer>
+</body>
+</html>
