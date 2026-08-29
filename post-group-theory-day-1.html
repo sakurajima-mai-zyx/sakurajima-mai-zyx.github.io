@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="十天学完整本群论讲义 Day 1：群的基本知识">
+    <title>十天学群论 Day 1：从对称变换到群的结构 | zhangyuxuan</title>
+    <link rel="stylesheet" href="assets/site.css?v=20260829-1">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body class="post-page">
+    <header class="main-header sub-header">
+        <div class="vertical">
+            <div class="inner title-mark">
+                <p class="title-kicker">GROUP THEORY</p>
+                <p class="title-band">群论</p>
+            </div>
+        </div>
+    </header>
+
+    <div id="home">
+        <header class="blog-header">
+            <div class="blog-title">
+                <h2><a href="index.html">zhangyuxuan</a></h2>
+                <p>群论</p>
+            </div>
+            <nav class="blog-nav" aria-label="主导航">
+                <div class="nav-links">
+                    <a href="index.html">首页</a>
+                    <a class="active" href="blog-list.html">随笔</a>
+                    <a href="mailto:contact@zhangyuxuan.xin">联系</a>
+                </div>
+                <span>随笔 - 2</span>
+            </nav>
+        </header>
+
+        <div class="page-layout article-layout">
+            <main id="main-content">
+                <article class="post-body">
+                    <header class="post-header">
+                        <h1>十天学群论 Day 1：从对称变换到群的结构</h1>
+                        <p class="post-lead">讲义第 1 章，PDF 6–42 页：先建立“变换—结构—不变量”的统一语言，再把它送进表示论。</p>
+                    </header>
+
+                    <h2 id="map">0. 今日知识地图</h2>
+                    <p>今天的内容可以压缩成一条主线：系统的对称操作组成群；子群挑出局部对称，陪集衡量它在大群中的位置；正规子群允许把一部分差异压缩掉，得到商群；共轭类把“只差观察方向”的操作归为一类；同态描述结构如何被保留或遗忘；群作用把抽象群落到具体对象；直积与半直积负责组装对称性；最后，张量把群作用翻译成分量的变换律。</p>
+                    <p>因此第 1 章并不是术语清单，而是一套结构化流程：</p>
+                    <div class="math-block">
+                        \[
+                        \text{对称变换}\longrightarrow G
+                        \longrightarrow \{H,\,G/H,\,C_g\}
+                        \longrightarrow \text{作用与同态}
+                        \longrightarrow \text{线性空间上的张量变换}.
+                        \]
+                    </div>
+                    <p>这条链的终点正是下一章的群表示：把每个抽象群元变成一个线性算符。</p>
+
+                    <h2 id="group">1. 群：对称性的最小闭环</h2>
+                    <p>设非空集合 \(G\) 配有乘法。它成为群，需要封闭性、结合律、单位元与逆元。写成紧凑形式，就是对任意 \(a,b,c\in G\)，有</p>
+                    <div class="math-block">
+                        \[
+                        ab\in G,\qquad (ab)c=a(bc),\qquad ea=ae=a,\qquad aa^{-1}=a^{-1}a=e.
+                        \]
+                    </div>
+                    <p>物理 picture 是“可连续执行、可撤销的合法操作集合”。封闭性保证两次对称操作合起来仍是对称操作；结合律保证多步操作无需额外指定括号；单位元代表什么也不做；逆元使每次操作都能撤回。交换律并不在群公理中，因为先后次序往往有物理后果：绕不同轴旋转就是典型的非交换操作。</p>
+                    <p>系统在某组变换下不变，这组变换自然形成群。空间转动、时空平移、宇称与时间反演、规范相位、全同粒子置换、晶体点群，表面上对象完全不同，抽掉对象后却共享同一种复合结构。抽象化的收益是：群一旦得到，就可以离开原系统，作用在新的集合或线性空间上。</p>
+                    <p>有限群的阶记作 \(|G|\)，即群元个数。固定 \(u\in G\) 左乘所有元素只会重排群元：</p>
+                    <div class="math-block">
+                        \[
+                        uG=G.
+                        \]
+                    </div>
+                    <p>这就是重排定理。它解释了为什么有限群乘法表的每一行、每一列都恰好出现一次全部群元；但一张“每行每列不重复”的拉丁方仍未必是群表，因为结合律还必须另外成立。</p>
+                    <p>乘法表还提供一种“只看结构、不看名字”的分类办法。例如四阶群若含四阶元素，就被该元素循环生成而同构于 \(C_4\)；若没有四阶元素，则三个非单位元全是二阶元，结构必同构于 Klein 四元群 \(C_2\times C_2\)。这说明元素的阶、乘法表和同构类型之间可以互相校验。讲义以正多面体为几何插曲：五种正多面体的转动对称群给出 \(T\)、\(O\)、\(I\)，而空间反演或转动—反演联合操作又把纯转动点群扩充为非固有点群。</p>
+
+                    <h2 id="finite">2. 从循环群到生成元：用关系压缩乘法表</h2>
+                    <p>若 \(g^n=e\)，且更小的正幂都不等于单位元，则 \(g\) 的阶为 \(n\)，它生成循环子群</p>
+                    <div class="math-block">
+                        \[
+                        \langle g\rangle=\{e,g,g^2,\ldots,g^{n-1}\}\cong C_n.
+                        \]
+                    </div>
+                    <p>同一个元素的幂彼此交换，所以循环群一定是 Abel 群。一般有限群可由较少的生成元与关系描述，记作 \(\langle S\mid R\rangle\)。例如二面体群可以写为</p>
+                    <div class="math-block">
+                        \[
+                        D_n=\langle r,s\mid r^n=e,\ s^2=e,\ srs^{-1}=r^{-1}\rangle.
+                        \]
+                    </div>
+                    <p>这里 \(r\) 是转动，\(s\) 是翻转；最后一条关系说，改变观察朝向会把转动方向反过来。生成元给出“允许走哪些基本步”，Cayley 图则把每个群元画成顶点、把右乘生成元画成有向边。它让抽象乘法变成一张均匀的运动网络，也预示了后面“群作用”的几何语言。</p>
+
+                    <h2 id="coset">3. 子群、陪集与 Lagrange 定理</h2>
+                    <p>子集 \(H\subseteq G\) 若沿用同一乘法仍构成群，就称为子群。对有限群，一个非空子集只要对乘法封闭，单位元和逆元会由有限性自动出现。给定 \(g\in G\)，左、右陪集分别为</p>
+                    <div class="math-block">
+                        \[
+                        gH=\{gh:h\in H\},\qquad Hg=\{hg:h\in H\}.
+                        \]
+                    </div>
+                    <p>陪集不是新群元，而是把 \(H\) 整体平移后的“块”。两个左陪集要么相同，要么不相交，而且每块都与 \(H\) 等大。因此有限群被等大的陪集分割，立即得到 Lagrange 定理：</p>
+                    <div class="math-block">
+                        \[
+                        |G|=[G:H]\,|H|,
+                        \]
+                    </div>
+                    <p>其中 \([G:H]\) 是陪集数，也叫指标。于是子群阶整除群阶，任一群元的阶也整除群阶；特别地，素数阶群只能由任一非单位元循环生成，因而必为 Abel 群。这个结论给出最基本的“全局规模限制局部结构”。讲义还用 Sylow 第一定理补充了逆方向的一部分：若素数幂 \(p^r\) 整除 \(|G|\)，群中必有 \(p^r\) 阶子群。</p>
+
+                    <h2 id="quotient">4. 正规子群与商群：有控制地遗忘细节</h2>
+                    <p>一般子群的左、右陪集未必相同。若对所有 \(g\in G\) 都有 \(gH=Hg\)，则 \(H\) 是正规子群，记作 \(H\trianglelefteq G\)。它的等价条件是</p>
+                    <div class="math-block">
+                        \[
+                        gHg^{-1}=H\qquad (g\in G).
+                        \]
+                    </div>
+                    <p>正规性保证陪集之间的乘法不依赖代表元选择，于是所有陪集组成商群 \(G/H\)，乘法为</p>
+                    <div class="math-block">
+                        \[
+                        (gH)(kH)=(gk)H.
+                        \]
+                    </div>
+                    <p>商群的物理 picture 是降低分辨率：同一陪集中的微观操作被视作同一个有效操作。规范理论中的等价构型、晶体中的平移等价点、相变后的剩余对称性，都反复出现这种“把不可区分变换压成一点”的思想。若一个群没有非平凡正规子群，它就是单群；单群之于有限群，类似素数之于整数，是不能再按正规子群继续分解的结构砖块。</p>
+                    <p>有限群还可以沿正规子群逐层拆成合成群列，使相邻两层的商群都是单群。这个过程只回答“有哪些不可再分的块”，并不自动回答“怎样把块重新粘回去”；后一个问题是群扩张。直积和半直积将在今天稍后给出两种重要的粘合方式，也解释了为什么知道正规子群与商群仍不总能唯一确定原群。</p>
+
+                    <h2 id="conjugacy">5. 共轭类与中心：改变坐标，不改变操作类型</h2>
+                    <p>若 \(h=xgx^{-1}\)，称 \(g\) 与 \(h\) 共轭。共轭不是随意的代数包装：先换到由 \(x\) 定义的新观察框架，执行 \(g\)，再换回来，就得到 \(h\)。所以共轭元素具有相同的阶，并代表同一类几何动作。共轭类与中心化子分别写作</p>
+                    <div class="math-block">
+                        \[
+                        C_g=\{xgx^{-1}:x\in G\},\qquad
+                        Z_G(g)=\{x\in G:xg=gx\}.
+                        \]
+                    </div>
+                    <p>共轭作用下 \(g\) 的稳定子正是 \(Z_G(g)\)，因此轨道—稳定子计数给出</p>
+                    <div class="math-block">
+                        \[
+                        |C_g|=[G:Z_G(g)]=\frac{|G|}{|Z_G(g)|}.
+                        \]
+                    </div>
+                    <p>这说明有限群每个共轭类的大小整除群阶。所有与任意群元都交换的元素组成中心 \(Z(G)\)；它们在共轭作用下各自单独成类。正规子群必须是若干完整共轭类的并，因为正规性正是不被共轭作用带出自身。下一章特征标在同一共轭类上取相同值，所以共轭类将成为有限群表示论最自然的计算单位。</p>
+
+                    <h2 id="morphism">6. 同态、同构与自同构：结构怎样被保留</h2>
+                    <p>映射 \(\varphi:G\to F\) 若满足</p>
+                    <div class="math-block">
+                        \[
+                        \varphi(g_1g_2)=\varphi(g_1)\varphi(g_2),
+                        \]
+                    </div>
+                    <p>就是同态。它保留乘法结构，但可以把不同群元压到同一个像。被压成单位元的部分称为核：</p>
+                    <div class="math-block">
+                        \[
+                        \ker\varphi=\{g\in G:\varphi(g)=e_F\}.
+                        \]
+                    </div>
+                    <p>核必为正规子群。同态基本定理把“丢失了什么”与“还保留什么”精确联系起来：</p>
+                    <div class="math-block">
+                        \[
+                        G/\ker\varphi\cong \operatorname{Im}\varphi.
+                        \]
+                    </div>
+                    <p>若核只有单位元，同态就是单射；若再满射，就是同构。同构群的元素名字和具体载体可以不同，但乘法结构完全相同。群到自身的同构组成自同构群 \(\operatorname{Aut}(G)\)。其中由共轭产生的映射 \(\mu_u(g)=ugu^{-1}\) 叫内自同构，并满足</p>
+                    <div class="math-block">
+                        \[
+                        \operatorname{Inn}(G)\cong G/Z(G),\qquad
+                        \operatorname{Inn}(G)\trianglelefteq \operatorname{Aut}(G).
+                        \]
+                    </div>
+                    <p>中心里的元素不能产生新的共轭变换，所以在内自同构群中恰好被商掉。</p>
+                    <p>也可以把同态理解成实验的读出通道：不同的微观变换若给出同一个可观测结果，就落入同一陪集；核收集所有“对读出无效”的变换，像空间则是仪器真正分辨出的有效对称群。同态基本定理保证，这种解释不是类比，而是精确的商结构。</p>
+
+                    <h2 id="action">7. 变换群：轨道与迷向子群是一对</h2>
+                    <p>集合 \(X\) 上所有双射组成完全对称群 \(S_X\)，它的子群就是 \(X\) 上的变换群。Cayley 定理说任何群都同构于某个变换群：令 \(g\) 通过左乘作用在 \(G\) 自身上即可。抽象群因此总能被理解为“某些对象的置换”。</p>
+                    <p>当 \(G\) 作用在 \(X\) 上，点 \(x\) 的轨道和迷向子群为</p>
+                    <div class="math-block">
+                        \[
+                        \operatorname{Orb}(x)=\{g\cdot x:g\in G\},\qquad
+                        G_x=\{g\in G:g\cdot x=x\}.
+                        \]
+                    </div>
+                    <p>有限情形下，轨道上的每个点对应 \(G_x\) 的一个左陪集，所以</p>
+                    <div class="math-block">
+                        \[
+                        |\operatorname{Orb}(x)|=[G:G_x]=\frac{|G|}{|G_x|}.
+                        \]
+                    </div>
+                    <p>物理上，轨道是一个状态在全部对称操作下可到达的等价态集合，迷向子群是保持该状态不动的剩余对称性。自发对称性破缺以后，真空的轨道与稳定子正是描述简并真空和未破缺子群的核心对象。</p>
+
+                    <h2 id="example">8. 具体例子：正三角形的 \(D_3\)</h2>
+                    <p>取正三角形的转动 \(r\) 与一次翻转 \(s\)。六个对称操作是</p>
+                    <div class="math-block">
+                        \[
+                        D_3=\{e,r,r^2,s,sr,sr^2\},\qquad
+                        r^3=s^2=e,\qquad srs^{-1}=r^{-1}.
+                        \]
+                    </div>
+                    <p>转动子群 \(H=\langle r\rangle\cong C_3\) 的左、右陪集都只有 \(H\) 与 \(sH\)，所以 \(H\trianglelefteq D_3\)，且</p>
+                    <div class="math-block">
+                        \[
+                        D_3/H\cong C_2.
+                        \]
+                    </div>
+                    <p>这表示忽略具体转了多少度以后，只剩“是否发生翻转”这一位信息。同态 \(\varphi:D_3\to C_2\) 把三次转动都送到单位元，把三次翻转都送到非平凡元，核正是 \(H\)。共轭类则为</p>
+                    <div class="math-block">
+                        \[
+                        \{e\},\qquad \{r,r^2\},\qquad \{s,sr,sr^2\}.
+                        \]
+                    </div>
+                    <p>两次非平凡转动只差翻转后的观察方向，三条反射轴也彼此等价。最后，翻转对子群 \(C_3\) 的作用是 \(r\mapsto r^{-1}\)，因此</p>
+                    <div class="math-block">
+                        \[
+                        D_3\cong C_3\rtimes C_2,
+                        \]
+                    </div>
+                    <p>而不是直积 \(C_3\times C_2\cong C_6\)：在直积中两部分彼此交换，在这里 \(sr\neq rs\)。一个例子同时串起了陪集、正规子群、商群、同态核、共轭类与半直积。</p>
+
+                    <h2 id="products">9. 直积与半直积：独立对称和耦合对称</h2>
+                    <p>若 \(H,K\leq G\) 只有单位元相交、彼此交换，并且每个 \(g\in G\) 都能唯一写成 \(hk\)，则 \(G\) 是直积 \(H\times K\)。抽象地，任意两个群都可在笛卡尔积上定义</p>
+                    <div class="math-block">
+                        \[
+                        (h_1,k_1)(h_2,k_2)=(h_1h_2,k_1k_2).
+                        \]
+                    </div>
+                    <p>物理上这描述两套相互独立、互不改写的对称操作，例如一个纯转动群再乘上与转动交换的空间反演。</p>
+                    <p>半直积 \(H\rtimes K\) 放松了“彼此交换”：只要求 \(H\trianglelefteq G\)，并由同态 \(\alpha:K\to\operatorname{Aut}(H)\) 指定 \(K\) 如何扭动 \(H\)。乘法变成</p>
+                    <div class="math-block">
+                        \[
+                        (h_1,k_1)(h_2,k_2)
+                        =\bigl(h_1\,\alpha_{k_1}(h_2),\,k_1k_2\bigr).
+                        \]
+                    </div>
+                    <p>所以直积是“两个对称性并排存在”，半直积是“一个对称性会重标记另一个对称性”。Galilei 群、Poincaré 群以及许多空间群都需要这种结构，而不是简单直积。</p>
+
+                    <h2 id="tensor">10. \(GL(n,\mathbb C)\) 的张量：把群作用写到指标上</h2>
+                    <p>一般线性群 \(GL(n,\mathbb C)\) 由所有可逆复矩阵组成。主动观点让向量变、基不变；被动观点让向量不变、基作逆变换。两种观点给出的分量变换一致。逆变与协变分量分别满足</p>
+                    <div class="math-block">
+                        \[
+                        x'^a=M^a{}_b x^b,\qquad
+                        y'_a=y_b(M^{-1})^b{}_a.
+                        \]
+                    </div>
+                    <p>一上一下的变换矩阵互逆，保证缩并是标量。一般的 \((p,q)\) 型张量按每个指标分别变换；以 \((1,1)\) 型为例，</p>
+                    <div class="math-block">
+                        \[
+                        T'^a{}_b=M^a{}_c\,T^c{}_d\,(M^{-1})^d{}_b,
+                        \qquad\text{即}\qquad T'=MTM^{-1}.
+                        \]
+                    </div>
+                    <p>这正是共轭变换在线性空间中的版本。不变张量在群作用下分量不变，例如 \(\delta^a{}_b\)。张量的线性组合、张量积与一对上下指标的缩并仍是张量；若有可逆度规 \(g_{ab}\)，还可用 \(x_a=g_{ab}x^b\) 升降指标。对 \(SO(n)\)，实正交性使协变与逆变的规则相同；对 \(SU(n)\)，幺正性把复共轭与对偶紧密联系起来。这些简化会在角动量、旋量和粒子多重态中成为日常工具。</p>
+                    <p>复线性空间还需要区分普通指标与带点指标：带点逆变分量按复共轭矩阵 \(\overline M\) 变换，带点协变分量按 \((M^{-1})^\dagger\) 变换。它们分别属于共轭空间与其对偶空间。张量不是“排成多维数组的一组数”，而是这些数在整个群下满足确定变换律；这一定义把坐标依赖的分量与坐标无关的几何对象分开。线性组合、张量积和缩并之所以重要，正因为这些运算保持变换律，能够稳定地产生新的协变量或不变量。</p>
+
+                    <h2 id="summary">11. 当日总结与跨章联系</h2>
+                    <p>第 1 章的核心不是记住多少群名，而是掌握三种操作。第一，分解：用子群、陪集、正规子群和共轭类识别群的内部层次。第二，比较：用同态、核、商群和同构判断哪些结构被保留。第三，作用与组装：用轨道—迷向子群连接代数和几何，用直积或半直积搭建复合对称性，再把作用写成张量指标的变换律。</p>
+                    <p>向后看，第 2 章会把 \(g\in G\) 映为线性算符 \(D(g)\)，同态条件变成 \(D(g_1g_2)=D(g_1)D(g_2)\)；共轭类将组织特征标，直积将产生复合系统的表示，张量积将引出 Clebsch–Gordan 分解。第 3 章把离散乘法局域化为李代数，第 4 章再把这些结构落实到 \(SU(2)\)、角动量和球谐函数。今天建立的是此后九天共同使用的语法。</p>
+
+                    <footer class="article-meta">posted @ 2026-08-29  zhangyuxuan  阅读(0)  评论(0)</footer>
+                </article>
+            </main>
+
+            <aside class="sidebar article-sidebar" aria-label="文章目录">
+                <section>
+                    <h2>目录</h2>
+                    <a href="#map">0. 今日知识地图</a>
+                    <a href="#group">1. 群与对称性</a>
+                    <a href="#finite">2. 有限群与生成元</a>
+                    <a href="#coset">3. 子群与陪集</a>
+                    <a href="#quotient">4. 正规子群与商群</a>
+                    <a href="#conjugacy">5. 共轭类与中心</a>
+                    <a href="#morphism">6. 同态与自同构</a>
+                    <a href="#action">7. 变换群</a>
+                    <a href="#example">8. \(D_3\) 例子</a>
+                    <a href="#products">9. 直积与半直积</a>
+                    <a href="#tensor">10. 线性群的张量</a>
+                    <a href="#summary">11. 总结与联系</a>
+                </section>
+                <section>
+                    <h2>学习进度</h2>
+                    <p>Day 1 / 10</p>
+                    <p>PDF 6–42</p>
+                </section>
+            </aside>
+        </div>
+    </div>
+
+    <footer>
+        <p>Copyright © zhangyuxuan</p>
+        <p>Powered by zhangyuxuan.xin</p>
+    </footer>
+</body>
+</html>
