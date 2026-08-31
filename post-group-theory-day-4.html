@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="十天学完整本群论讲义 Day 4：SO(3)、SU(2)、李群流形、无穷小生成元与李氏三定理">
+    <title>十天学群论 Day 4：从三维转动走进李群 | zhangyuxuan</title>
+    <link rel="stylesheet" href="assets/site.css?v=20260831-3">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body class="post-page">
+    <header class="main-header sub-header"><div class="vertical"><div class="inner title-mark"><p class="title-kicker">GROUP THEORY</p><p class="title-band">群论</p></div></div></header>
+
+    <div id="home">
+        <header class="blog-header">
+            <div class="blog-title"><h2><a href="index.html">zhangyuxuan</a></h2><p>群论</p></div>
+            <nav class="blog-nav" aria-label="主导航"><div class="nav-links"><a href="index.html">首页</a><a class="active" href="blog-list.html">随笔</a><a href="mailto:contact@zhangyuxuan.xin">联系</a></div><span>随笔 - 5</span></nav>
+        </header>
+
+        <div class="page-layout article-layout">
+            <main id="main-content">
+                <article class="post-body">
+                    <header class="post-header">
+                        <h1>十天学群论 Day 4：从三维转动走进李群</h1>
+                        <p class="post-lead">讲义第 3.1–3.7 节，PDF 142–190 页：从 \(SO(3)\) 与 \(SU(2)\) 的覆盖关系出发，理解连续对称的流形、生成元和李代数，以及它们为何是量子力学和场论的共同语言。</p>
+                    </header>
+
+                    <h2 id="map">0. 今日知识地图</h2>
+                    <p>有限群把对称性看成一个个离散操作；李群则允许从恒元连续地走到邻近变换。连续性带来两层结构：整体上，群是一张可能带孔、缠绕或多重覆盖的流形；局域上，恒元附近的切向量组成李代数，交换子记录连续变换的非交换性。今天的主线是</p>
+                    <div class="math-block">
+                        \[
+                        SO(3)\ \longleftarrow\ SU(2)
+                        \quad\Longrightarrow\quad
+                        \text{李群}\ \longrightarrow\ \text{无穷小生成元}\ \longrightarrow\ \text{李代数}.
+                        \]
+                    </div>
+                    <p>这条线既解释普通空间中的转动，也解释自旋为何不能只用 \(SO(3)\) 描述。更一般地，经典场的连续对称、量子态的幺正变换和规范场的内禀对称，最终都要落在“群元负责有限变换，生成元负责无穷小变化”这对概念上。</p>
+
+                    <h2 id="so3">1. \(SO(3)\)：保持长度和取向的三维转动</h2>
+                    <p>三阶实特殊正交群定义为</p>
+                    <div class="math-block">
+                        \[
+                        SO(3)=\left\{R\in M_3(\mathbb R)\mid R^{\mathsf T}R=I,\ \det R=1\right\}.
+                        \]
+                    </div>
+                    <p>正交条件保证内积、长度与夹角不变，行列式 \(+1\) 则排除了空间反演。每个 \(R\in SO(3)\) 都有本征值 \(1\)，相应本征向量给出不动的转轴；其垂直平面上发生二维转动。因此“特殊正交矩阵”和“三维定点转动”是同一个对象的代数与几何说法。</p>
+                    <p>若加入反演 \(P=-I\)，完整正交群分为保持取向和反转取向的两块：</p>
+                    <div class="math-block">
+                        \[
+                        O(3)=SO(3)\cup P\,SO(3)\cong SO(3)\times\mathbb Z_2.
+                        \]
+                    </div>
+                    <p>物理 picture 很直接：\(SO(3)\) 描述连续旋转，额外的 \(\mathbb Z_2\) 记录宇称。由于转轴可以被另一个转动搬到任意方向，而转角保持不变，\(SO(3)\) 中具有相同转角的元素落在同一共轭类。于是共轭类就是“与坐标轴选择无关的转动类型”。</p>
+                    <p>转角还能从矩阵本身读出。三维转动的本征值为 \(1,e^{i\omega},e^{-i\omega}\)，因而</p>
+                    <div class="math-block">
+                        \[
+                        \operatorname{tr}R=1+2\cos\omega.
+                        \]
+                    </div>
+                    <p>迹在共轭变换下不变，所以它是共轭类函数；反过来，在约定 \(0\leq\omega\leq\pi\) 后，迹便确定转角。这与 Day 3 的特征标思想完全一致：不追踪坐标基如何转，只提取不依赖基的对称信息。对具有球对称的哈密顿量，能量只依赖旋转不变量；对刚体，转轴与转角则直接给出一次有限运动。</p>
+
+                    <h2 id="parameter">2. 三种参数化：同一个转动的三张地图</h2>
+                    <p>轴角参数用单位向量 \(\hat n\) 与转角 \(\omega\) 写成 \(R(\hat n,\omega)\)。令三个反对称生成元满足 \((J_i)_{jk}=-i\varepsilon_{ijk}\)，便得到 Rodrigues 公式的指数形式</p>
+                    <div class="math-block">
+                        \[
+                        R(\hat n,\omega)=\exp\!\left(-i\omega\,\hat n\!\cdot\!\mathbf J\right),
+                        \qquad [J_i,J_j]=i\varepsilon_{ijk}J_k.
+                        \]
+                    </div>
+                    <p>指数映射把李代数中的一条直线变成群中的一条单参数曲线。轴角参数空间可看成半径为 \(\pi\) 的球，但边界上相对的两点要识别，因为绕 \(\hat n\) 转 \(\pi\) 与绕 \(-\hat n\) 转 \(\pi\) 是同一转动。这一边界识别已经暗示 \(SO(3)\) 的整体拓扑并不像普通实数空间。</p>
+                    <p>计算复合转动时常用欧拉角：</p>
+                    <div class="math-block">
+                        \[
+                        R(\alpha,\beta,\gamma)
+                        =R_z(\alpha)R_y(\beta)R_z(\gamma).
+                        \]
+                    </div>
+                    <p>欧拉角把任意姿态拆成三次简单转动，适合刚体、角动量和球谐函数；轴角形式保留最清楚的几何意义；指数形式则最适合推导生成元和交换关系。参数化不是群本身，只是覆盖群流形的坐标卡，因此某些角度处出现坐标退化并不代表群发生奇异。</p>
+                    <p>还要注意，有限转动不能简单地把参数相加。若 \(A=-i\boldsymbol\alpha\cdot\mathbf J\)、\(B=-i\boldsymbol\beta\cdot\mathbf J\)，则 Baker–Campbell–Hausdorff 展开从第二阶开始出现交换子：</p>
+                    <div class="math-block">
+                        \[
+                        e^Ae^B=\exp\!\left(A+B+\frac12[A,B]+\cdots\right).
+                        \]
+                    </div>
+                    <p>这项正是“三维中绕不同轴转动的先后次序会改变结果”的代数版本。李代数并非只做线性近似；连同交换子及其高阶组合，它编码了恒元附近完整的乘法规律。</p>
+
+                    <h2 id="su2">3. \(SU(2)\)：作用在二分量旋量上的转动</h2>
+                    <p>二阶特殊幺正群为</p>
+                    <div class="math-block">
+                        \[
+                        SU(2)=\left\{U\in M_2(\mathbb C)\mid U^\dagger U=I,\ \det U=1\right\}.
+                        \]
+                    </div>
+                    <p>任意群元可由 Pauli 矩阵 \(\boldsymbol\sigma=(\sigma_1,\sigma_2,\sigma_3)\) 写为</p>
+                    <div class="math-block">
+                        \[
+                        U(\hat n,\omega)
+                        =\exp\!\left(-\frac{i\omega}{2}\hat n\!\cdot\!\boldsymbol\sigma\right)
+                        =I\cos\frac{\omega}{2}-i(\hat n\!\cdot\!\boldsymbol\sigma)\sin\frac{\omega}{2}.
+                        \]
+                    </div>
+                    <p>半角不是记号上的偶然，而是自旋 \(1/2\) 的核心。令 \(S_i=\sigma_i/2\)，则 \([S_i,S_j]=i\varepsilon_{ijk}S_k\)，与三维转动生成元满足同一李代数；但有限变换的全局行为不同：</p>
+                    <div class="math-block">
+                        \[
+                        U(\hat n,2\pi)=-I,
+                        \qquad U(\hat n,4\pi)=I.
+                        \]
+                    </div>
+                    <p>经典矢量转 \(2\pi\) 已回到原位，旋量却改变符号。孤立态矢量的整体相位不可观测，但与未旋转路径发生干涉时，这个负号能产生可测后果。因此量子自旋并不是“小球自转”的缩小版，而是空间转动群之覆盖群的表示。</p>
+                    <p>把群元写成 \(U=a_0I-i\mathbf a\cdot\boldsymbol\sigma\)，幺正与幺模条件等价于 \(a_0^2+\mathbf a^2=1\)。所以 \(SU(2)\) 的每个点都落在四维实空间的单位三维球面上。这里没有轴角坐标的边界奇点；看似不同的参数只是同一光滑流形的不同坐标表达。这也使 \(SU(2)\) 成为理解“群的矩阵定义”和“群流形的整体形状”如何同时成立的最佳样本。</p>
+
+                    <h2 id="cover">4. \(SU(2)\to SO(3)\)：局域相同，整体不同</h2>
+                    <p>把三维实向量 \(\mathbf x\) 编码成无迹厄米矩阵 \(X=\mathbf x\cdot\boldsymbol\sigma\)。对 \(U\in SU(2)\) 作共轭变换，得到另一个同类矩阵：</p>
+                    <div class="math-block">
+                        \[
+                        UXU^{-1}=\bigl(R(U)\mathbf x\bigr)\cdot\boldsymbol\sigma,
+                        \qquad
+                        U\sigma_iU^{-1}=\sigma_jR(U)^{j}{}_{i}.
+                        \]
+                    </div>
+                    <p>迹内积 \(\operatorname{tr}(XY)\) 在共轭下不变，故 \(R(U)\) 保持三维欧氏内积；连续性又保证 \(\det R(U)=1\)。并且 \(R(U_1U_2)=R(U_1)R(U_2)\)，所以这是从 \(SU(2)\) 到 \(SO(3)\) 的满同态。其核为 \(\{I,-I\}\)，于是</p>
+                    <div class="math-block">
+                        \[
+                        SU(2)/\mathbb Z_2\cong SO(3),
+                        \qquad R(U)=R(-U).
+                        \]
+                    </div>
+                    <p>两者在恒元附近共享同一套交换关系，所以局域上不可区分；但 \(SU(2)\) 的流形是三维球面 \(S^3\)，而 \(SO(3)\) 是把对径点识别后的 \(S^3/\mathbb Z_2\cong\mathbb{RP}^3\)。这就是“同一个李代数不一定决定同一个李群”的第一个重要例子。量子理论必须关心整体结构，因为允许哪些表示、相位绕一圈怎样返回，取决于群而不只取决于李代数。</p>
+
+                    <h2 id="lie-group">5. 李群：代数结构与光滑流形兼容</h2>
+                    <p>李群既是群又是光滑流形，并要求乘法与取逆映射光滑。局部坐标把恒元邻域中的群元写成 \(g(a^1,\ldots,a^r)\)，参数数目 \(r\) 就是李群的维数。对矩阵李群，连续曲线 \(g(t)\) 在恒元处的切向量可表示为矩阵 \(X\)，其附近群元为</p>
+                    <div class="math-block">
+                        \[
+                        g(t)=I+tX+O(t^2)=\exp(tX)+O(t^2).
+                        \]
+                    </div>
+                    <p>群乘法可以把恒元处的切向量左移到任意点，从而得到左不变向量场。恒元附近的微分信息因此能沿整个连通分支传播。对物理来说，这意味着只要知道无穷小变换怎样作用，就可以通过指数化构造有限变换。</p>
+                    <p>若群作用在场 \(\phi(x)\) 上，无穷小变换通常同时改变坐标与内部分量。写成</p>
+                    <div class="math-block">
+                        \[
+                        \delta\phi(x)
+                        =-i\epsilon^a T_a\phi(x)
+                        -\delta x^\mu\partial_\mu\phi(x),
+                        \]
+                    </div>
+                    <p>第一项是表示空间中的内禀变换，第二项是流形坐标变化引起的拖曳。空间转动的轨道角动量来自第二项，自旋矩阵来自第一项；总角动量正是二者相加。这个分解会在相对论场论中继续成为 Lorentz 变换作用于场的标准形式。</p>
+                    <p>若系统由两个子系统组成，群元作用为 \(U(g)=U_1(g)\otimes U_2(g)\)。在恒元附近展开可见总生成元是两者之和：</p>
+                    <div class="math-block">
+                        \[
+                        T_a^{(1\otimes2)}=T_a^{(1)}\otimes I+I\otimes T_a^{(2)}.
+                        \]
+                    </div>
+                    <p>这正是总角动量 \(\mathbf J=\mathbf J_1+\mathbf J_2\) 的群论来源，也说明 Day 3 的直积表示与 C-G 分解在连续群中如何延续。</p>
+
+                    <h2 id="generators">6. 无穷小生成元：连续对称的可观测方向</h2>
+                    <p>选取恒元处切空间的一组基 \(T_a\)，群元可局部写成 \(g(\boldsymbol\theta)=\exp(-i\theta^aT_a)\)。两个无穷小变换的次序差在二阶显现：</p>
+                    <div class="math-block">
+                        \[
+                        e^{-i\epsilon T_a}e^{-i\eta T_b}
+                        e^{i\epsilon T_a}e^{i\eta T_b}
+                        =I-\epsilon\eta[T_a,T_b]+O(\epsilon^2,\eta^2).
+                        \]
+                    </div>
+                    <p>因此交换子测量群流形上两个方向不对易的程度。闭合性给出结构常数</p>
+                    <div class="math-block">
+                        \[
+                        [T_a,T_b]=i f_{ab}{}^{c}T_c,
+                        \qquad
+                        f_{ab}{}^{d}f_{dc}{}^{e}+f_{bc}{}^{d}f_{da}{}^{e}+f_{ca}{}^{d}f_{db}{}^{e}=0.
+                        \]
+                    </div>
+                    <p>后一式是 Jacobi 恒等式。量子力学中，连续对称由幺正算符表示，厄米生成元对应可观测量；若哈密顿量在该对称下不变，则 \([H,T_a]=0\)，相应量守恒。场论中，全局内禀对称的生成元是 Noether 荷；若把参数提升为时空函数，则需要规范场来补偿局域变化。可见生成元既是几何切向量，也是量子算符和守恒荷。</p>
+
+                    <h2 id="global">7. 常见李群与局域、整体性质</h2>
+                    <p>常见矩阵李群包括 \(GL(n,\mathbb R)\)、\(GL(n,\mathbb C)\)、\(O(n)\)、\(SO(n)\)、\(U(n)\)、\(SU(n)\) 以及保持辛形式的群。定义方程既限制矩阵元，也决定维数。例如实反对称矩阵有 \(n(n-1)/2\) 个独立分量，因此</p>
+                    <div class="math-block">
+                        \[
+                        \dim SO(n)=\frac{n(n-1)}2,
+                        \qquad \dim SU(n)=n^2-1.
+                        \]
+                    </div>
+                    <p>局域性质关注恒元邻域、维数和李代数；整体性质则包括连通性、紧致性与单连通性。\(O(n)\) 因 \(\det=\pm1\) 分成两个连通分支，\(SO(3)\) 连通但非单连通，\(SU(2)\) 则是 \(SO(3)\) 的单连通覆盖。粒子表示对整体拓扑敏感：整数自旋可下降为 \(SO(3)\) 的表示，半整数自旋只能忠实地看作 \(SU(2)\) 的表示。</p>
+                    <p>紧致性也会影响表示论。紧致群存在有限的不变 Haar 测度，可以把任意内积在群上平均，从而把有限维表示幺正化；这正是有限群“除以群阶求平均”的连续版本。非紧致群则通常没有非平凡的有限维幺正表示，Lorentz 群的有限维旋量表示与量子态空间上的无限维幺正表示因此必须区分。局域代数相近，表示论的分析条件却会因整体性质而改变。</p>
+
+                    <h2 id="lie-theorems">8. 李氏三定理：群与代数之间的桥</h2>
+                    <p>第一、第二定理的核心是：李群的局部乘法由有限个参数和结构常数控制，而群同态在微分后给出保持交换子的李代数同态。第三定理反向保证每个有限维实李代数都能积分成某个局部李群，并存在相应的单连通李群。于是连续对称可以先在线性空间中研究生成元，再还原成有限变换。</p>
+                    <p>不过“还原”不是全局唯一的。共享 \(\mathfrak{su}(2)\cong\mathfrak{so}(3)\) 的 \(SU(2)\) 与 \(SO(3)\) 正是反例：李代数决定单连通覆盖群，其他连通群可由覆盖群对离散中心取商得到。物理上，交换关系决定局域动力学，而边界条件、拓扑扇区与允许的量子表示还需要知道全局群。</p>
+                    <p>因此实际解题时可以分两步：先用李代数求生成元、Casimir 算符与局部表示，再检查这些结果能否指数化为目标群的单值表示。前一步决定可能的量子数，后一步筛掉与群的全局识别不相容的量子数。自旋正是这套检查最简洁也最深刻的实例。</p>
+
+                    <h2 id="example">9. 具体例子：自旋 \(1/2\) 绕一圈为什么得到负号</h2>
+                    <p>取沿 \(z\) 方向自旋向上的态 \(|\uparrow\rangle=(1,0)^{\mathsf T}\)，绕 \(z\) 轴旋转角 \(\omega\) 的算符为</p>
+                    <div class="math-block">
+                        \[
+                        U_z(\omega)=e^{-i\omega\sigma_3/2}
+                        =\begin{pmatrix}
+                        e^{-i\omega/2}&0\\[2pt]0&e^{i\omega/2}
+                        \end{pmatrix}.
+                        \]
+                    </div>
+                    <p>代入 \(\omega=2\pi\) 与 \(4\pi\)，得到</p>
+                    <div class="math-block">
+                        \[
+                        U_z(2\pi)|\uparrow\rangle=-|\uparrow\rangle,
+                        \qquad
+                        U_z(4\pi)|\uparrow\rangle=|\uparrow\rangle.
+                        \]
+                    </div>
+                    <p>对三维矢量，两次矩阵 \(U\) 与 \(-U\) 经共轭映射得到同一个 \(R\in SO(3)\)，所以经典坐标看不出负号；对量子振幅，负号在叠加与干涉中却有意义。这一小例子同时展示了覆盖映射、旋量表示和量子相位三件事：局部生成元代数相同，不代表有限变换对所有对象的作用相同。</p>
+
+                    <h2 id="summary">10. 当日总结与跨章联系</h2>
+                    <p>Day 4 的核心不是背诵一串矩阵群，而是学会把连续对称分成三个尺度：群流形描述整体几何，恒元附近的生成元描述局部方向，李括号描述方向之间的非交换结构。\(SO(3)\) 与 \(SU(2)\) 把这三层一次展示完整：它们李代数相同、整体拓扑不同，因而既共享角动量交换关系，又允许不同的量子表示。</p>
+                    <p>与 Day 3 相连，紧致李群的表示仍然可用正交关系、特征标、直积约化与 Wigner-Eckart 定理分析，只是有限求和将逐步换成不变积分。向 Day 5 看，指数映射、理想、中心、Killing 型和 Casimir 算符会进一步回答：怎样从李代数识别可分解性、半单性与表示标签。向 Day 6 看，今天的 \(SU(2)\to SO(3)\) 将具体长成角动量多重态、Wigner \(D\) 矩阵、球谐函数和自旋耦合。</p>
+
+                    <footer class="article-meta">posted @ 2026-08-31  zhangyuxuan  阅读(0)  评论(0)</footer>
+                </article>
+            </main>
+
+            <aside class="sidebar article-sidebar" aria-label="文章目录">
+                <section><h2>目录</h2><a href="#map">0. 今日知识地图</a><a href="#so3">1. SO(3)</a><a href="#parameter">2. 转动参数化</a><a href="#su2">3. SU(2)</a><a href="#cover">4. 覆盖关系</a><a href="#lie-group">5. 李群与流形</a><a href="#generators">6. 无穷小生成元</a><a href="#global">7. 常见李群</a><a href="#lie-theorems">8. 李氏三定理</a><a href="#example">9. 自旋例子</a><a href="#summary">10. 总结与联系</a></section>
+                <section><h2>学习进度</h2><p>Day 4 / 10</p><p>PDF 142–190</p></section>
+            </aside>
+        </div>
+    </div>
+
+    <footer><p>Copyright © zhangyuxuan</p><p>Powered by zhangyuxuan.xin</p></footer>
+</body>
+</html>
