@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="十天学完整本群论讲义 Day 3：Schur 引理、特征标、C-G 系数与 Wigner-Eckart 定理">
+    <title>十天学群论 Day 3：从正交关系到量子选择定则 | zhangyuxuan</title>
+    <link rel="stylesheet" href="assets/site.css?v=20260831-2">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body class="post-page">
+    <header class="main-header sub-header"><div class="vertical"><div class="inner title-mark"><p class="title-kicker">GROUP THEORY</p><p class="title-band">群论</p></div></div></header>
+
+    <div id="home">
+        <header class="blog-header">
+            <div class="blog-title"><h2><a href="index.html">zhangyuxuan</a></h2><p>群论</p></div>
+            <nav class="blog-nav" aria-label="主导航"><div class="nav-links"><a href="index.html">首页</a><a class="active" href="blog-list.html">随笔</a><a href="mailto:contact@zhangyuxuan.xin">联系</a></div><span>随笔 - 4</span></nav>
+        </header>
+
+        <div class="page-layout article-layout">
+            <main id="main-content">
+                <article class="post-body">
+                    <header class="post-header">
+                        <h1>十天学群论 Day 3：从正交关系到量子选择定则</h1>
+                        <p class="post-lead">讲义第 2.7–2.14 节，PDF 85–141 页：有限群表示论的计算核心，以及它怎样压缩量子力学中的能级、微扰和跃迁问题。</p>
+                    </header>
+
+                    <h2 id="map">0. 今日知识地图</h2>
+                    <p>今天把“不可约表示是基本单元”从一句原则变成可计算的方法。Schur 引理控制与群作用相容的算符；大正交定理把不可约表示矩阵元变成群函数空间中的正交基；特征标抹掉基的选择，只保留表示的等价类；正则表示保证所有不可约表示都会出现；直积和 C-G 系数处理复合系统；诱导表示在子群与大群之间搬运信息；Wigner-Eckart 定理把动力学矩阵元拆成群论系数与少数约化矩阵元；投影算符最后把任意试探函数筛成不可约基。</p>
+                    <div class="math-block">
+                        \[
+                        \text{Schur}
+                        \Rightarrow \text{正交与特征标}
+                        \Rightarrow \text{约化}
+                        \Rightarrow \text{C-G / Wigner--Eckart}
+                        \Rightarrow \text{能级与选择定则}.
+                        \]
+                    </div>
+
+                    <h2 id="schur">1. Schur 引理：不可约块内部没有多余结构</h2>
+                    <p>若 \(D(G)\) 是复线性空间上的不可约表示，矩阵 \(M\) 与所有 \(D(g)\) 对易，则 Schur 引理 I 断言</p>
+                    <div class="math-block">
+                        \[
+                        MD(g)=D(g)M\quad(\forall g\in G)
+                        \qquad\Longrightarrow\qquad M=\lambda I.
+                        \]
+                    </div>
+                    <p>证明的 picture 是：\(M\) 的任一本征子空间都会因对易关系而在群作用下保持不变；不可约性不允许非平凡不变子空间，所以整个表示空间只能对应同一个本征值。物理上，如果一组态构成完整的不可约多重态，那么任何尊重全部对称性的可观测量，在这个多重态内部只能是常数。因此同一不可约多重态中的态具有相同能量，或受到相同的对称微扰平移。</p>
+                    <p>Schur 引理 II 处理两个不可约表示之间的交织映射。若</p>
+                    <div class="math-block">
+                        \[
+                        D^{(i)}(g)M=MD^{(j)}(g)\quad(\forall g\in G),
+                        \]
+                    </div>
+                    <p>则非零 \(M\) 迫使两表示等价且 \(M\) 可逆；若两表示不等价，则 \(M=0\)。这条“相同块之间才可能耦合”的规则，稍后直接变成微扰矩阵的分块结构和跃迁选择定则。</p>
+
+                    <h2 id="orthogonality">2. 大正交定理：矩阵元是群上的傅里叶模态</h2>
+                    <p>设有限群阶为 \(n\)，\(D^{(i)}\)、\(D^{(j)}\) 是维数分别为 \(m_i\)、\(m_j\) 的不等价不可约幺正表示。其矩阵元满足第一正交关系</p>
+                    <div class="math-block">
+                        \[
+                        \sum_{g\in G}
+                        D^{(i)}_{\mu\rho}(g)\,
+                        \overline{D^{(j)}_{\nu\lambda}(g)}
+                        =\frac{n}{m_i}\,
+                        \delta_{ij}\delta_{\mu\nu}\delta_{\rho\lambda}.
+                        \]
+                    </div>
+                    <p>固定表示标签和矩阵指标后，\(D^{(i)}_{\mu\rho}(g)\) 是群变量 \(g\) 的函数。上式说这些函数彼此正交，恰如圆上的指数函数或空间中的球谐函数。有限群表示论因此是一种离散的群傅里叶分析。</p>
+                    <p>正则表示的分解给出 Burnside 公式</p>
+                    <div class="math-block">
+                        \[
+                        \sum_i m_i^2=n.
+                        \]
+                    </div>
+                    <p>左边正是全部不可约矩阵元函数的个数，右边是群函数空间的维数，所以正交函数组同时完备。第一正交关系控制“不同模态互不混合”，第二正交关系则表达“这些模态足以重建任意群函数”。</p>
+
+                    <h2 id="character">3. 特征标：不选基也能完成约化</h2>
+                    <p>表示的特征标定义为 \(\chi(g)=\operatorname{Tr}D(g)\)。迹在相似变换下不变，所以特征标只依赖表示的等价类；同一共轭类中的群元也有相同特征标。因此特征标本质上是类函数。</p>
+                    <p>不等价不可约表示的特征标满足</p>
+                    <div class="math-block">
+                        \[
+                        \sum_{g\in G}\chi^{(i)}(g)\overline{\chi^{(j)}(g)}
+                        =n\delta_{ij}.
+                        \]
+                    </div>
+                    <p>若可约表示的特征标为 \(\chi\)，其中不可约表示 \(D^{(j)}\) 出现 \(a_j\) 次，则</p>
+                    <div class="math-block">
+                        \[
+                        a_j=\frac1n\sum_{g\in G}
+                        \overline{\chi^{(j)}(g)}\chi(g).
+                        \]
+                    </div>
+                    <p>这就是表示论的频谱分析公式：\(\chi\) 是总信号，\(\chi^{(j)}\) 是正交基，内积抽出第 \(j\) 个频率的重复度。由此得到两个实用判据：两表示等价当且仅当特征标逐元素相同；表示不可约当且仅当</p>
+                    <div class="math-block">
+                        \[
+                        \sum_{g\in G}|\chi(g)|^2=n.
+                        \]
+                    </div>
+                    <p>不可约特征标的个数等于共轭类数。换言之，群的“类结构”与其“基本线性振动模式”数目完全吻合。</p>
+
+                    <h2 id="regular">4. 正则表示：一张装下全部不可约表示的总谱</h2>
+                    <p>左正则表示 \(L(g)x=gx\) 的特征标极其简单：单位元的迹为 \(n\)，非单位元的迹为 \(0\)。代入重复度公式得到</p>
+                    <div class="math-block">
+                        \[
+                        \mathbb C[G]\simeq\bigoplus_j m_jD^{(j)}.
+                        \]
+                    </div>
+                    <p>每个不可约表示 \(D^{(j)}\) 出现的次数恰好等于它的维数 \(m_j\)。因此正则表示像一张群的完整光谱：任何不可约类型都不缺席。把正则表示完全约化，等价于在群代数中寻找最小左理想；幂等元则是投影到这些理想的代数装置。</p>
+
+                    <h2 id="tensor">5. 直积表示与 C-G 系数</h2>
+                    <p>若两个子系统分别按 \(D^{(j)}\) 与 \(D^{(k)}\) 变换，复合系统的态空间是张量积，群作用为</p>
+                    <div class="math-block">
+                        \[
+                        D^{(j\otimes k)}(g)=D^{(j)}(g)\otimes D^{(k)}(g),
+                        \qquad
+                        \chi^{(j\otimes k)}(g)=\chi^{(j)}(g)\chi^{(k)}(g).
+                        \]
+                    </div>
+                    <p>直积表示通常可约。将“未耦合基” \(|j\mu\rangle\otimes|k\nu\rangle\) 组合成“总对称性基” \(|Jr\rho\rangle\) 的酉换基矩阵，就是 Clebsch-Gordan 矩阵：</p>
+                    <div class="math-block">
+                        \[
+                        |Jr\rho\rangle=
+                        \sum_{\mu,\nu}C^{jk}_{\mu\nu,Jr\rho}
+                        |j\mu\rangle\otimes|k\nu\rangle.
+                        \]
+                    </div>
+                    <p>物理 picture 是“两个局部量子数怎样耦合成总量子数”。氦原子的两个电子、两个角动量、同位旋多重态的复合，都由同一换基问题控制。群不变量出现的条件，是一个表示与另一个表示的对偶相配，使直积中包含平凡表示；有限群的幺正情形可说成 \(D^{(i)}\otimes\overline{D^{(i)}}\) 恰含一次平凡表示。</p>
+
+                    <h2 id="induced">6. 分导与诱导表示：在子群和大群之间往返</h2>
+                    <p>把大群 \(G\) 的表示只看在子群 \(H\) 上，得到分导表示；它往往分裂成更多的 \(H\) 不可约块。反方向，给定 \(H\) 的表示，可利用陪集 \(G=\bigcup_\alpha k_\alpha H\) 扩张表示空间，构造 \(G\) 的诱导表示。</p>
+                    <p>若 \(B(H)\) 的维数为 \(d\)，子群指数为 \([G:H]=r\)，诱导表示的维数就是 \(rd\)。其矩阵分块由</p>
+                    <div class="math-block">
+                        \[
+                        U^{B}(g)_{\alpha\nu,\beta\mu}
+                        =B(k_\alpha^{-1}gk_\beta)_{\nu\mu}
+                        \]
+                    </div>
+                    <p>给出；当括号内元素不在 \(H\) 时相应分块取零。Frobenius 互易定理说明，大群不可约表示 \(A\) 在 \(\operatorname{Ind}_H^G B\) 中出现几次，恰等于 \(B\) 在 \(A\) 限制到 \(H\) 后出现几次。它把“从局部对称造全局态”和“把全局态按局部对称拆分”精确配对。</p>
+
+                    <h2 id="wigner">7. Wigner-Eckart 定理：几何系数与动力学分家</h2>
+                    <p>一组算符 \(T^{(j)}_\mu\) 若在群作用下按不可约表示 \(D^{(j)}\) 相互混合，称为不可约算符：</p>
+                    <div class="math-block">
+                        \[
+                        P(g)T^{(j)}_\mu P(g)^{-1}
+                        =\sum_\lambda T^{(j)}_\lambda D^{(j)}_{\lambda\mu}(g).
+                        \]
+                    </div>
+                    <p>它作用在按 \(D^{(k)}\) 变换的态上时，所得向量按直积 \(D^{(j)}\otimes D^{(k)}\) 变换。Wigner-Eckart 定理于是把矩阵元写成</p>
+                    <div class="math-block">
+                        \[
+                        \langle k'\nu'|T^{(j)}_\mu|k\nu\rangle
+                        =\sum_r C^{jk}_{\mu\nu,k'r\nu'}
+                        \langle k'\|T^{(j)}\|k;r\rangle.
+                        \]
+                    </div>
+                    <p>C-G 系数只由群决定，约化矩阵元才包含具体相互作用。这是量子力学中极其省力的分工：先用对称性判断哪些矩阵元必为零、非零项的相对比例如何，再为少数独立的约化矩阵元做真正的动力学计算。</p>
+
+                    <h2 id="physics">8. 物理主线：能级、微扰与选择定则</h2>
+                    <p>哈密顿量的本征子空间承载其对称群的表示，完全对称群下的定态可按不可约表示分类。若某个不可约表示维数大于 \(1\)，同一多重态内必有简并。所谓“偶然简并”通常意味着还没有找全对称群，例如库仑势的 \(SO(3)\) 之外还隐藏着 Runge-Lenz 向量生成的更大对称性。</p>
+                    <p>若微扰 \(H'\) 保持原对称群 \(G\)，Schur 引理给出不可约多重态内部</p>
+                    <div class="math-block">
+                        \[
+                        \langle j\alpha|H'|j\beta\rangle=c_j\delta_{\alpha\beta},
+                        \]
+                    </div>
+                    <p>所以整组能级只能共同平移，简并不被劈裂。若微扰只保持子群 \(G'\subset G\)，原来 \(G\) 的不可约表示限制到 \(G'\) 后可能可约；能级就按这些 \(G'\) 不可约块分裂。对称性降低不是一句定性描述，而是一个明确的分导表示约化问题。</p>
+                    <p>跃迁概率含矩阵元 \(\langle a|V|b\rangle\)。若 \(V\) 是 \(G\) 的不可约算符，只有当末态表示出现在“算符表示与初态表示”的直积分解中时，矩阵元才可能非零：</p>
+                    <div class="math-block">
+                        \[
+                        D^{(a)}\subset D^{(V)}\otimes D^{(b)}.
+                        \]
+                    </div>
+                    <p>这就是选择定则。C-G 系数还给出允许通道间的振幅比例，平方后产生分支比。对称性因此能在不求完整波函数的情况下，直接预测谱线缺失、简并劈裂和散射道强度。</p>
+
+                    <h2 id="projector">9. 投影算符与不可约标准基</h2>
+                    <p>群代数中的不可约标准基像矩阵单位一样满足乘法规则。对任意表示空间 \(V\)，由不可约矩阵元构造广义投影算符</p>
+                    <div class="math-block">
+                        \[
+                        P^{(j)}_{\mu\nu}
+                        =\frac{m_j}{|G|}\sum_{g\in G}
+                        \overline{D^{(j)}_{\mu\nu}(g)}\,P(g),
+                        \]
+                    </div>
+                    <p>并有</p>
+                    <div class="math-block">
+                        \[
+                        P^{(i)}_{\mu\rho}P^{(j)}_{\sigma\nu}
+                        =\delta_{ij}\delta_{\rho\sigma}P^{(i)}_{\mu\nu}.
+                        \]
+                    </div>
+                    <p>固定 \(j,\nu\)，把 \(P^{(j)}_{\mu\nu}\) 作用到任意试探向量上，只要结果非零，就得到一整组按 \(D^{(j)}\) 变换的基。对角求和给出特征标投影算符</p>
+                    <div class="math-block">
+                        \[
+                        P^{(j)}=\frac{m_j}{|G|}\sum_{g\in G}
+                        \overline{\chi^{(j)}(g)}P(g),
+                        \qquad P^{(i)}P^{(j)}=\delta_{ij}P^{(i)}.
+                        \]
+                    </div>
+                    <p>它像频率滤波器一样，从任意函数、轨道组合或分子振动试探向量中筛出指定对称类型。</p>
+
+                    <h2 id="example">10. 具体例子：对称微扰为什么不劈裂双重态</h2>
+                    <p>设二维不可约表示的正交基为 \(|1\rangle,|2\rangle\)，哈密顿量在这组态上给出简并能量 \(E_0\)。加入保持全部群对称的微扰 \(H'\)。因为 \(H'\) 与所有表示矩阵对易，Schur 引理迫使</p>
+                    <div class="math-block">
+                        \[
+                        H'\big|_{V}=\lambda I_2,
+                        \qquad
+                        H\big|_{V}=
+                        \begin{pmatrix}E_0+\lambda&0\\0&E_0+\lambda\end{pmatrix}.
+                        \]
+                    </div>
+                    <p>两条能级一起移动但不分裂。若外场把对称性降到只有一维不可约表示的子群，原二维表示限制到子群后分成两个一维块，微扰矩阵可变为 \(\operatorname{diag}(\lambda_1,\lambda_2)\)，双重态便分裂。这正是晶场劈裂和 Zeeman 劈裂背后的群论骨架。</p>
+
+                    <h2 id="summary">11. 当日总结与跨章联系</h2>
+                    <p>Day 2 建立了表示空间，Day 3 给出了表示空间的“谱分解术”。Schur 引理说明不可约块内部的对称算符只能是常数；正交关系与特征标识别每种不可约成分；C-G 系数把复合自由度换到总对称性基；Wigner-Eckart 定理把群论和动力学分离；投影算符则把这些结论变成构造不可约基的算法。</p>
+                    <p>向后看，Day 4 会把有限群求和替换为李群的局域微分结构。对紧致李群，今天的正交、特征标、投影和 Wigner-Eckart 思想仍可由不变积分保留；对 \(SO(3)\) 与 \(SU(2)\)，C-G 系数会成为角动量耦合系数，投影出的不可约函数会成为球谐函数。今天是整本讲义从抽象结构走向可预测物理的关键转折点。</p>
+
+                    <footer class="article-meta">posted @ 2026-08-31  zhangyuxuan  阅读(0)  评论(0)</footer>
+                </article>
+            </main>
+
+            <aside class="sidebar article-sidebar" aria-label="文章目录">
+                <section><h2>目录</h2><a href="#map">0. 今日知识地图</a><a href="#schur">1. Schur 引理</a><a href="#orthogonality">2. 正交定理</a><a href="#character">3. 特征标</a><a href="#regular">4. 正则表示</a><a href="#tensor">5. C-G 系数</a><a href="#induced">6. 诱导表示</a><a href="#wigner">7. Wigner-Eckart</a><a href="#physics">8. 物理应用</a><a href="#projector">9. 投影算符</a><a href="#example">10. 微扰例子</a><a href="#summary">11. 总结与联系</a></section>
+                <section><h2>学习进度</h2><p>Day 3 / 10</p><p>PDF 85–141</p></section>
+            </aside>
+        </div>
+    </div>
+
+    <footer><p>Copyright © zhangyuxuan</p><p>Powered by zhangyuxuan.xin</p></footer>
+</body>
+</html>

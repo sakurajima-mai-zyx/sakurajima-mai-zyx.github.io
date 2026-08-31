@@ -1,21 +1,23 @@
 {
-  "day": 2,
+  "day": 3,
   "date": "2026-08-31",
-  "pdf_pages": "43-84",
+  "pdf_pages": "85-141",
   "sections": [
-    "2.1 群表示",
-    "2.2 标量场、坐标变换算符",
-    "2.3 量子系统的对称变换、Noether 定理",
-    "2.4 时间相关对称性之一例：伽利略对称性",
-    "2.5 等价表示、不可约表示、幺正表示",
-    "2.6 线性代数、群代数和正则表示、群函数及其变换算符"
+    "2.7 Schur 引理",
+    "2.8 有限群不可约表示的正交关系和特征标",
+    "2.9 正则表示的约化和不可约表示完备性",
+    "2.10 直积表示和 C-G 系数",
+    "2.11 诱导表示",
+    "2.12 不可约算符和 Wigner-Eckart 定理",
+    "2.13 能级、微扰与选择定则",
+    "2.14 投影算符和标准基"
   ],
-  "article": "post-group-theory-day-2.html",
-  "commit": "1cc2ebe",
+  "article": "post-group-theory-day-3.html",
+  "commit": "pending",
   "next_day": {
-    "day": 3,
-    "pdf_pages": "85-141",
-    "sections": "第 2.7-2.14 节"
+    "day": 4,
+    "pdf_pages": "142-190",
+    "sections": "第 3.1-3.7 节"
   },
   "complete": false
 }
