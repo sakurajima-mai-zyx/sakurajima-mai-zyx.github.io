@@ -1,22 +1,21 @@
 {
-  "day": 1,
-  "date": "2026-08-29",
-  "pdf_pages": "6-42",
+  "day": 2,
+  "date": "2026-08-31",
+  "pdf_pages": "43-84",
   "sections": [
-    "1.1 群",
-    "1.2 子群和陪集",
-    "1.3 共轭和共轭类",
-    "1.4 群的同构、同态与自同构",
-    "1.5 变换群",
-    "1.6 群的直积和半直积",
-    "1.7 一般线性群的张量"
+    "2.1 群表示",
+    "2.2 标量场、坐标变换算符",
+    "2.3 量子系统的对称变换、Noether 定理",
+    "2.4 时间相关对称性之一例：伽利略对称性",
+    "2.5 等价表示、不可约表示、幺正表示",
+    "2.6 线性代数、群代数和正则表示、群函数及其变换算符"
   ],
-  "article": "post-group-theory-day-1.html",
-  "commit": "48db2c7fde8d2006ed9d6f0b6eaacea8a4e9d0b9",
+  "article": "post-group-theory-day-2.html",
+  "commit": "pending",
   "next_day": {
-    "day": 2,
-    "pdf_pages": "43-84",
-    "sections": "第 2.1-2.6 节"
+    "day": 3,
+    "pdf_pages": "85-141",
+    "sections": "第 2.7-2.14 节"
   },
   "complete": false
 }

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="十天学完整本群论讲义 Day 2：群表示、量子对称性与正则表示">
+    <title>十天学群论 Day 2：让抽象对称作用在量子态上 | zhangyuxuan</title>
+    <link rel="stylesheet" href="assets/site.css?v=20260831-1">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body class="post-page">
+    <header class="main-header sub-header">
+        <div class="vertical"><div class="inner title-mark"><p class="title-kicker">GROUP THEORY</p><p class="title-band">群论</p></div></div>
+    </header>
+
+    <div id="home">
+        <header class="blog-header">
+            <div class="blog-title"><h2><a href="index.html">zhangyuxuan</a></h2><p>群论</p></div>
+            <nav class="blog-nav" aria-label="主导航">
+                <div class="nav-links"><a href="index.html">首页</a><a class="active" href="blog-list.html">随笔</a><a href="mailto:contact@zhangyuxuan.xin">联系</a></div>
+                <span>随笔 - 3</span>
+            </nav>
+        </header>
+
+        <div class="page-layout article-layout">
+            <main id="main-content">
+                <article class="post-body">
+                    <header class="post-header">
+                        <h1>十天学群论 Day 2：让抽象对称作用在量子态上</h1>
+                        <p class="post-lead">讲义第 2.1–2.6 节，PDF 43–84 页：从线性表示出发，经由量子对称与 Noether 定理，走到群代数、正则表示和群函数。</p>
+                    </header>
+
+                    <h2 id="map">0. 今日知识地图</h2>
+                    <p>第 1 章回答“对称操作怎样组成群”，今天回答“群怎样对物理对象起作用”。核心链条是：把群元映成线性算符；把坐标变换提升为函数空间上的算符；把量子对称写成对哈密顿量的约束；再用不可约分解找出真正独立的运动模式。最后把有限群本身扩充成线性空间与代数，使每个群都自动获得正则表示。</p>
+                    <div class="math-block">
+                        \[
+                        G\xrightarrow{\,P\,}GL(V)
+                        \longrightarrow \text{不变子空间与不可约块}
+                        \longrightarrow \mathbb C[G]
+                        \longrightarrow \text{正则表示与群函数}.
+                        \]
+                    </div>
+                    <p>这条路线把“几何动作”翻译成“矩阵如何混合基矢”。在量子力学中，基矢就是态，矩阵元就是对称操作对态的混合系数，所以表示论不是对群的附加装饰，而是对称性可被实验读取的方式。</p>
+
+                    <h2 id="representation">1. 表示：保留乘法结构的线性化</h2>
+                    <p>群 (G) 在线性空间 (V) 上的线性表示，是一个保持乘法的映射 (P:G\to GL(V))：</p>
+                    <div class="math-block">
+                        \[
+                        P(g_1g_2)=P(g_1)P(g_2),\qquad
+                        P(e)=I,\qquad P(g^{-1})=P(g)^{-1}.
+                        \]
+                    </div>
+                    <p>选定基以后，算符 (P(g)) 变成矩阵 (D(g))。若基为 \(\{v_\mu\}\)，则群作用按表示矩阵的列混合基矢：</p>
+                    <div class="math-block">
+                        \[
+                        P(g)v_\mu=\sum_\nu v_\nu D(g)_{\nu\mu}.
+                        \]
+                    </div>
+                    <p>同一个抽象群可以有许多表示：一维平凡表示把所有群元都送到 (1)；忠实表示不把不同群元混为一谈，其核只有单位元；非忠实表示则有意忽略一部分群结构。表示的物理 picture 是选择一组可观测自由度后，看对称操作在这组自由度上留下什么“影子”。</p>
+                    <p>复共轭表示、对偶表示与逆步复共轭表示分别由 \(\overline{D(g)}\)、\((D(g)^{-1})^{T}\) 和 \((D(g)^{-1})^{\dagger}\) 给出。它们预告了以后粒子与反粒子、矢量与协矢量、旋量与共轭旋量之间的关系。</p>
+
+                    <h2 id="scalar">2. 标量场与坐标变换算符</h2>
+                    <p>标量在同一个空间点上的数值不随坐标系改变，但描述其空间分布的函数会改变。若坐标变换为 (x' = Rx)，则同一点的新旧坐标满足 (x=R^{-1}x')，所以标量场的被动变换律是</p>
+                    <div class="math-block">
+                        \[
+                        \phi'(x)=\phi(R^{-1}x).
+                        \]
+                    </div>
+                    <p>定义坐标变换算符 \(P_R\phi(x)=\phi(R^{-1}x)\)。逆元之所以出现，是因为新函数在坐标 (x) 处读取的是旧函数在反向追溯点 (R^{-1}x) 处的值。连续做两次坐标变换得到</p>
+                    <div class="math-block">
+                        \[
+                        P_RP_S\phi(x)=\phi(S^{-1}R^{-1}x)=P_{RS}\phi(x),
+                        \]
+                    </div>
+                    <p>因此 \(R\mapsto P_R\) 本身就是群表示，通常是无限维函数空间上的表示。若函数空间存在有限维不变子空间，就能截取出有限维矩阵表示。</p>
+                    <p>内积取为 \((\phi,\psi)=\int \overline{\phi(x)}\psi(x)\,dx\) 时，若变换的 Jacobi 行列式模为 (1)，则 (P_R) 保持内积，因而是幺正算符。平移和转动保持体积元，正是这类情形。算符 (L(x)) 的变换则由共轭给出：</p>
+                    <div class="math-block">
+                        \[
+                        L'(x)=P_RL(x)P_R^{-1}=L(R^{-1}x).
+                        \]
+                    </div>
+                    <p>这里已经出现一个反复使用的结构：态按 (P_R) 变换，作用于态的算符按共轭变换；共轭恰好保证“先作用算符再变换”和“先变换再用新算符”给出同一物理结果。</p>
+
+                    <h2 id="symmetry">3. 量子对称性：概率与动力学同时不变</h2>
+                    <p>量子变换首先必须保持跃迁概率。Wigner 定理说明，保持射线间概率的变换只能由幺正线性算符或反幺正反线性算符实现。连续地连接到恒等变换的对称性只能走幺正分支。</p>
+                    <p>若 (U) 不显含时间，把 Schrödinger 方程中的态变为 (U|\psi(t)\rangle)，要求变换后的态仍满足同一动力学，便得到</p>
+                    <div class="math-block">
+                        \[
+                        UHU^{-1}=H
+                        \qquad\Longleftrightarrow\qquad [U,H]=0.
+                        \]
+                    </div>
+                    <p>因此哈密顿量的全部对称变换形成对称群。属于同一能量的本征子空间对这个群保持不变：若 \(H|\psi\rangle=E|\psi\rangle\)，则</p>
+                    <div class="math-block">
+                        \[
+                        H\,U|\psi\rangle=U H|\psi\rangle=E\,U|\psi\rangle.
+                        \]
+                    </div>
+                    <p>这就是“简并态张成表示空间”的根源。对称操作只能在同一能级内混合态，不能把它送到别的能量。以后不可约表示的维数会直接给出对称性保护的简并度。</p>
+
+                    <h2 id="noether">4. Noether 定理：生成元就是守恒荷</h2>
+                    <p>若连续幺正变换由参数 \(\epsilon\) 描述，可写为 \(U(\epsilon)=\exp(i\epsilon Q)\)，其中生成元 (Q) 是厄米算符。对称条件在无穷小阶给出</p>
+                    <div class="math-block">
+                        \[
+                        UHU^{-1}=H
+                        \quad\Longrightarrow\quad
+                        [Q,H]=0
+                        \quad\Longrightarrow\quad
+                        \frac{d}{dt}\langle Q\rangle=0.
+                        \]
+                    </div>
+                    <p>物理 picture 是：连续对称方向在 Hilbert 空间中有一个切向量，生成元 (Q) 就是沿这个方向移动的“速度算符”；动力学若看不见这个方向，沿它的动量便守恒。空间平移的生成元定义为动量，空间转动的生成元定义为角动量。对平移</p>
+                    <div class="math-block">
+                        \[
+                        U(\mathbf a)=\exp\!\left(-\frac{i}{\hbar}\mathbf a\cdot\mathbf P\right),
+                        \qquad [X_i,P_j]=i\hbar\delta_{ij}.
+                        \]
+                    </div>
+                    <p>这不是从经典公式硬搬一个微分算符，而是从“平移怎样改变位置测量”与群结构共同推出生成元必须满足的对易关系；选定坐标本征态相位后，才得到熟悉的 \(\mathbf P=-i\hbar\nabla\)。</p>
+
+                    <h2 id="galilei">5. 含时对称的例子：Galilei 推动</h2>
+                    <p>Galilei 变换把惯性系速度改变为 \(\mathbf v\)，经典坐标与动量分别变为 \(\mathbf X+\mathbf v t\) 和 \(\mathbf P+m\mathbf v\)。量子算符必须满足</p>
+                    <div class="math-block">
+                        \[
+                        U^{-1}(\mathbf v,t)\mathbf XU(\mathbf v,t)=\mathbf X+\mathbf vt,
+                        \qquad
+                        U^{-1}(\mathbf v,t)\mathbf PU(\mathbf v,t)=\mathbf P+m\mathbf v.
+                        \]
+                    </div>
+                    <p>在讲义采用的相位约定和自然单位下，推动算符可写成</p>
+                    <div class="math-block">
+                        \[
+                        U(\mathbf v,t)=\exp\!\left(i\mathbf v\cdot\mathbf K\right),
+                        \qquad \mathbf K=t\mathbf P-m\mathbf X.
+                        \]
+                    </div>
+                    <p>关键不是记住符号，而是看到质量 (m) 出现在中心扩张中：</p>
+                    <div class="math-block">
+                        \[
+                        [K_i,P_j]=-im\delta_{ij},\qquad [K_i,H]=-iP_i.
+                        \]
+                    </div>
+                    <p>这说明量子态实现的是 Galilei 群的投影表示，等价地，是中心扩张群的普通表示；质量由此成为不可约表示的标签。相位不是可有可无的修饰，它记录了量子理论怎样把经典时空群提升到 Hilbert 空间。</p>
+                    <p>由于 (U(\mathbf v,t)) 显含时间，对称条件不再是简单的 \([U,H]=0\)，而是</p>
+                    <div class="math-block">
+                        \[
+                        H=UHU^{-1}+i\frac{\partial U}{\partial t}U^{-1}.
+                        \]
+                    </div>
+                    <p>由此可推出 Galilei 不变的多粒子哈密顿量必须具有动能加相对坐标势的形式：</p>
+                    <div class="math-block">
+                        \[
+                        H=\sum_a\frac{\mathbf P_a^2}{2m_a}+V(\mathbf X_b-\mathbf X_c).
+                        \]
+                    </div>
+                    <p>这是当天最强的物理结论：对称性不仅产生守恒量，还直接限制可允许的动力学形式。含时生成元虽不与 (H) 对易，却仍可满足 \(d\langle K_i\rangle/dt=0\)，所以 Noether 的本质是全时间导数为零，而不只是与哈密顿量对易。</p>
+
+                    <h2 id="irreducible">6. 等价、不可约与幺正表示</h2>
+                    <p>两个矩阵表示若存在同一个可逆矩阵 (S)，使所有群元都满足</p>
+                    <div class="math-block">
+                        \[
+                        D'(g)=S^{-1}D(g)S,
+                        \]
+                    </div>
+                    <p>则它们只是选择了不同基，物理内容相同。若表示空间含非平凡的群不变子空间，表示可约；若不存在，则不可约。完全可约意味着可以选基把所有矩阵同时化为不可约块的直和：</p>
+                    <div class="math-block">
+                        \[
+                        D(g)\simeq\bigoplus_j a_jD^{(j)}(g).
+                        \]
+                    </div>
+                    <p>有限群任意表示都等价于幺正表示。证明的结构很漂亮：把任意内积在全群上平均，</p>
+                    <div class="math-block">
+                        \[
+                        \langle x,y\rangle_G=\frac{1}{|G|}\sum_{g\in G}
+                        \langle P(g)x,P(g)y\rangle,
+                        \]
+                    </div>
+                    <p>群元左乘只重排求和项，因此新内积对群作用不变。幺正表示若有不变子空间 (W)，其正交补 (W^{\perp}) 也不变，于是可约必完全可约。表示论的任务因此被压缩为：找出全部不等价不可约幺正表示，并计算任意表示中各不可约块的重复度。</p>
+
+                    <h2 id="algebra">7. 群代数与正则表示</h2>
+                    <p>有限群 (G) 的群代数 \(\mathbb C[G]\) 是以群元为基的复线性空间，元素写作 \(x=\sum_g x_g g\)，乘法由群乘法双线性延拓：</p>
+                    <div class="math-block">
+                        \[
+                        \left(\sum_g x_g g\right)\left(\sum_h y_h h\right)
+                        =\sum_{g,h}x_gy_h(gh).
+                        \]
+                    </div>
+                    <p>群代数把离散的群元和线性叠加放进同一个容器。左乘 (L(g)x=gx) 给出左正则表示；它是忠实的，维数等于群阶。在自然基下，每个表示矩阵都是置换矩阵，因此也是幺正矩阵。右乘逆元给出右正则表示，而共轭 (x\mapsto gxg^{-1}) 给出伴随表示。</p>
+                    <p>同一共轭类中所有群元之和称为类算符。它与每个群元对易，所以类算符的共同本征空间天然提供群不变子空间。这条思路稍后会与 Schur 引理、特征标和 Casimir 算符汇合。</p>
+
+                    <h2 id="functions">8. 群函数：把正则表示搬到函数空间</h2>
+                    <p>群函数就是映射 (f:G\to\mathbb C)。有限群的群函数空间与群空间同维，基函数可取为 \(\delta_h(g)\)。第一类变换算符</p>
+                    <div class="math-block">
+                        \[
+                        (P_hf)(g)=f(h^{-1}g)
+                        \]
+                    </div>
+                    <p>给出左正则表示；它把函数图样沿群流形“平移”，而函数值本身不变。内积</p>
+                    <div class="math-block">
+                        \[
+                        (f_1,f_2)=\sum_{g\in G}\overline{f_1(g)}f_2(g)
+                        \]
+                    </div>
+                    <p>在这种平移下保持不变，所以群函数上的正则表示也是幺正的。群函数观点比群代数更容易推广到连续群：求和会变成不变积分，矩阵元会变成群上的正交函数。Day 3 的大正交定理正从这里开始。</p>
+
+                    <h2 id="example">9. 具体例子：(C_2) 的正则表示如何分裂</h2>
+                    <p>令 (C_2=\{e,s\})，满足 (s^2=e)。在群代数自然基 \((e,s)\) 下，左正则表示为</p>
+                    <div class="math-block">
+                        \[
+                        L(e)=\begin{pmatrix}1&0\\0&1\end{pmatrix},\qquad
+                        L(s)=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+                        \]
+                    </div>
+                    <p>改用对称与反对称基</p>
+                    <div class="math-block">
+                        \[
+                        v_+=\frac{e+s}{\sqrt2},\qquad
+                        v_-=\frac{e-s}{\sqrt2},
+                        \]
+                    </div>
+                    <p>便有 \(L(s)v_+=v_+\)、\(L(s)v_-=-v_-\)。于是二维正则表示分解成两个一维不可约表示：一个偶表示、一个奇表示。物理上，这和宇称对称系统把波函数分成偶态与奇态完全同构；选择不可约基，就是选择不会被对称操作互相混杂的“好量子数”基。</p>
+
+                    <h2 id="summary">10. 当日总结与跨章联系</h2>
+                    <p>今天完成了三次翻译。第一，把抽象群翻译为线性算符与矩阵；第二，把坐标对称翻译为量子态和算符的变换律；第三，把有限群翻译为群代数与群函数空间。不可约表示是这些翻译中的最小语义单元，幺正性保证概率结构与正交分解稳定。</p>
+                    <p>向前看，Day 1 的同态、共轭类和直积在今天分别变成表示映射、类算符和复合系统的线性作用。向后看，Day 3 将用 Schur 引理证明不可约矩阵元的正交性，用特征标完成约化，并把直积表示的换基系数识别为 C-G 系数；Day 4 则把连续参数的无穷小变化提炼为李代数。Galilei 例子已经提前展示了这条主线：对称群决定生成元，对易关系决定表示，表示又约束粒子的质量和动力学。</p>
+
+                    <footer class="article-meta">posted @ 2026-08-31  zhangyuxuan  阅读(0)  评论(0)</footer>
+                </article>
+            </main>
+
+            <aside class="sidebar article-sidebar" aria-label="文章目录">
+                <section>
+                    <h2>目录</h2>
+                    <a href="#map">0. 今日知识地图</a><a href="#representation">1. 群表示</a><a href="#scalar">2. 标量场</a><a href="#symmetry">3. 量子对称</a><a href="#noether">4. Noether 定理</a><a href="#galilei">5. Galilei 对称</a><a href="#irreducible">6. 不可约与幺正</a><a href="#algebra">7. 群代数</a><a href="#functions">8. 群函数</a><a href="#example">9. (C_2) 例子</a><a href="#summary">10. 总结与联系</a>
+                </section>
+                <section><h2>学习进度</h2><p>Day 2 / 10</p><p>PDF 43–84</p></section>
+            </aside>
+        </div>
+    </div>
+
+    <footer><p>Copyright © zhangyuxuan</p><p>Powered by zhangyuxuan.xin</p></footer>
+</body>
+</html>
