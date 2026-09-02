@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="十天学完整本群论讲义 Day 5：指数映射、李代数结构、Killing 型、Casimir 算符、不变积分与伴随表示">
+    <title>十天学群论 Day 5：从指数映射到 Casimir 不变量 | zhangyuxuan</title>
+    <link rel="stylesheet" href="assets/site.css?v=20260902-1">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body class="post-page">
+    <header class="main-header sub-header"><div class="vertical"><div class="inner title-mark"><p class="title-kicker">GROUP THEORY</p><p class="title-band">群论</p></div></div></header>
+
+    <div id="home">
+        <header class="blog-header">
+            <div class="blog-title"><h2><a href="index.html">zhangyuxuan</a></h2><p>群论</p></div>
+            <nav class="blog-nav" aria-label="主导航"><div class="nav-links"><a href="index.html">首页</a><a class="active" href="blog-list.html">随笔</a><a href="mailto:contact@zhangyuxuan.xin">联系</a></div><span>随笔 - 6</span></nav>
+        </header>
+
+        <div class="page-layout article-layout">
+            <main id="main-content">
+                <article class="post-body">
+                    <header class="post-header">
+                        <h1>十天学群论 Day 5：从指数映射到 Casimir 不变量</h1>
+                        <p class="post-lead">讲义第 3.8–3.14 节，PDF 191–224 页：把李群的整体运动压缩到李代数，借理想和 Levi 分解拆开结构，再用 Killing 型、Casimir 算符、Haar 积分与伴随表示提取不依赖坐标的内容。</p>
+                    </header>
+
+                    <h2 id="map">0. 今日知识地图</h2>
+                    <p>Day 4 建立了“李群是流形，李代数是恒元处切空间”的直观。今天要把这句话变成一套可计算的方法：指数映射负责在局部把切向量变成有限群元；理想、中心与导出链负责辨认李代数内部哪些方向能够独立成块；Killing 型和 Casimir 算符把结构常数压缩成不变量；不变积分把有限群的平均推广到连续群；伴随表示则让群直接作用在自己的生成元上。</p>
+                    <div class="math-block">
+                        \[
+                        \mathfrak g\xrightarrow{\exp}G,
+                        \qquad
+                        \mathfrak g=\mathfrak r\rtimes\mathfrak s,
+                        \qquad
+                        \operatorname{ad}:\mathfrak g\to\mathfrak{gl}(\mathfrak g)
+                        \Longrightarrow B,\ C_2,\ [dg].
+                        \]
+                    </div>
+                    <p>这张地图有一个统一的物理 picture：对称群可能是弯曲而复杂的空间，但实验中可观测的量子数、守恒量和简并结构，应当不依赖群参数或生成元基的任意选择。因此我们先线性化，再寻找在线性化之后仍保持不变的结构。</p>
+
+                    <h2 id="exponential">1. 指数映射：从无穷小方向走成有限变换</h2>
+                    <p>给定李代数中的向量 \(X\)，把它视为群流形上的左不变向量场。从恒元出发的积分曲线 \(\phi_X(t)\) 满足单参数群性质</p>
+                    <div class="math-block">
+                        \[
+                        \phi_X(t+s)=\phi_X(t)\phi_X(s),
+                        \qquad
+                        \exp(X):=\phi_X(1),
+                        \qquad
+                        \exp(tX)=\phi_X(t).
+                        \]
+                    </div>
+                    <p>于是李代数中的一条直线 \(tX\) 被送到群中的一条单参数子群。对矩阵李群，这个几何定义就是熟悉的矩阵指数：</p>
+                    <div class="math-block">
+                        \[
+                        \exp(X)=e^X=\sum_{n=0}^{\infty}\frac{X^n}{n!}.
+                        \]
+                    </div>
+                    <p>指数映射在 \(0\in\mathfrak g\) 的某个邻域内解析且可逆，所以恒元附近的群元都能唯一写成某个小生成元的指数。这正是“无穷小生成元决定局部群结构”的严格版本。若两个方向不对易，有限变换的复合由 Baker-Campbell-Hausdorff 公式控制：</p>
+                    <div class="math-block">
+                        \[
+                        e^Xe^Y=\exp\!\left(X+Y+\frac12[X,Y]
+                        +\frac1{12}[X,[X,Y]]+\frac1{12}[Y,[Y,X]]+\cdots\right).
+                        \]
+                    </div>
+                    <p>交换子不是修饰项，而是群乘法弯曲性的第一条记录。若 \([X,Y]=0\)，参数直接相加；若不为零，走“先 \(X\) 后 \(Y\)”与走“先 \(Y\) 后 \(X\)”会在二阶发生偏差。</p>
+                    <p>必须区分局部可逆与整体满射。一般连通李群中，不是每个群元都等于单个 \(e^X\)，但每个群元都可写成有限个指数的乘积：</p>
+                    <div class="math-block">
+                        \[
+                        g=e^{X_1}e^{X_2}\cdots e^{X_m}.
+                        \]
+                    </div>
+                    <p>对紧致连通李群，指数映射是满的。这个差别提醒我们：李代数完全控制局部结构和单连通覆盖群，却不能独自记住所有整体拓扑识别。共享同一李代数的 \(SU(2)\) 与 \(SO(3)\) 仍是最清楚的例子。</p>
+                    <p>李氏三定理的逆向结论补齐了另一半桥梁：每个有限维实李代数都能积分成一个局部李群，并唯一决定一个单连通李群 \(\widetilde G\)。具有同一李代数的其他连通群都可写成</p>
+                    <div class="math-block">
+                        \[
+                        G\cong \widetilde G/\Gamma,
+                        \qquad \Gamma\subseteq Z(\widetilde G)
+                        \]
+                    </div>
+                    <p>其中 \(\Gamma\) 是离散中心子群。于是李代数表示总能积分成 \(\widetilde G\) 的表示，但要下降为 \(G\) 的单值表示，还必须让 \(\Gamma\) 作用为恒等。这一步正是局部交换关系无法代替整体拓扑的地方：半整数自旋能表示 \(SU(2)\)，却不能成为 \(SO(3)\) 的普通单值表示。</p>
+
+                    <h2 id="ideals">2. 理想、中心与商代数：哪些方向能独立存在</h2>
+                    <p>子代数只要求自身对李括号封闭；理想则要求它在整个代数的作用下仍不被推出去。对线性子空间 \(\mathfrak h\subseteq\mathfrak g\)，理想条件是</p>
+                    <div class="math-block">
+                        \[
+                        [\mathfrak g,\mathfrak h]\subseteq\mathfrak h.
+                        \]
+                    </div>
+                    <p>因此理想正是伴随作用下的不变子空间，对应李群中的连通正规子群。中心是所有与整个代数对易的方向：</p>
+                    <div class="math-block">
+                        \[
+                        Z(\mathfrak g)=\{Z\in\mathfrak g\mid[Z,X]=0,\ \forall X\in\mathfrak g\}.
+                        \]
+                    </div>
+                    <p>中心中的生成元不会被任何内部对称旋转到别的方向；在物理中，它常对应中心荷、超选择标签或覆盖群核在无穷小层面的影子。若 \(\mathfrak h\) 是理想，陪集空间可继承李括号，得到商代数</p>
+                    <div class="math-block">
+                        \[
+                        [X+\mathfrak h,Y+\mathfrak h]=[X,Y]+\mathfrak h.
+                        \]
+                    </div>
+                    <p>这把“忽略一组对称方向”变成了严格操作。直和要求两块都是理想且彼此对易；半直和只要求其中一块是理想，另一块可以非平凡地作用在它上面。欧氏群的结构 \(\mathfrak e(2)=\mathfrak t(2)\rtimes\mathfrak{so}(2)\) 就表示转动会混合两个平移生成元。</p>
+
+                    <h2 id="classification">3. 导出链、可解性与 Levi 分解</h2>
+                    <p>要判断非交换性会不会在不断取括号后消失，可以建立导出链与降中心链：</p>
+                    <div class="math-block">
+                        \[
+                        \begin{aligned}
+                        \mathfrak g^{(0)}&=\mathfrak g,
+                        &\mathfrak g^{(n+1)}&=[\mathfrak g^{(n)},\mathfrak g^{(n)}],\\
+                        \mathfrak g_{0}&=\mathfrak g,
+                        &\mathfrak g_{n+1}&=[\mathfrak g,\mathfrak g_n].
+                        \end{aligned}
+                        \]
+                    </div>
+                    <p>第一条链终止于零称为可解；第二条链终止于零称为幂零。幂零必可解，反之不一定。可解复李代数的有限维表示可同时化为上三角形，因而有限维不可约表示只能是一维；这说明“非半单”的部分在表示中往往表现为逐层耦合，而不是稳定的多维不可约块。</p>
+                    <p>有限维李代数的总结构由 Levi 分解概括：</p>
+                    <div class="math-block">
+                        \[
+                        \mathfrak g=\mathfrak r\rtimes\mathfrak s,
+                        \]
+                    </div>
+                    <p>其中 \(\mathfrak r\) 是最大可解理想（根基），\(\mathfrak s\) 是半单 Levi 因子。半单代数又能分解为单代数的直和。物理上，这像把对称性分成“可逐层三角化的运动学部分”和“携带不可约内部结构的核心”。例如 Poincaré 代数中的平移构成 Abel 理想，Lorentz 代数负责对它作非平凡作用；这正是半直积而非直积。</p>
+
+                    <h2 id="killing">4. Killing 型与 Cartan 判据：用代数自身测量代数</h2>
+                    <p>每个生成元都通过李括号作用在整个代数上，定义内导子</p>
+                    <div class="math-block">
+                        \[
+                        \operatorname{ad}_X(Y)=[X,Y],
+                        \qquad
+                        [\operatorname{ad}_X,\operatorname{ad}_Y]=\operatorname{ad}_{[X,Y]}.
+                        \]
+                    </div>
+                    <p>对两个生成元取这类线性变换乘积的迹，得到 Killing 型：</p>
+                    <div class="math-block">
+                        \[
+                        B(X,Y)=\operatorname{Tr}(\operatorname{ad}_X\operatorname{ad}_Y),
+                        \qquad
+                        B_{ij}=f_{i q}{}^{p}f_{j p}{}^{q}.
+                        \]
+                    </div>
+                    <p>它对称、双线性，并在基变换下作合同变换，所以退化性和实情形中的惯性指数都不依赖坐标。Cartan 判据给出关键结论：有限维李代数半单，当且仅当 Killing 型非退化，亦即 \(\det B\neq0\)。直观上，若存在 Abel 理想，其中某些方向的伴随作用太弱，Killing 型便无法“看见”它们而出现零方向；半单代数没有这种盲区。</p>
+                    <p>对实半单李代数还有更强的紧致性判据：它紧致，当且仅当 Killing 型负定。于是 \(\mathfrak{so}(3)\) 的 Killing 型为负定，而 \(\mathfrak{so}(2,1)\) 有混合符号；两者复化后相同，却对应不同的实几何。</p>
+
+                    <h2 id="casimir">5. Casimir 算符：表示空间中的不变量标签</h2>
+                    <p>半单时 Killing 型有逆矩阵 \(B^{ij}\)，可以把生成元缩并成二阶 Casimir 算符：</p>
+                    <div class="math-block">
+                        \[
+                        C_2=B^{ij}X_iX_j,
+                        \qquad
+                        [C_2,X_k]=0.
+                        \]
+                    </div>
+                    <p>第二个等式来自 Killing 型的不变性与结构常数的反对称组合。Casimir 算符位于包络代数的中心；在不可约表示 \(\lambda\) 中，Schur 引理迫使它成为常数倍单位矩阵：</p>
+                    <div class="math-block">
+                        \[
+                        D_\lambda(C_2)=C_2(\lambda)I.
+                        \]
+                    </div>
+                    <p>因此它给不可约表示贴上不随基改变的标签。对转动群，熟悉的总角动量平方就是这一结构：\(\mathbf J^2\) 与每个 \(J_i\) 对易，而在自旋 \(j\) 多重态上取值 \(j(j+1)\hbar^2\)。磁量子数 \(m\) 会随选定量子化轴变化，\(j\) 却由 Casimir 固定；这就是“不变量标签”的物理意义。</p>
+                    <p>更高阶的不变张量还能构造高阶 Casimir 算符。独立 Casimir 的个数等于半单李代数的秩，所以它们与 Cartan 子代数的一组共同本征值一起，为不可约表示提供坐标。Day 10 的最高权理论会把这句话系统化；这里先抓住原则：生成元本身依赖基，所有生成元都无法改变的联合谱才是表示的身份证。</p>
+
+                    <h2 id="compact">6. 紧致性与复化：局部公式相似，实几何可能不同</h2>
+                    <p>实李代数的复化允许系数从实数扩张到复数：</p>
+                    <div class="math-block">
+                        \[
+                        \mathfrak g_{\mathbb C}=\mathfrak g\otimes_{\mathbb R}\mathbb C.
+                        \]
+                    </div>
+                    <p>反过来，一个复李代数可以有多个互不同构的实形。最小也最重要的例子是</p>
+                    <div class="math-block">
+                        \[
+                        \mathfrak{so}(3)_{\mathbb C}\cong
+                        \mathfrak{so}(2,1)_{\mathbb C}\cong\mathfrak{sl}(2,\mathbb C),
+                        \]
+                    </div>
+                    <p>但前者是紧致实形，后者是非紧致实形。复化保留根系与许多代数分类信息，却抹去 Killing 型在实方向上的正负号。量子理论中这一区分非常实际：紧致单群的不可约幺正表示是有限维的；非紧致单群除平凡表示外，幺正不可约表示通常必须无限维。有限维 Lorentz 旋量表示可以存在，却不能同时作为普通正定 Hilbert 空间上的非平凡幺正表示。</p>
+
+                    <h2 id="haar">7. 不变积分：把有限群平均推广到连续群</h2>
+                    <p>有限群上对所有元素求和不怕整体左乘或右乘，因为乘法只会重排元素。李群上相应对象是 Haar 测度。若归一化群体积为一，则</p>
+                    <div class="math-block">
+                        \[
+                        \int_G[dg]\,F(g)
+                        =\int_G[dg]\,F(hg)
+                        =\int_G[dg]\,F(gh).
+                        \]
+                    </div>
+                    <p>紧致群存在有限且可归一化的左右不变测度；这使有限群表示论中的平均技巧整体搬到紧致李群。矩阵元和特征标的正交关系变为积分：</p>
+                    <div class="math-block">
+                        \[
+                        \int_G[dg]\,D^{(\lambda)}_{mn}(g)^*
+                        D^{(\mu)}_{pq}(g)
+                        =\frac{1}{d_\lambda}\delta_{\lambda\mu}
+                        \delta_{mp}\delta_{nq}.
+                        \]
+                    </div>
+                    <p>这既解释紧致群表示为何完全可约，也给出投影到指定不可约分量的操作。对 \(SO(3)\) 的欧拉角 \((\alpha,\beta,\gamma)\)，归一化测度为</p>
+                    <div class="math-block">
+                        \[
+                        [dR]=\frac{1}{8\pi^2}\sin\beta\,
+                        d\alpha\,d\beta\,d\gamma.
+                        \]
+                    </div>
+                    <p>因子 \(\sin\beta\) 不是人为权重，而是群流形在这套坐标中的体积密度；它会抵消参数变换的 Jacobi 因子，使积分结果与坐标选择无关。物理上，对群平均就是把一个对象的所有取向等权叠加，从而提取旋转标量或构造对称态。</p>
+                    <p>一般李群分别存在左、右 Haar 测度；二者一致的群称为单模群，Abel 群和半单群都属于这一类。非紧致群的总群体积不能归一化为一，因此不能照搬紧致群的有限平均证明。这也解释了为何“有限维、幺正、完全可约”在紧致群中自然相容，到了 Lorentz 群等非紧致群却必须重新选择表示空间与分析条件。</p>
+
+                    <h2 id="adjoint">8. 伴随表示：让对称性作用在自己的生成元上</h2>
+                    <p>群通过共轭作用在自身附近；微分后，这个作用落到李代数上：</p>
+                    <div class="math-block">
+                        \[
+                        \operatorname{Ad}_g(X)=gXg^{-1},
+                        \qquad
+                        \operatorname{ad}_X(Y)=[X,Y].
+                        \]
+                    </div>
+                    <p>在基 \(\{X_i\}\) 下，伴随表示生成元的矩阵元就是结构常数：</p>
+                    <div class="math-block">
+                        \[
+                        (\operatorname{ad}_{X_i})^k{}_{j}=f_{ij}{}^k.
+                        \]
+                    </div>
+                    <p>因此伴随表示不依赖先选哪一个外部矩阵表示，它直接由群乘法决定。李代数单纯当且仅当伴随表示不可约：若有伴随不变子空间，它正是理想。对规范场而言，这一点几乎可以“摸到”：非 Abel 规范势写成 \(A_\mu=A_\mu^aT_a\)，规范变换会通过伴随作用混合指标 \(a\)，所以规范玻色子本身携带群的伴随表示；结构常数同时控制它们的自相互作用。</p>
+
+                    <h2 id="example">9. 具体例子：\(SU(2)\) 如何把整套结构串起来</h2>
+                    <p>取厄米基 \(T_i=\sigma_i/2\)，满足</p>
+                    <div class="math-block">
+                        \[
+                        [T_i,T_j]=i\varepsilon_{ij}{}^kT_k,
+                        \qquad
+                        U(\boldsymbol\theta)=e^{-i\theta^iT_i}.
+                        \]
+                    </div>
+                    <p>它没有非平凡理想，故 \(\mathfrak{su}(2)\) 单纯，伴随表示不可约。伴随作用把三个生成元像三维矢量一样旋转：</p>
+                    <div class="math-block">
+                        \[
+                        UT_iU^{-1}=R(U)^j{}_{i}T_j,
+                        \qquad R(U)\in SO(3).
+                        \]
+                    </div>
+                    <p>Killing 型在适当规范下与 \(-\delta_{ij}\) 成正比，负定性对应紧致。二阶 Casimir 可取 \(\sum_iT_i^2\)，在自旋 \(j\) 表示上为</p>
+                    <div class="math-block">
+                        \[
+                        \sum_{i=1}^{3}J_i^2=j(j+1)\hbar^2I.
+                        \]
+                    </div>
+                    <p>最后，用 Haar 测度对任意算符作群平均，</p>
+                    <div class="math-block">
+                        \[
+                        \overline A=\int_{SU(2)}[dU]\,U A U^{-1},
+                        \]
+                    </div>
+                    <p>所得 \(\overline A\) 与所有 \(U\) 对易；在不可约空间中它只能是常数矩阵。于是指数映射给有限转动，伴随表示给生成元的旋转，Killing 型判断紧致与半单，Casimir 标记自旋，Haar 平均提取标量——七节内容在同一个例子里闭合。</p>
+
+                    <h2 id="summary">10. 当日总结与跨章联系</h2>
+                    <p>Day 5 的核心是从“写出生成元”前进到“识别结构”。指数映射说明局部有限变换如何由生成元产生；理想与商代数说明哪些方向可以被分离；导出链和 Levi 分解把任意有限维李代数拆成可解根基与半单核心；Killing 型把半单性和紧致性变成可计算判据；Casimir 算符把抽象对称变成不可约表示中的量子数；Haar 积分恢复连续群上的正交、完备与投影；伴随表示则把这些对象统一到群对自身的作用中。</p>
+                    <p>向前看，Day 2–3 的“有限群求和、特征标和投影”在这里升级成紧致李群上的不变积分；Day 4 的“生成元与李代数”在这里获得结构分类。向后看，Day 6 将把 \(SU(2)\) 的 Casimir 本征值、Haar 正交关系和伴随作用具体化为角动量多重态、Wigner \(D\) 矩阵、球谐函数与 C-G 系数。今天建立的不是额外术语表，而是一套决定后续表示论如何计算、量子数为何稳定的骨架。</p>
+
+                    <footer class="article-meta">posted @ 2026-09-02  zhangyuxuan  阅读(0)  评论(0)</footer>
+                </article>
+            </main>
+
+            <aside class="sidebar article-sidebar" aria-label="文章目录">
+                <section><h2>目录</h2><a href="#map">0. 今日知识地图</a><a href="#exponential">1. 指数映射</a><a href="#ideals">2. 理想与中心</a><a href="#classification">3. Levi 分解</a><a href="#killing">4. Killing 型</a><a href="#casimir">5. Casimir 算符</a><a href="#compact">6. 紧致与复化</a><a href="#haar">7. 不变积分</a><a href="#adjoint">8. 伴随表示</a><a href="#example">9. SU(2) 例子</a><a href="#summary">10. 总结与联系</a></section>
+                <section><h2>学习进度</h2><p>Day 5 / 10</p><p>PDF 191–224</p></section>
+            </aside>
+        </div>
+    </div>
+
+    <footer><p>Copyright © zhangyuxuan</p><p>Powered by zhangyuxuan.xin</p></footer>
+</body>
+</html>
