@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="十天学完整本群论讲义 Day 6：转动群表示、球谐函数与旋量、角动量耦合、分波展开及原子光谱中的选择定则">
+    <title>十天学群论 Day 6：从转动表示到原子光谱 | zhangyuxuan</title>
+    <link rel="stylesheet" href="assets/site.css?v=20260903-1">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body class="post-page">
+    <header class="main-header sub-header"><div class="vertical"><div class="inner title-mark"><p class="title-kicker">GROUP THEORY</p><p class="title-band">群论</p></div></div></header>
+    <div id="home">
+        <header class="blog-header">
+            <div class="blog-title"><h2><a href="index.html">zhangyuxuan</a></h2><p>群论</p></div>
+            <nav class="blog-nav" aria-label="主导航"><div class="nav-links"><a href="index.html">首页</a><a class="active" href="blog-list.html">随笔</a><a href="mailto:contact@zhangyuxuan.xin">联系</a></div><span>随笔 - 7</span></nav>
+        </header>
+        <div class="page-layout article-layout">
+            <main id="main-content">
+                <article class="post-body">
+                    <header class="post-header">
+                        <h1>十天学群论 Day 6：从转动表示到原子光谱</h1>
+                        <p class="post-lead">讲义第 4.1–4.9 节，PDF 225–276 页。把抽象的不可约表示落实为角动量态、球谐函数、旋量与原子谱线，理解对称性能决定什么，又把哪些问题留给动力学。</p>
+                    </header>
+
+                    <h2 id="map">0. 今日知识地图</h2>
+                    <p>今天的主线是“如何描述一个量子系统被转动之后的样子”。第 4.1–4.3 节构造转动群及其李代数的不可约表示；第 4.4–4.5 节把表示矩阵连接到球谐函数、张量和旋量；第 4.6–4.7 节让转动作用到波函数与场算符，得到角动量和分波展开；第 4.8–4.9 节通过 C-G 系数与 Wigner-Eckart 定理解释角动量耦合、能级分裂和选择定则。</p>
+                    <p>Day 5 的 Casimir 算符在这里成为总角动量平方，Haar 积分成为球谐函数的正交关系。贯穿全篇的物理 picture 是：<strong>转动可以改变一个态相对于实验室的方向，却不能改变它属于哪一种角动量多重态。</strong>本文采用主动转动与标准球谐函数相位，保留 \(\hbar\)；讲义中取自然单位的式子相应恢复量纲。</p>
+
+                    <h2 id="representations">1. 不可约表示：为什么角动量是一列有限的台阶</h2>
+                    <p>Wigner 的构造从两个复变量的齐次多项式出发。线性变换不改变总次数，因此固定次数的多项式构成不变空间；等价地，可以取基本二维表示的全对称张量：</p>
+                    <div class="math-block">\[
+                        \begin{gathered}
+                        V_j=\operatorname{Sym}^{2j}(\mathbb C^2),\\
+                        \dim V_j=2j+1,\qquad j=0,\tfrac12,1,\ldots .
+                        \end{gathered}
+                    \]</div>
+                    <p>维数来自两个变量之间分配总次数的可能数。它不是任意选出的矩阵大小，而是转动封闭地混合的一整组状态。借助适当归一化，这些表示均可取为幺正表示。</p>
+                    <p>另一条道路直接使用 \(\mathfrak{su}(2)\) 的交换关系。这里的 \(J_a\) 为厄米角动量算符，数学上的反厄米生成元为 \(-iJ_a/\hbar\)。定义 \(J_\pm=J_x\pm iJ_y\)，则</p>
+                    <div class="math-block">\[
+                        \begin{gathered}
+                        [J_a,J_b]=i\hbar\epsilon_{abc}J_c,\\
+                        [\mathbf J^2,J_a]=0,
+                        \qquad [J_z,J_\pm]=\pm\hbar J_\pm.
+                        \end{gathered}
+                    \]</div>
+                    <p>因此升降算符只改变投影量子数，保持 Casimir 的本征值。正定内积要求升降后态的范数非负；有限维空间又要求台阶在两端终止。设最高投影为 \(j\)，两端的零范数条件给出最低投影为 \(-j\)，从而 \(2j\) 必须为非负整数。归一化后：</p>
+                    <div class="math-block">\[
+                        \begin{aligned}
+                        \mathbf J^2|j,m\rangle&=\hbar^2j(j+1)|j,m\rangle,\\
+                        J_z|j,m\rangle&=\hbar m|j,m\rangle,\\
+                        J_\pm|j,m\rangle&=\hbar\sqrt{(j\mp m)(j\pm m+1)}
+                        |j,m\pm1\rangle.
+                        \end{aligned}
+                    \]</div>
+                    <p>两端之间所有 \(m=-j,-j+1,\ldots,j\) 都由同一条链连接；任何非零不变子空间都会包含整条链，这解释了不可约性。多项式法与升降法得到同一套表示。其特征标为</p>
+                    <div class="math-block">\[
+                        \chi_j(\omega)=\sum_{m=-j}^{j}e^{-im\omega}
+                        =\frac{\sin[(j+\tfrac12)\omega]}{\sin(\omega/2)}.
+                    \]</div>
+                    <p>分母为零处取连续极限。Haar 内积下这些特征标正交，且相应正弦函数系完备，因而没有遗漏其他不可约表示。量子角动量的分类，至此成为紧致群表示分类的具体结果。</p>
+                    <p>讲义还给出 Schwinger 的双玻色模实现：令 \(J_+=\hbar a^\dagger b\)、\(J_-=\hbar b^\dagger a\)、\(J_z=\hbar(N_a-N_b)/2\)，固定总占据数 \(N=N_a+N_b\) 就固定 \(j=N/2\)。它把多项式中的两个变量换成两个产生算符；正确的 Casimir 为 \(\mathbf J^2=\hbar^2(N/2)(N/2+1)\)，不能把总粒子数的一半直接当作角动量平方。</p>
+
+                    <h2 id="cover">2. 同一李代数，为什么还有整数与半整数自旋</h2>
+                    <p>李代数只记住恒元附近的变化，整体群还会要求闭合路径的作用一致。\(SU(2)\) 覆盖 \(SO(3)\) 时，两个群元 \(U\) 与 \(-U\) 对应同一空间转动；表示是否能下降到 \(SO(3)\)，取决于它是否分辨这两个群元：</p>
+                    <div class="math-block">\[
+                        D^{(j)}(-I)=(-1)^{2j}I,
+                        \qquad U_j(2\pi)=(-1)^{2j}I.
+                    \]</div>
+                    <p>整数自旋给出 \(SO(3)\) 的普通单值表示；半整数自旋给出 \(SU(2)\) 的单值表示，在 \(SO(3)\) 上则须用射影表示理解。除平凡表示外，整数自旋表示的 \(SU(2)\) 核是 \(\{I,-I\}\)，半整数自旋表示的核只有恒元。</p>
+                    <p>自旋态转过一周产生的整体负号不改变单独状态的概率，但若只转动干涉实验的一条分支，就会成为可比较的相对相位。这不意味着电子是一颗需要转两周才复原的小球。若再考虑 \(O(3)\)，还需给转动多重态附加宇称标签；转动本身不能决定这个离散标签。</p>
+
+                    <h2 id="harmonics">3. Wigner 矩阵与球谐函数：群上的傅里叶分析</h2>
+                    <p>采用依次绕固定轴的欧拉角分解，有限转动的矩阵元写成</p>
+                    <div class="math-block">\[
+                        \begin{aligned}
+                        D^{(j)}_{m'm}(\alpha,\beta,\gamma)
+                        &=e^{-im'\alpha}d^{(j)}_{m'm}(\beta)e^{-im\gamma},\\
+                        d^{(j)}_{m'm}(\beta)
+                        &=\langle j,m'|e^{-i\beta J_y/\hbar}|j,m\rangle.
+                        \end{aligned}
+                    \]</div>
+                    <p>前后两个相位记录绕量子化轴的转动，中间的小矩阵负责混合不同投影态。标准相位下 \(d^{(j)}\) 为实正交矩阵，\(D^{(j)}\) 为幺正矩阵；其元素模方给定向制备的角动量态在另一方向基中测量的概率。无需为每种转动重新解本征方程。</p>
+                    <p>对归一化 Haar 测度，矩阵元满足</p>
+                    <div class="math-block">\[
+                        \int[dg]\,D^{(j)}_{mn}(g)^*D^{(j')}_{m'n'}(g)
+                        =\frac{\delta_{jj'}\delta_{mm'}\delta_{nn'}}{2j+1}.
+                    \]</div>
+                    <p>所有这些矩阵元构成群上平方可积函数的完备展开基。它们既能用于傅里叶展开，也能像 Day 3 那样乘以表示算符再积分，构造选取指定角动量分量的广义投影算符。</p>
+                    <p>一个方向只需两个角度，绕该方向的第三个转角并不改变方向本身。令表示矩阵的第二指标为零，恰好消去第三个欧拉角，于是</p>
+                    <div class="math-block">\[
+                        \begin{gathered}
+                        Y_{lm}(\theta,\phi)
+                        =\sqrt{\frac{2l+1}{4\pi}}\,
+                        D^{(l)}_{m0}(\phi,\theta,0)^*,\\
+                        l=0,1,2,\ldots .
+                        \end{gathered}
+                    \]</div>
+                    <p>复共轭保证与标准 \(e^{im\phi}\) 相位一致。球谐函数因此是群表示在球面上的具体实现：它们正交完备，是 \(\mathbf L^2,L_z\) 的共同本征函数；宇称为 \((-1)^l\)，且 \(d^{(l)}_{00}(\theta)=P_l(\cos\theta)\)。球谐微分方程正是 Casimir 本征方程在球坐标中的写法。</p>
+
+                    <h2 id="tensors">4. 张量与旋量：分量数并不等于不可约性</h2>
+                    <p>三维矢量携带自旋一表示，二分量旋量携带自旋二分之一表示。高阶张量是基本表示的张量积，通常仍可继续拆分。例如二阶三维张量的九个分量分为迹、反对称部分和对称无迹部分：</p>
+                    <div class="math-block">\[
+                        V_1\otimes V_1\cong V_0\oplus V_1\oplus V_2,
+                        \qquad 9=1+3+5.
+                    \]</div>
+                    <p>这三块分别表现为标量、轴矢量与四极结构。对称无迹的高阶张量也可写成调和齐次多项式 \(r^lY_{lm}\)；“去迹”对应作用拉普拉斯算符得到零，将张量语言与球谐语言接起来。</p>
+                    <p>\(SO(3)\) 的不变张量包括 \(\delta_{ab}\) 和 \(\epsilon_{abc}\)。\(SU(2)\) 则有反对称不变形式</p>
+                    <div class="math-block">\[
+                        U\varepsilon U^{\mathsf T}=\varepsilon,
+                        \qquad \varepsilon=
+                        \begin{pmatrix}0&1\\-1&0\end{pmatrix}.
+                    \]</div>
+                    <p>它可以联系对偶表示、升降旋量指标，也可把两个旋量缩并成转动标量。由于它反对称，交换缩并次序要留意符号。普通可交换分量满足 \(\psi^{\mathsf T}\varepsilon\psi=0\)；Grassmann 场分量却还带交换负号，不能照搬这个结论。旋量的变换规律本身与场的统计性质是不同层次的信息。</p>
+
+                    <h2 id="quantum">5. 转动波函数与场算符：轨道和自旋从哪里来</h2>
+                    <p>主动转动把一个定域粒子从 \(\mathbf x\) 送到 \(R\mathbf x\)，但在固定观测点读取转动后的波函数，需要回查原来的位置。因此带自旋 \(s\) 的波函数满足</p>
+                    <div class="math-block">\[
+                        \psi'_m(\mathbf x)=
+                        \sum_n D^{(s)}_{mn}(U)\psi_n(R^{-1}\mathbf x),
+                        \qquad R=R(U).
+                    \]</div>
+                    <p>一个动作改变空间宗量，另一个混合内部自旋分量。两者作用在不同的空间，对易；把有限变换线性化，就得到</p>
+                    <div class="math-block">\[
+                        \begin{gathered}
+                        \mathbf J=\mathbf L+\mathbf S,\qquad [L_a,S_b]=0,\\
+                        \mathbf L=-i\hbar\,\mathbf x\times\nabla.
+                        \end{gathered}
+                    \]</div>
+                    <p>自旋是内部空间对转动的响应，轨道角动量是空间位置对转动的响应。即使内部指标形成不可约表示，整个位置与自旋函数空间仍可分成许多总角动量扇区。“自旋不可约”不等于整个 Hilbert 空间不可约。</p>
+                    <p>场论中，产生算符作用于不变真空给出位置自旋态。在与上式一致的约定下，湮灭场满足</p>
+                    <div class="math-block">\[
+                        \widehat U\Psi_m(\mathbf x)\widehat U^{-1}
+                        =\sum_nD^{(s)}_{mn}(U^{-1})\Psi_n(R\mathbf x).
+                    \]</div>
+                    <p>它与波函数公式出现相反的转动方向，因为这里变换的是算符，而波函数是在固定坐标基中读取变换后的态。用 \(\psi_m(\mathbf x)=\langle0|\Psi_m(\mathbf x)|\psi\rangle\) 可以核对二者相容。若哈密顿量在共同转动下不变，Noether 守恒量就是总角动量；含自旋轨道耦合时，轨道与自旋通常不分别守恒。</p>
+
+                    <h2 id="partial-waves">6. 中心势与分波：先拆角度，再解动力学</h2>
+                    <p>对无自旋粒子的中心势，定态可选为 \(H,\mathbf L^2,L_z\) 的共同本征态。除去可能的额外简并标签，波函数和径向方程为</p>
+                    <div class="math-block">\[
+                        \begin{gathered}
+                        \psi_{Elm}(\mathbf x)=\frac{u_{El}(r)}{r}Y_{lm}(\theta,\phi),\\
+                        \left[-\frac{\hbar^2}{2\mu}\frac{d^2}{dr^2}
+                        +V(r)+\frac{\hbar^2l(l+1)}{2\mu r^2}\right]u_{El}
+                        =E u_{El}.
+                        \end{gathered}
+                    \]</div>
+                    <p>角向形式由表示论固定，离心项由 Casimir 本征值固定，径向函数仍依赖势能。转动对称性保护同一 \(l\) 中不同 \(m\) 的简并，却不要求不同 \(l\) 的能量相同；氢原子的额外简并需要更多结构解释。</p>
+                    <p>平面波与球面波分别强调确定动量方向和确定角动量，它们由球谐函数互相展开。对短程中心势的无自旋弹性散射，常用归一化下</p>
+                    <div class="math-block">\[
+                        f(\theta)=\frac{1}{2ik}
+                        \sum_{l=0}^{\infty}(2l+1)
+                        \bigl(e^{2i\delta_l(k)}-1\bigr)P_l(\cos\theta).
+                    \]</div>
+                    <p>这里 \(k\) 是波数，\(\delta_l\) 是各角动量通道的相移。球对称性使散射算符在每个不可约角向空间内成为标量，故角度依赖只能按这些 Legendre 分量组合；相互作用的细节全部留在相移中。这也是 Wigner-Eckart 定理对标量算符的直接应用。</p>
+
+                    <h2 id="coupling">7. C-G 系数：用总角动量重新组织两个子系统</h2>
+                    <p>同时转动两个子系统时，总生成元为 \(\mathbf J=\mathbf J_1+\mathbf J_2\)。直积基知道各自的投影，耦合基知道总角动量。两种基之间的变换系数，就是 C-G 系数：</p>
+                    <div class="math-block">\[
+                        \begin{aligned}
+                        V_{j_1}\otimes V_{j_2}
+                        &\cong\bigoplus_{J=|j_1-j_2|}^{j_1+j_2}V_J,\\
+                        |JM\rangle
+                        &=\sum_{m_1,m_2}C^{JM}_{j_1m_1,j_2m_2}
+                        |j_1m_1\rangle|j_2m_2\rangle.
+                        \end{aligned}
+                    \]</div>
+                    <p>求和中的总角动量逐次相差一，每个表示恰好出现一次；只有 \(M=m_1+m_2\) 时系数才可能非零。实相位约定下，C-G 矩阵正交。构造时先取唯一的最大投影态，再用总降算符生成最大多重态；在剩余空间找正交的最高态，反复进行。这种逐层构造比记忆阶乘长公式更能说明耦合的结构。</p>
+                    <p>最具体的例子是两个自旋二分之一。记 \(|+\rangle,|-\rangle\) 为各自的上下投影态：</p>
+                    <div class="math-block">\[
+                        \begin{aligned}
+                        |1,1\rangle&=|++\rangle,\\
+                        |1,0\rangle&=\frac{|+-\rangle+|-+\rangle}{\sqrt2},\\
+                        |1,-1\rangle&=|--\rangle,\\
+                        |0,0\rangle&=\frac{|+-\rangle-|-+\rangle}{\sqrt2}.
+                        \end{aligned}
+                    \]</div>
+                    <p>三重态在交换下对称，单态反对称；单态被三个总角动量分量同时湮灭，因而在任何共同转动下不变。对 \(H=A\,\mathbf S_1\cdot\mathbf S_2/\hbar^2\)，三重态能量为 \(A/4\)，单态为 \(-3A/4\)，能隙为 \(|A|\)。这是把四维矩阵对角化化为两个 Casimir 数值的例子。对相同自旋 \(j\) 的两份表示，耦合态的交换因子一般为 \((-1)^{2j-J}\)；全同粒子还须连同空间部分满足总交换对称性。</p>
+
+                    <h2 id="spinor-harmonics">8. 球旋函数与球谐乘积：把耦合落到波函数上</h2>
+                    <p>将轨道球谐函数和自旋基 \(\chi_{sm_s}\) 耦合，得到总角动量确定的球旋函数：</p>
+                    <div class="math-block">\[
+                        \mathcal Y^{ls}_{JM}(\widehat{\mathbf r})
+                        =\sum_{m,m_s}C^{JM}_{lm,sm_s}
+                        Y_{lm}(\widehat{\mathbf r})\chi_{sm_s}.
+                    \]</div>
+                    <p>对电子，\(s=\tfrac12\)，当 \(l\geq1\) 时分成 \(J=l+\tfrac12\) 与 \(J=l-\tfrac12\) 两支；\(l=0\) 时只有前一支。它们正是处理自旋轨道耦合时合适的角向基，而不是任意选出的二分量函数。</p>
+                    <p>球谐函数的乘积也按同一条三角规则分解，展开系数是两个 C-G 系数的乘积，其中零投影系数保证宇称匹配。特别地，把两个同阶球谐函数耦合成标量，得到加法定理：</p>
+                    <div class="math-block">\[
+                        \sum_{m=-l}^{l}Y_{lm}(\widehat{\mathbf n}_1)^*
+                        Y_{lm}(\widehat{\mathbf n}_2)
+                        =\frac{2l+1}{4\pi}
+                        P_l(\widehat{\mathbf n}_1\cdot\widehat{\mathbf n}_2).
+                    \]</div>
+                    <p>左边看似依赖两套球坐标，缩并成标量后只剩两方向的夹角。多极展开中反复出现的这个恒等式，本质就是从张量积中挑出平凡表示。</p>
+
+                    <h2 id="wigner-eckart">9. Wigner-Eckart：角度规律与动力学各司其职</h2>
+                    <p>秩 \(k\) 的不可约球张量算符 \(T^{(k)}_q\) 在共轭转动下像自旋 \(k\) 的基一样混合。其无穷小判据为</p>
+                    <div class="math-block">\[
+                        \begin{aligned}
+                        [J_z,T^{(k)}_q]&=\hbar qT^{(k)}_q,\\
+                        [J_\pm,T^{(k)}_q]&=\hbar\sqrt{(k\mp q)(k\pm q+1)}
+                        T^{(k)}_{q\pm1}.
+                        \end{aligned}
+                    \]</div>
+                    <p>这说明它能向态传递多少投影角动量。需要特别区分：算符空间的 Casimir 是双重交换子 \(\sum_a[J_a,[J_a,T^{(k)}_q]]=\hbar^2k(k+1)T^{(k)}_q\)，不能写成普通的 \([\mathbf J^2,T^{(k)}_q]\)。例如 \(\mathbf J\) 本身是矢量算符，却与 \(\mathbf J^2\) 对易。</p>
+                    <p>采用“初态先与算符耦合”的常用约定，定理写成</p>
+                    <div class="math-block">\[
+                        \langle\alpha'j'm'|T^{(k)}_q|\alpha jm\rangle
+                        =\frac{C^{j'm'}_{jm,kq}}{\sqrt{2j'+1}}
+                        \langle\alpha'j'\Vert T^{(k)}\Vert\alpha j\rangle.
+                    \]</div>
+                    <p>额外标签 \(\alpha\) 区分同类角动量中的不同物理态。这里约化矩阵元的归一化与讲义约定不同，但物理矩阵元一致。C-G 系数决定投影与取向关系，约化矩阵元保留径向波函数、耦合强度等动力学信息。对称性可以给出禁戒条件和相对强度，却不能保证一个允许跃迁的约化矩阵元必不为零。</p>
+                    <p>同阶算符在固定初末多重态之间具有相同的角度系数，矩阵元因而成比例。特别在一个固定、无额外重数的 \(j>0\) 多重态内，任意矢量算符的投影正比于 \(\mathbf J\)，比例由 \(\langle\mathbf J\cdot\mathbf A\rangle/[\hbar^2j(j+1)]\) 决定。这是一阶张量投影定理，也是下面磁矩计算的捷径。</p>
+
+                    <h2 id="spectra">10. 精细结构与磁场：哪些简并仍然受保护</h2>
+                    <p>单电子有效中心势中的自旋轨道项可写为 \(H_{LS}=\xi(r)\mathbf L\cdot\mathbf S\)。把内积改写成三个角动量平方，在固定径向态的一阶微扰中：</p>
+                    <div class="math-block">\[
+                        \Delta E_J=\frac{\hbar^2\langle\xi\rangle}{2}
+                        \left[J(J+1)-l(l+1)-s(s+1)\right].
+                    \]</div>
+                    <p>对 \(s=\tfrac12\) 且 \(l\geq1\)，原来的 \(4l+2\) 个态分成维数为 \(2l+2\) 和 \(2l\) 的两组。以 \(l=1\) 为例，两组位移分别是 \(\hbar^2\langle\xi\rangle/2\) 和 \(-\hbar^2\langle\xi\rangle\)。同组的不同 \(M\) 仍简并，因为耦合破坏了分别转动轨道或自旋的对称性，却保留共同转动。</p>
+                    <p>再沿量子化轴加弱磁场，利用矢量投影定理，在忽略电子磁矩微小修正时得到</p>
+                    <div class="math-block">\[
+                        \begin{aligned}
+                        \Delta E_{JM}&=\mu_B B\,g_JM,\\
+                        g_J&=1+\frac{J(J+1)+s(s+1)-l(l+1)}{2J(J+1)}.
+                        \end{aligned}
+                    \]</div>
+                    <p>此式适用于磁场能标远小于自旋轨道分裂、且 \(J>0\) 的情况。磁场挑出一个方向，使不同 \(M\) 分裂；Landé 因子则反映自旋磁矩在总角动量方向上的投影。自旋为零时得到正常 Zeeman 图样；自旋参与时产生通常所称的反常 Zeeman 图样。磁场强到使轨道与自旋解耦时，应改用 \(m_l,m_s\) 基，位移趋向 \(\mu_BB(m_l+2m_s)\)，这是 Paschen-Back 极限，不能与一般正常 Zeeman 效应混为一谈。</p>
+
+                    <h2 id="transitions">11. 电偶极跃迁与 Stark 效应：同一个算符，两种实验</h2>
+                    <p>电偶极算符与位置成正比。它的球分量 \(r_0=z\)、\(r_{\pm1}=\mp(x\pm iy)/\sqrt2\) 构成秩一张量。由角动量耦合与奇宇称得到电偶极选择定则：</p>
+                    <div class="math-block">\[
+                        \begin{gathered}
+                        \Delta J=0,\pm1,\qquad 0\not\to0,\\
+                        M'=M+q,\quad q=0,\pm1,\qquad \pi'=-\pi.
+                        \end{gathered}
+                    \]</div>
+                    <p>不同球分量对应不同偏振通道。在忽略自旋轨道耦合、采用分离的轨道与自旋基时，单电子电偶极算符不改变自旋，且轨道满足 \(\Delta l=\pm1\)。更高多极或磁偶极过程有不同的角动量与宇称条件，因此“电偶极禁戒”不等于一切辐射过程绝对不可能。</p>
+                    <p>例如忽略自旋，比较 \(|l=2,m=1\rangle\) 到 \(l'=1\) 的三个算符分量。按 \(q=+1,0,-1\) 排列，在同一径向矩阵元和相同外场归一化下，矩阵元模方之比为 \(0:1:1\)。第一个通道要求不存在的 \(m'=2\)，所以必为零；另两个比值由 C-G 系数固定。实际谱线强度还要结合偏振、布居和探测几何。</p>
+                    <p>静电场沿轴作用时，同一个位置分量进入定态微扰：\(H'=e\mathcal E z\)，其中 \(e>0\) 是元电荷。确定宇称的非简并态，其一阶对角元为零；若同能量空间包含相反宇称的态，非对角元却可能非零。忽略自旋及精细结构，氢原子第一激发层按通常主量子数记为 \(n=2\)，其中 \(2s\) 与 \(2p,m=0\) 混合：</p>
+                    <div class="math-block">\[
+                        \begin{gathered}
+                        H'_{\{2s,2p_0\}}=
+                        \begin{pmatrix}0&v\\v^*&0\end{pmatrix},\\
+                        v=e\mathcal E\langle2s|z|2p_0\rangle,
+                        \qquad \Delta E=\pm|v|.
+                        \end{gathered}
+                    \]</div>
+                    <p>另两个 \(2p,m=\pm1\) 态在此近似下一阶不移，因此形成三个能量位置，即线性 Stark 效应。对没有相反宇称简并的能级，领先效应通常来自二阶虚跃迁，表现为二次 Stark 位移。这里决定线性还是二次响应的关键，是宇称与简并共同作用，而不仅是“加了电场”。</p>
+
+                    <h2 id="summary">12. 当日总结与跨章联系</h2>
+                    <p>今天把三种语言对齐了：群的不可约表示对应量子多重态，李代数的升降链对应角动量谱，张量积的约化对应复合系统的角动量耦合。球谐函数、球旋函数和分波展开都在选择适合对称性的基；Wigner-Eckart 定理则把这种选择用于算符矩阵元，分开普适的角度规律与具体相互作用。</p>
+                    <p>回看 Day 3，投影与选择定则现在获得了连续转动的明确形式；回看 Day 4–5，覆盖群决定允许哪些自旋，Casimir 和 Haar 测度决定如何分类与展开。下一天将进入 \(SU(3)\)、夸克模型和置换群：两个角动量的约化规则会推广为更复杂的多重态，今天的全对称张量与交换对称性会发展为杨图、杨表和杨算符。</p>
+                    <p>复习时可沿三个问题自检：为什么自旋轨道耦合不解除同一总角动量内的投影简并？为什么某个跃迁由角动量允许却仍可能没有强度？为什么氢原子简并层会有线性 Stark 效应，而孤立宇称本征态的一阶位移为零？能把答案分别落到表示、约化矩阵元和简并子空间，就抓住了这一天的物理结构。</p>
+                    <footer class="article-meta">posted @ 2026-09-03  zhangyuxuan  阅读(0)  评论(0)</footer>
+                </article>
+            </main>
+            <aside class="sidebar article-sidebar" aria-label="文章目录">
+                <section><h2>目录</h2><a href="#map">0. 今日知识地图</a><a href="#representations">1. 不可约表示</a><a href="#cover">2. 整数与半整数自旋</a><a href="#harmonics">3. 矩阵与球谐函数</a><a href="#tensors">4. 张量与旋量</a><a href="#quantum">5. 波函数与场算符</a><a href="#partial-waves">6. 中心势与分波</a><a href="#coupling">7. C-G 系数</a><a href="#spinor-harmonics">8. 球旋函数</a><a href="#wigner-eckart">9. Wigner-Eckart 定理</a><a href="#spectra">10. 精细结构与磁场</a><a href="#transitions">11. 跃迁与 Stark 效应</a><a href="#summary">12. 总结与联系</a></section>
+                <section><h2>学习进度</h2><p>Day 6 / 10</p><p>PDF 225–276</p><a href="post-group-theory-day-5.html">上一篇：Day 5</a></section>
+            </aside>
+        </div>
+    </div>
+    <footer><p>Copyright © zhangyuxuan</p><p>Powered by zhangyuxuan.xin</p></footer>
+</body>
+</html>
