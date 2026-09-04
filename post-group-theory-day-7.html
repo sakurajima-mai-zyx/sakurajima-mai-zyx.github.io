@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="十天学完整本群论讲义 Day 7：SU(3) 表示、夸克模型与对称性破缺，置换群、杨图、杨算符及线性群张量表示">
+    <title>十天学群论 Day 7：从夸克八重态到杨图 | zhangyuxuan</title>
+    <link rel="stylesheet" href="assets/site.css?v=20260904-1">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body class="post-page">
+    <header class="main-header sub-header"><div class="vertical"><div class="inner title-mark"><p class="title-kicker">GROUP THEORY</p><p class="title-band">群论</p></div></div></header>
+    <div id="home">
+        <header class="blog-header">
+            <div class="blog-title"><h2><a href="index.html">zhangyuxuan</a></h2><p>群论</p></div>
+            <nav class="blog-nav" aria-label="主导航"><div class="nav-links"><a href="index.html">首页</a><a class="active" href="blog-list.html">随笔</a><a href="mailto:contact@zhangyuxuan.xin">联系</a></div><span>随笔 - 8</span></nav>
+        </header>
+        <div class="page-layout article-layout">
+            <main id="main-content">
+                <article class="post-body">
+                    <header class="post-header">
+                        <h1>十天学群论 Day 7：从夸克八重态到杨图</h1>
+                        <p class="post-lead">讲义第 4.10 节与第 5 章，PDF 277–332 页。从 \(SU(3)\) 的二维权图走进强子多重态，再以置换群和杨图统一处理全同粒子、张量对称性与线性群不可约表示。</p>
+                    </header>
+
+                    <h2 id="map">0. 今日知识地图</h2>
+                    <p>今天有两条表面不同、实际相接的主线。第一条把 Day 6 的 \(SU(2)\) 升降链推广为 \(SU(3)\) 的平面权图：表示由两个最高权指标标记，夸克、反夸克和强子多重态都成为权图中的点，对称性破缺则把原本简并的多重态按几何因子劈裂。第二条从“交换若干对象”出发，用轮换结构分类置换群的共轭类，再用杨图、杨表和杨算符构造全部不可约表示。</p>
+                    <p>连接两条线的是张量积。夸克模型要约化 \(3\otimes\bar 3\) 与 \(3\otimes3\otimes3\)，全同粒子还要求控制交换对称性；杨算符恰好把张量指标投影到指定的对称类型。今天的物理 picture 是：<strong>群表示不告诉我们粒子的质量数值，却先规定哪些态必须结伴出现、哪些组合彼此独立，以及允许用多少个参数描述对称性破缺。</strong></p>
+
+                    <h2 id="su3">1. \(SU(3)\)：从一条升降链到二维权格</h2>
+                    <p>\(SU(3)\) 是行列式为一的三维幺正矩阵群。其李代数可用八个 Gell-Mann 矩阵的一半 \(F_a=\lambda_a/2\) 为厄米基，并取归一化 \(\operatorname{Tr}(F_aF_b)=\delta_{ab}/2\)。对易子和反对易子分别给出全反对称与全对称不变张量：</p>
+                    <div class="math-block">\[
+                        [F_a,F_b]=if_{abc}F_c,
+                        \qquad
+                        \{F_a,F_b\}=\frac{1}{3}\delta_{ab}I+d_{abc}F_c.
+                    \]</div>
+                    <p>\(f_{abc}\) 编码李括号，\(d_{abc}\) 则是 \(SU(2)\) 中没有的新结构；它们后来正好提供 \(8\otimes8\to8\) 的两种耦合。这里不要把“有八个生成元”误解为秩八。相互对易的 \(F_3,F_8\) 构成 Cartan 子代数，所以 \(\mathfrak{su}(3)\) 的秩是二，基态可用两个共同本征值标记。</p>
+                    <p>物理上常用同位旋第三分量 \(T_3=F_3\) 与超荷 \(Y=2F_8/\sqrt3\) 作坐标，并把其余生成元组成 \(T_\pm,U_\pm,V_\pm\)。三组升降算符让权分别沿三个夹角为六十度的方向移动。于是 \(SU(2)\) 的一维磁量子数链变成二维权格；不可约表示由最高权 \((p,q)\) 唯一确定，其维数为</p>
+                    <div class="math-block">\[
+                        \dim(p,q)=\frac{1}{2}(p+1)(q+1)(p+q+2),
+                        \qquad (p,q)^*=(q,p).
+                    \]</div>
+                    <p>公式不仅计数。它告诉我们基础表示 \((1,0)\) 是 \(3\)，共轭基础表示 \((0,1)\) 是 \(\bar3\)，伴随表示 \((1,1)\) 是 \(8\)。权图边界的权通常重数为一，向内重数增加；这正是 \(SU(3)\) 比 \(SU(2)\) 多出的困难：相同 \((T_3,Y)\) 可能对应多个线性独立态，不能只看坐标而忽略重权。</p>
+
+                    <h2 id="products">2. 直积约化：多重态怎样从基本三重态长出来</h2>
+                    <p>直积表示的生成元是各因子生成元之和，所以直积态的权就是各权之和。把一幅权图平移到另一幅权图的每个点上，便得到直积权图；再从最高权开始逐层扣除不可约权图，即可得到 C-G 级数。最重要的两组分解是</p>
+                    <div class="math-block">\[
+                        \begin{aligned}
+                        3\otimes\bar3&\cong8\oplus1,\\
+                        3\otimes3\otimes3&\cong10\oplus8\oplus8\oplus1.
+                        \end{aligned}
+                    \]</div>
+                    <p>第一式也能从混合张量 \(M^i{}_j\) 看出：九个分量拆成一个迹与八维无迹部分。归一化单态是</p>
+                    <div class="math-block">\[
+                        |1\rangle=\frac{1}{\sqrt3}
+                        \bigl(|1\bar1\rangle+|2\bar2\rangle+|3\bar3\rangle\bigr),
+                    \]</div>
+                    <p>与它正交的无迹子空间就是八重态。第二式则把三个基础表示按置换对称性分成全对称十重态、两个混合对称八重态与全反对称单态。这里已经能看到第 5 章的影子：同一个 \(SU(3)\) 直积分解，同时携带着交换三个张量因子的 \(S_3\) 结构。</p>
+
+                    <h2 id="quarks">3. 夸克模型：权图为什么会变成粒子谱</h2>
+                    <p>近似味 \(SU(3)\) 把轻夸克 \(u,d,s\) 放在 \(3\) 中，反夸克放在 \(\bar3\) 中。介子由 \(q\bar q\) 组成，所以形成八重态加单态；重子由三个夸克组成，所以形成十重态、两个八重态和单态。权图坐标不再只是抽象本征值：横轴对应同位旋分量，纵轴对应超荷，权图上的点直接组织出 \(\pi,K,\eta_8\) 以及 \(N,\Lambda,\Sigma,\Xi,\Delta,\Omega\) 等粒子家族。</p>
+                    <p>例如赝标介子的中性八重态与单态分别为</p>
+                    <div class="math-block">\[
+                        \begin{aligned}
+                        |\eta_8\rangle&=\frac{|u\bar u\rangle+|d\bar d\rangle-2|s\bar s\rangle}{\sqrt6},\\
+                        |\eta_1\rangle&=\frac{|u\bar u\rangle+|d\bar d\rangle+|s\bar s\rangle}{\sqrt3}.
+                        \end{aligned}
+                    \]</div>
+                    <p>它们拥有相同的可观测离散量子数，因此真实的 \(\eta,\eta'\) 可以混合，不能把物理粒子机械等同于纯八重态和纯单态。对重子还要更小心：基态空间波函数对称，夸克是费米子，故完整波函数在任意交换下必须反对称。味、自旋和颜色共同承担这个条件；三夸克颜色单态全反对称，因而基态重子的自旋—味部分需要全对称。群论分类的是完整直积空间中的协调关系，而不是某一个自由度孤立的“对称或反对称”。</p>
+
+                    <h2 id="breaking">4. 对称性破缺与 GMO：少数参数为何能预言质量关系</h2>
+                    <p>味 \(SU(3)\) 只是近似对称，因为 \(m_s\) 明显不同于 \(m_u,m_d\)。在同位旋极限 \(m_u=m_d\) 下，质量项分成 \(SU(3)\) 单态与八重态的第八分量。单态只给整个多重态同样的平移；八重态破缺算符则按 Wigner-Eckart 定理，把态依赖限制在有限个群论几何因子中。</p>
+                    <p>十重态在 \(10\otimes8\) 中只出现一次，因此只有一个独立约化矩阵元，质量随超荷线性变化，得到等间距规则：</p>
+                    <div class="math-block">\[
+                        M_{\Sigma^*}-M_\Delta
+                        =M_{\Xi^*}-M_{\Sigma^*}
+                        =M_\Omega-M_{\Xi^*}.
+                    \]</div>
+                    <p>这条关系曾用于预言 \(\Omega^-\) 的质量。八重态在 \(8\otimes8\) 中出现两次，所以需要两个独立的八重态结构。连同单态常数，质量可写为</p>
+                    <div class="math-block">\[
+                        M(I,Y)=M_0+AY+B\left[I(I+1)-\frac{Y^2}{4}\right].
+                    \]</div>
+                    <p>四个重子同位旋多重态却只有三个参数，消元便得到 Gell-Mann–Okubo 关系</p>
+                    <div class="math-block">\[
+                        M_N+M_\Xi=\frac{3M_\Lambda+M_\Sigma}{2}.
+                    \]</div>
+                    <p>它的力量来自“允许的张量结构数目”，不是某个精细动力学模型。赝标介子相应关系应作用于质量平方，且 \(\eta_8-\eta_1\) 混合与非微扰效应使实验偏差更大。这也提醒我们：近似对称性给出稳定的关系，但不会把破缺与混合自动消除。</p>
+
+                    <h2 id="permutations">5. 置换群：轮换结构就是共轭类的指纹</h2>
+                    <p>\(S_n\) 包含 \(n!\) 个对象置换。任意置换都能唯一地写成互不相交轮换的乘积（不计轮换因子的次序与循环起点），因而由各轮换长度形成整数 \(n\) 的一个分拆 \(\lambda=(\lambda_1,\lambda_2,\ldots)\)。一个长度为 \(r\) 的轮换可拆成 \(r-1\) 个对换，所以置换宇称为</p>
+                    <div class="math-block">\[
+                        \operatorname{sgn}(\sigma)=(-1)^{\sum_i(\lambda_i-1)}.
+                    \]</div>
+                    <p>共轭只会重新命名轮换中的对象，不会改变轮换长度；反过来，具有相同轮换结构的置换总能通过重新命名彼此共轭。因此 \(S_n\) 的共轭类与 \(n\) 的分拆一一对应。把第 \(i\) 行画成 \(\lambda_i\) 个左对齐方格，就得到杨图。有限群的不可约表示数等于共轭类数，于是“用杨图标记全部 \(S_n\) 不可约表示”已经在计数上显出必然性。</p>
+                    <p>物理上，置换不是把粒子真的沿路径搬动，而是交换全同粒子的标签。玻色与费米只对应一行图 \([n]\) 和一列图 \([1^n]\) 两个极端；三个及以上粒子还存在混合对称类型，这正是重子八重态中两个不同八重态来源的抽象版本。</p>
+
+                    <h2 id="tableaux">6. 杨表与钩长：不可约表示的维数怎样数出来</h2>
+                    <p>在杨图的格中填入 \(1,\ldots,n\) 得到杨表；若每行从左到右递增、每列从上到下递增，则为正则杨表。给定形状 \(\lambda\) 的正则杨表数，恰好等于相应 \(S_n\) 不可约表示的维数。钩长公式把这个计数化为局部几何：</p>
+                    <div class="math-block">\[
+                        d_\lambda=\frac{n!}{\prod_{(i,j)\in\lambda}h_{ij}},
+                    \]</div>
+                    <p>其中 \(h_{ij}\) 是从格 \((i,j)\) 向右与向下组成的钩所含格数。以形状 \([2,1]\) 为例，三个钩长为 \(3,1,1\)，故 \(d_{[2,1]}=3!/3=2\)。这正是 \(S_3\) 的二维不可约表示；再加一维全对称表示与一维符号表示，维数平方满足</p>
+                    <div class="math-block">\[
+                        1^2+2^2+1^2=6=|S_3|.
+                    \]</div>
+                    <p>这不是巧合，而是正则表示完全约化的维数核对。杨图的格子在这里同时记录共轭类、不可约表示类型与表示维数。</p>
+
+                    <h2 id="symmetrizers">7. 杨算符：把“对称类型”变成真正的投影</h2>
+                    <p>对一个固定杨表 \(T\)，令 \(R_T\) 为同行数码的置换子群，\(C_T\) 为同列数码的置换子群。行算符做全对称化，列算符做带符号的全反对称化：</p>
+                    <div class="math-block">\[
+                        P_T=\sum_{p\in R_T}p,
+                        \qquad
+                        Q_T=\sum_{q\in C_T}\operatorname{sgn}(q)q,
+                        \qquad
+                        Y_T=P_TQ_T.
+                    \]</div>
+                    <p>次序很重要，因为一般 \(P_TQ_T\neq Q_TP_T\)。杨算符满足本质幂等关系 \(Y_T^2=c_TY_T\)，其中 \(c_T\neq0\)；归一化后便成为群代数中的原始幂等元。它的像空间对应一个最小左理想，也就是一个不可约表示。同行被强制对称、同列被强制反对称，因此杨图不再只是标签，而成为能实际作用在波函数或张量上的筛选器。</p>
+                    <p>仍以 \([2,1]\) 的杨表第一行填 \(1,2\)、第二行填 \(3\) 为例：</p>
+                    <div class="math-block">\[
+                        Y=(e+(12))(e-(13))
+                        =e+(12)-(13)-(123).
+                    \]</div>
+                    <p>把 \(Y\) 作用到任意三粒子波函数上，得到的不是全对称也不是全反对称，而是二维混合对称扇区中的向量。若两数既被要求同行对称又被要求同列反对称，相应乘积必为零；这正是杨算符正交与 Fock 条件背后的简单冲突。</p>
+
+                    <h2 id="irreps">8. 不可约矩阵与特征标：从相邻对换开始</h2>
+                    <p>每个杨图给出一种不等价不可约表示，同一杨图的不同正则杨表提供表示空间的一组自然基。任意置换都可由相邻对换 \(s_a=(a\,a+1)\) 生成，因此只要知道这些生成元如何作用在正则杨表基上，就能构造全部表示矩阵：同一行给本征值 \(+1\)，同一列给 \(-1\)，否则 \(s_a\) 混合交换后仍为正则的两张杨表，形成一个实正交的二维块。</p>
+                    <p>如果只关心约化而非具体基，特征标更高效。对表示 \(\lambda\) 与共轭类 \(\mu\)，\(\chi^\lambda_\mu\) 只依赖轮换结构；讲义给出的边缘带正则填充法，本质上是 Murnaghan-Nakayama 规则的图形版本。直积重数由有限群特征标内积给出：</p>
+                    <div class="math-block">\[
+                        m_\nu=\frac{1}{n!}\sum_{\sigma\in S_n}
+                        \chi^\lambda(\sigma)\chi^\mu(\sigma)
+                        \chi^\nu(\sigma)^*.
+                    \]</div>
+                    <p>由于 \(S_n\) 的特征标可取实数，上式在三个表示标签之间呈对称形式。它把庞大的矩阵计算压缩为按共轭类求和。</p>
+
+                    <h2 id="lr">9. 外积、Littlewood-Richardson 规则与分支</h2>
+                    <p>两个不同粒子子系统若分别由 \(S_m,S_n\) 分类，把它们合成含 \(m+n\) 个全同粒子的系统，需要从子群 \(S_m\times S_n\) 向 \(S_{m+n}\) 诱导；这称为表示的外积。Littlewood-Richardson 规则用“向一幅杨图合法添入另一幅图的格子”直接给出分解及重数。相反，把 \(S_n\) 的表示限制到 \(S_{n-1}\)，分支律只需从杨图的右下边缘合法删去一个格：</p>
+                    <div class="math-block">\[
+                        V^\lambda\!\downarrow_{S_{n-1}}
+                        \cong\bigoplus_{\mu=\lambda-\square}V^\mu.
+                    \]</div>
+                    <p>每个合法形状最多出现一次。物理 picture 很直接：加入或移去一个全同粒子，就是给交换对称类型加入或移去一个格子；复杂的多体耦合因此变成受约束的图形生长。</p>
+
+                    <h2 id="linear-groups">10. \(GL(n,\mathbb C)\) 张量：置换群为什么能约化连续群表示</h2>
+                    <p>在 \(V^{\otimes r}\) 上，\(GL(n,\mathbb C)\) 同时用同一个矩阵作用于每个张量因子，而 \(S_r\) 只交换因子位置；二者作用彼此对易。于是任何杨算符的像都在 \(GL(n,\mathbb C)\) 下保持不变，并给出由杨图标记的不可约张量类型。这是 Schur-Weyl 对偶的核心 picture：连续群负责“分量如何转”，置换群负责“指标如何交换”，两套对称性互相充当对方的分解工具。</p>
+                    <p>例如二阶协变张量分成对称与反对称部分，分别对应两格一行和两格一列。对混合张量还可以缩并上下指标，因此须先分离迹与无迹部分：</p>
+                    <div class="math-block">\[
+                        T^i{}_j=
+                        \left(T^i{}_j-\frac{\operatorname{Tr}T}{n}\delta^i{}_j\right)
+                        +\frac{\operatorname{Tr}T}{n}\delta^i{}_j.
+                    \]</div>
+                    <p>第一项是无迹部分，第二项是一维不变子空间。对 \(SL(n,\mathbb C)\) 与 \(SU(n)\)，不变张量 \(\varepsilon_{i_1\cdots i_n}\) 还会把某些列长为 \(n\) 的结构与更低阶对偶张量联系起来；对 \(SO(n)\)，度量允许任意同类指标缩并，所以也必须先去迹。杨图规则相似，但可用的不变张量不同，决定了哪些图真正代表独立不可约表示。</p>
+
+                    <h2 id="su5">11. \(SU(5)\) GUT：杨图语言的一次统一尝试</h2>
+                    <p>讲义在 PDF 第 332 页只列出本节标题，没有展开推导；这里仅用前述表示论说明它为何自然出现，不把它当作已由讲义证明的现象学结论。最小 \(SU(5)\) 大统一把标准模型规范群嵌入</p>
+                    <div class="math-block">\[
+                        SU(3)_C\times SU(2)_L\times U(1)_Y\subset SU(5),
+                    \]</div>
+                    <p>一代费米子可按 \(\bar5\oplus10\) 组织，其中 \(10\) 正是二阶反对称张量，对应两格一列的杨图；伴随表示 \(24\) 可由无迹混合张量得到，并可用来描述从 \(SU(5)\) 到标准模型子群的对称性破缺。这个例子展示了本章方法的价值：粒子清单、规范玻色子与允许耦合可以先由表示和分支规则组织，再交给具体拉氏量与实验约束判断。统一的表示结构很漂亮，但质子衰变等可检验后果也说明，群论上的可构造性并不等于自然界已经选择了最小模型。</p>
+
+                    <h2 id="summary">12. 当日总结与跨章联系</h2>
+                    <p>今天把“表示的标签”变成了三种可操作对象：\(SU(3)\) 用最高权与二维权图组织多重态，\(S_n\) 用分拆和杨图组织交换类型，杨算符则把图形直接变成张量空间中的投影。夸克模型说明权图怎样成为粒子谱；GMO 关系说明对称性破缺仍受表示重数控制；线性群张量表示则解释了为什么同一套杨图能跨越有限群与连续群。</p>
+                    <p>回看 Day 3，群代数中的原始幂等元现在有了杨算符的具体实现；回看 Day 6，角动量的 C-G 约化被推广到 \(SU(3)\) 与多体交换对称。下一天将进入点群、晶体对称与离散时空变换：今天的有限群特征标会直接用于分子和晶体能级，而反线性时间反演将提醒我们，并非所有量子对称都能由普通幺正矩阵表示。</p>
+                    <p>复习时可抓住三个检验：为什么 \(3\otimes\bar3\) 自然分成迹与无迹部分？为什么 \(S_n\) 的共轭类和不可约表示都由同样的分拆计数？为什么行对称、列反对称的杨算符能同时服务于全同粒子和 \(GL(n,\mathbb C)\) 张量？若能用“对易的两种群作用”贯通三问，这一天的结构就真正连起来了。</p>
+                    <footer class="article-meta">posted @ 2026-09-04  zhangyuxuan  阅读(0)  评论(0)</footer>
+                </article>
+            </main>
+            <aside class="sidebar article-sidebar" aria-label="文章目录">
+                <section><h2>目录</h2><a href="#map">0. 今日知识地图</a><a href="#su3">1. SU(3) 与权图</a><a href="#products">2. 直积约化</a><a href="#quarks">3. 夸克模型</a><a href="#breaking">4. 破缺与 GMO</a><a href="#permutations">5. 置换与共轭类</a><a href="#tableaux">6. 杨表与钩长</a><a href="#symmetrizers">7. 杨算符</a><a href="#irreps">8. 表示与特征标</a><a href="#lr">9. 外积与分支</a><a href="#linear-groups">10. 线性群张量</a><a href="#su5">11. SU(5) GUT</a><a href="#summary">12. 总结与联系</a></section>
+                <section><h2>学习进度</h2><p>Day 7 / 10</p><p>PDF 277–332</p><a href="post-group-theory-day-6.html">上一篇：Day 6</a></section>
+            </aside>
+        </div>
+    </div>
+    <footer><p>Copyright © zhangyuxuan</p><p>Powered by zhangyuxuan.xin</p></footer>
+</body>
+</html>
